@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "components/*": ["./src/view/components/*"],
+      "pages/*": ["./src/view/pages/*"],
+      "i18n/*": ["./src/view/i18n/*"],
+      "utils/*": ["./src/shared/utils/*", "./src/utils/*"],
+      "assets/*": ["./src/assets/*"],
+      "data/*": ["./src/data/*", "../backend/src/data/*"]
+    }
+  },
+  "include": ["src", "../backend/src/data/**/*.ts"]
+}

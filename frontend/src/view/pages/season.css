@@ -1,0 +1,55 @@
+.season-page {
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.season-page .filter {
+  min-width: 250px;
+  flex: 0;
+  padding-top: var(--spacing-small);
+  padding-left: var(--spacing);
+  padding-right: var(--spacing);
+  border-right: 1px solid var(--color-border);
+  min-height: 100%;
+}
+
+.season-page .filter ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  margin-bottom: var(--spacing);
+}
+
+.season-page .filter ul .row {
+  margin-top: var(--spacing-smaller);
+  margin-bottom: var(--spacing-smaller);
+}
+
+.season-page .filter input[type="range"] {
+  margin-bottom: var(--spacing);
+}
+
+.season-page .filter ul .checkbox {
+  margin-right: var(--spacing-smaller);
+}
+
+.season-page .content {
+  max-width: 100%;
+  padding-top: var(--spacing-small);
+  padding-left: var(--spacing);
+  padding-right: var(--spacing);
+  overflow: auto;
+}
+
+.season-page .content .schedule-row.subtitle {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.season-page .content .list {
+  margin-top: var(--spacing);
+}
+
+.season-page .content .list .schedule-row .others-subtitle span {
+  width: 16px;
+}

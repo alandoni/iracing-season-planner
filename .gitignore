@@ -1,0 +1,9 @@
+**/.env
+**/node_modules
+**/coverage
+
+**/build
+.vscode
+
+**/*.log
+**/downloaded

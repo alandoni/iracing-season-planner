@@ -1,0 +1,11 @@
+{
+  "name": "iracing-season-planner",
+  "version": "1.0.0",
+  "description": "An app to help to plan the season on iRacing",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Alan Donizete Quintiliano",
+  "license": "ISC"
+}

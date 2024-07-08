@@ -1,0 +1,37 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.column-halign-normal {
+  align-items: normal;
+}
+
+.column-halign-start {
+  align-items: flex-start;
+}
+
+.column-halign-center {
+  align-items: center;
+}
+
+.column-halign-end {
+  align-items: flex-end;
+}
+
+.column-valign-stretch {
+  justify-content: stretch;
+}
+
+.column-valign-start {
+  justify-content: flex-start;
+}
+
+.column-valign-center {
+  justify-content: center;
+}
+
+.column-valign-end {
+  justify-content: flex-end;
+}

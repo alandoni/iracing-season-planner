@@ -1,0 +1,1 @@
+export type LinkResponse = {link: string, expires: Date}

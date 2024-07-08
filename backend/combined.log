@@ -1,0 +1,349 @@
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /v1/season with Request ID: 1feab25a-4ecf-4534-8b7f-b18f5c7ba404"}
+{"level":"info","message":"End of getting season with Request ID: 1feab25a-4ecf-4534-8b7f-b18f5c7ba404"}
+{"level":"info","message":"Getting /v1/season with Request ID: 9a2dad17-7dda-4051-a2c4-7823862d62b8"}
+{"level":"info","message":"End of getting season with Request ID: 9a2dad17-7dda-4051-a2c4-7823862d62b8"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 8af0b7cb-3acb-4889-9b94-bc6e80409963"}
+{"level":"info","message":"End of getting season with Request ID: 8af0b7cb-3acb-4889-9b94-bc6e80409963"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 92840eed-df24-4bea-9438-9e7826fda937"}
+{"level":"info","message":"End of getting season with Request ID: 92840eed-df24-4bea-9438-9e7826fda937"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting / with Request ID: 9594fc78-cfe9-4d7c-b15e-f1efb1042ccd"}
+{"level":"info","message":"End of getting season with Request ID: 9594fc78-cfe9-4d7c-b15e-f1efb1042ccd"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 360a529c-17e6-4241-bc08-7f04739ea521"}
+{"level":"info","message":"End of getting season with Request ID: 360a529c-17e6-4241-bc08-7f04739ea521"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 23454ab8-89f4-4b8b-98f1-66f2ca288883"}
+{"level":"info","message":"End of getting season with Request ID: 23454ab8-89f4-4b8b-98f1-66f2ca288883"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 233c5400-29aa-4d43-83da-334aa5d99e14"}
+{"level":"info","message":"End of getting season with Request ID: 233c5400-29aa-4d43-83da-334aa5d99e14"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 846990c4-ec48-4494-a846-06374ee3c92f"}
+{"level":"info","message":"End of getting season with Request ID: 846990c4-ec48-4494-a846-06374ee3c92f"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 5c6a6d31-36e1-41d1-b514-664ee21256e6"}
+{"level":"info","message":"End of getting season with Request ID: 5c6a6d31-36e1-41d1-b514-664ee21256e6"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 371aed9f-9a9f-4727-b1f0-2552c34016b5"}
+{"level":"info","message":"End of getting season with Request ID: 371aed9f-9a9f-4727-b1f0-2552c34016b5"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: b734a222-0221-482d-8a94-39f27acb9ecc"}
+{"level":"info","message":"End of getting season with Request ID: b734a222-0221-482d-8a94-39f27acb9ecc"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: d3855864-5a67-437b-a40f-82e3d49f634e"}
+{"level":"info","message":"End of getting season with Request ID: d3855864-5a67-437b-a40f-82e3d49f634e"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: fdeace46-ef2a-42eb-8fee-d0943ae8884b"}
+{"level":"info","message":"End of getting season with Request ID: fdeace46-ef2a-42eb-8fee-d0943ae8884b"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: fd952ccf-a0a4-407a-a628-5e3f6cd4e30d"}
+{"level":"info","message":"End of getting season with Request ID: fd952ccf-a0a4-407a-a628-5e3f6cd4e30d"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: f80a0279-cf5e-4949-b155-4cbbf8528d1f"}
+{"level":"info","message":"End of getting season with Request ID: f80a0279-cf5e-4949-b155-4cbbf8528d1f"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 9e57d68a-6a0e-4a43-8336-71840d9de5ff"}
+{"level":"info","message":"End of getting season with Request ID: 9e57d68a-6a0e-4a43-8336-71840d9de5ff"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 51a5e3ea-7d7e-4d73-898c-b8d55f0a39fd"}
+{"level":"info","message":"End of getting season with Request ID: 51a5e3ea-7d7e-4d73-898c-b8d55f0a39fd"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 382ab222-6fa7-4657-9391-c935e29370f1"}
+{"level":"info","message":"End of getting season with Request ID: 382ab222-6fa7-4657-9391-c935e29370f1"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 00e0a73a-efd7-49b4-86ee-290c31aa926d"}
+{"level":"info","message":"End of getting season with Request ID: 00e0a73a-efd7-49b4-86ee-290c31aa926d"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 90bb94af-2593-402a-96a2-66611a4f3c4b"}
+{"level":"info","message":"End of getting season with Request ID: 90bb94af-2593-402a-96a2-66611a4f3c4b"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 7609ae7f-f62e-46b3-a452-6d81d8abc6fe"}
+{"level":"info","message":"End of getting season with Request ID: 7609ae7f-f62e-46b3-a452-6d81d8abc6fe"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 3118a13a-20a9-4b32-ba7e-e5e5c8ed0499"}
+{"level":"info","message":"End of getting season with Request ID: 3118a13a-20a9-4b32-ba7e-e5e5c8ed0499"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 189a1243-3453-4450-a159-77092659071b"}
+{"level":"info","message":"End of getting season with Request ID: 189a1243-3453-4450-a159-77092659071b"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 4d4e0e30-22e7-43cc-ad26-766bd813482b"}
+{"level":"info","message":"End of getting season with Request ID: 4d4e0e30-22e7-43cc-ad26-766bd813482b"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: ee9e2c18-1053-4323-adf7-ba3307b91cc6"}
+{"level":"info","message":"End of getting season with Request ID: ee9e2c18-1053-4323-adf7-ba3307b91cc6"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 9cf5a1cf-090f-437a-becd-5e076aab3567"}
+{"level":"info","message":"End of getting season with Request ID: 9cf5a1cf-090f-437a-becd-5e076aab3567"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: f00a0712-4cb2-42f0-ada3-5ba61ee0d280"}
+{"level":"info","message":"End of getting season with Request ID: f00a0712-4cb2-42f0-ada3-5ba61ee0d280"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: b7176ffe-99c9-4ac7-9873-a2fa861d2f0d"}
+{"level":"info","message":"End of getting season with Request ID: b7176ffe-99c9-4ac7-9873-a2fa861d2f0d"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: e92ac0ff-e08d-4174-bd8a-714a39103f5d"}
+{"level":"info","message":"End of getting season with Request ID: e92ac0ff-e08d-4174-bd8a-714a39103f5d"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: b0934ff1-4e18-455d-a72d-34f64626f570"}
+{"level":"info","message":"End of getting season with Request ID: b0934ff1-4e18-455d-a72d-34f64626f570"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: bf2a189d-e6c6-4f4f-9644-f699e70eb408"}
+{"level":"info","message":"End of getting season with Request ID: bf2a189d-e6c6-4f4f-9644-f699e70eb408"}
+{"level":"info","message":"Listening on port 3000"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 6be593ab-8a6c-40b2-aeaf-82092b014852"}
+{"level":"info","message":"End of getting season with Request ID: 6be593ab-8a6c-40b2-aeaf-82092b014852"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: b8335f9f-207b-40e6-b3ec-3cba8d1adb76"}
+{"level":"info","message":"End of getting season with Request ID: b8335f9f-207b-40e6-b3ec-3cba8d1adb76"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 3acd9dbc-d432-4605-a45d-42b3077bd152"}
+{"level":"info","message":"End of getting season with Request ID: 3acd9dbc-d432-4605-a45d-42b3077bd152"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: d9dc6932-d270-47d3-ab70-f7a03495b161"}
+{"level":"info","message":"End of getting season with Request ID: d9dc6932-d270-47d3-ab70-f7a03495b161"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 816fc65c-522f-4961-94d4-ac421d837e17"}
+{"level":"info","message":"End of getting season with Request ID: 816fc65c-522f-4961-94d4-ac421d837e17"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 77acb9a1-0854-4163-bff3-e7752279d285"}
+{"level":"info","message":"End of getting season with Request ID: 77acb9a1-0854-4163-bff3-e7752279d285"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: da9741f3-9947-4ad4-9277-84d7b8a40d6e"}
+{"level":"info","message":"End of getting season with Request ID: da9741f3-9947-4ad4-9277-84d7b8a40d6e"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: ce7d3c50-ac71-4078-9ab3-02d22d2bb8a0"}
+{"level":"info","message":"End of getting season with Request ID: ce7d3c50-ac71-4078-9ab3-02d22d2bb8a0"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 02e6dc6f-f7e4-4f59-b7df-b9dd23e44e02"}
+{"level":"info","message":"End of getting season with Request ID: 02e6dc6f-f7e4-4f59-b7df-b9dd23e44e02"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 98bcec22-4429-4cca-930d-5ad40b54ca6c"}
+{"level":"info","message":"End of getting season with Request ID: 98bcec22-4429-4cca-930d-5ad40b54ca6c"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 4715fd5e-2f25-42ef-a83e-a5f6e3bd63c4"}
+{"level":"info","message":"End of getting season with Request ID: 4715fd5e-2f25-42ef-a83e-a5f6e3bd63c4"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 6ca18071-3b7a-4f5f-b566-1cf8be1c13f0"}
+{"level":"info","message":"End of getting season with Request ID: 6ca18071-3b7a-4f5f-b566-1cf8be1c13f0"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: db3be4fe-dd97-4942-8423-3777eae14f22"}
+{"level":"info","message":"End of getting season with Request ID: db3be4fe-dd97-4942-8423-3777eae14f22"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 7cd4052e-a1ef-4650-9bbb-be2cef31d79b"}
+{"level":"info","message":"End of getting season with Request ID: 7cd4052e-a1ef-4650-9bbb-be2cef31d79b"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: b303bbce-65c2-477a-9d8c-499dce09ad27"}
+{"level":"info","message":"End of getting season with Request ID: b303bbce-65c2-477a-9d8c-499dce09ad27"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 762f918f-cf31-41db-89d0-21b2e134534b"}
+{"level":"info","message":"End of getting season with Request ID: 762f918f-cf31-41db-89d0-21b2e134534b"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 0159d224-08b9-4eb0-add4-0564697298f0"}
+{"level":"info","message":"End of getting season with Request ID: 0159d224-08b9-4eb0-add4-0564697298f0"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 4381d4c5-b61c-42b6-bbf3-c996efe0daae"}
+{"level":"info","message":"End of getting season with Request ID: 4381d4c5-b61c-42b6-bbf3-c996efe0daae"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 20590dd1-c7dd-4b67-b2ba-2e029c90a4dd"}
+{"level":"info","message":"End of getting season with Request ID: 20590dd1-c7dd-4b67-b2ba-2e029c90a4dd"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 553cab2b-8710-4f4a-97d4-18f210e88baa"}
+{"level":"info","message":"End of getting season with Request ID: 553cab2b-8710-4f4a-97d4-18f210e88baa"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 12e1cd50-40aa-4a38-91d5-e81e679846b6"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"End of getting season with Request ID: 12e1cd50-40aa-4a38-91d5-e81e679846b6"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 7f766909-f28c-4630-b0ac-58c3d8ded976"}
+{"level":"info","message":"End of getting season with Request ID: 7f766909-f28c-4630-b0ac-58c3d8ded976"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 5bc07949-1cec-4264-8982-5354e46a9c06"}
+{"level":"info","message":"End of getting season with Request ID: 5bc07949-1cec-4264-8982-5354e46a9c06"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 0678f14b-32a2-4451-83ec-128ad70adcd4"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"End of getting season with Request ID: 0678f14b-32a2-4451-83ec-128ad70adcd4"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 597d707b-2a5c-4964-acb6-138b96c6f0fc"}
+{"level":"info","message":"End of getting season with Request ID: 597d707b-2a5c-4964-acb6-138b96c6f0fc"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 6ce73295-84c8-4345-869a-3ccdc33dc80b"}
+{"level":"info","message":"End of getting season with Request ID: 6ce73295-84c8-4345-869a-3ccdc33dc80b"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 7b1a4879-7b5e-461d-ab11-fb947ba15d09"}
+{"level":"info","message":"End of getting season with Request ID: 7b1a4879-7b5e-461d-ab11-fb947ba15d09"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 8d71aa20-26aa-45e9-a01c-f3442b8f21c6"}
+{"level":"info","message":"End of getting season with Request ID: 8d71aa20-26aa-45e9-a01c-f3442b8f21c6"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: b6e89199-2195-48e0-bfa2-e05dcae46b39"}
+{"level":"info","message":"End of getting season with Request ID: b6e89199-2195-48e0-bfa2-e05dcae46b39"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: cf301571-92f0-4750-a57a-387b19de1f9c"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"End of getting season with Request ID: cf301571-92f0-4750-a57a-387b19de1f9c"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'formatted-file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: afc18c3c-fedf-4fee-9d3b-bf045ba2a095"}
+{"level":"info","message":"End of getting season with Request ID: afc18c3c-fedf-4fee-9d3b-bf045ba2a095"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Listening on port 3001"}
+{"level":"info","message":"Downloading latest info"}
+{"level":"warn","message":"File not loaded: Error: ENOENT: no such file or directory, open 'file-season.json'"}
+{"level":"info","message":"Latest info downloaded and cached"}
+{"level":"info","message":"Getting /api/v1/season with Request ID: 23a34a02-711b-4d37-ac11-c815e2dbf99e"}
+{"level":"info","message":"End of getting season with Request ID: 23a34a02-711b-4d37-ac11-c815e2dbf99e"}

@@ -1,0 +1,50 @@
+.header {
+  background-color: var(--color-primary);
+}
+
+.header .text {
+  color: var(--color-background);
+  font-style: italic;
+}
+
+.header .logo-container {
+  height: 37px;
+  overflow-y: clip;
+}
+
+.header .red {
+  background-color: var(--color-secondary);
+}
+
+.header .blue {
+  background-color: var(--color-background);
+}
+
+.header .bottom-bar {
+  height: var(--spacing-smaller);
+  width: 100%;
+  margin-bottom: var(--spacing-smaller);
+}
+
+.header .text {
+  margin-bottom: var(--spacing-smaller);
+  margin-top: var(--spacing-smaller);
+  margin-left: var(--spacing-smaller);
+}
+
+.header .logo {
+  width: 9px;
+  height: 60px;
+  margin-top: calc(var(--spacing-smaller) * -1);
+  margin-left: var(--spacing-smaller);
+  margin-right: 1px;
+  transform: rotate(15deg);
+}
+
+.header .logo:first-of-type {
+  margin-left: var(--spacing);
+}
+
+.header .logo:last-of-type {
+  margin-right: var(--spacing);
+}

@@ -1,0 +1,40 @@
+.schedule-row {
+  column-gap: 10px;
+  max-width: 100%;
+  padding-top: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+}
+
+.schedule-row .class {
+  max-width: fit-content;
+}
+
+.schedule-row .class div {
+  width: 24px;
+  height: 24px;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  padding-left: 1px;
+  padding-top: 1px;
+}
+
+.schedule-row .main {
+}
+
+.schedule-row .image {
+  max-width: 80px;
+}
+
+.schedule-row .others {
+  max-width: 100px;
+}
+
+.schedule-row .others .row {
+  column-gap: 8px;
+}
+
+.schedule-row input {
+  width: 16px;
+  height: 16px;
+}
