@@ -1,0 +1,39 @@
+.track-row {
+  column-gap: 10px;
+  max-width: 100%;
+  padding-top: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+}
+
+.track-row .price {
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  text-align: end;
+  align-items: end;
+}
+
+.track-row .others {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  align-items: end;
+}
+
+.track-row .others > .row {
+  gap: var(--spacing-small);
+}
+
+.track-row .others .checkbox-container {
+  display: block;
+  width: 20px;
+}
+
+.track-row .others .row .text {
+  width: 20px;
+  justify-content: end;
+}
+
+.track-row .class {
+  max-width: fit-content;
+}

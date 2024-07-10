@@ -1,0 +1,15 @@
+.checkable-list ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  margin-bottom: var(--spacing);
+}
+
+.checkable-list ul .row {
+  margin-top: var(--spacing-smaller);
+  margin-bottom: var(--spacing-smaller);
+}
+
+.checkable-list ul .checkbox {
+  margin-right: var(--spacing-smaller);
+}

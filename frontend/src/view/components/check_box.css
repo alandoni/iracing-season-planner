@@ -4,6 +4,7 @@
 }
 
 span.checkbox {
+  display: block;
   border-radius: 4px;
   border: 1px solid var(--color-border);
   background-color: var(--color-background);
@@ -11,6 +12,7 @@ span.checkbox {
   height: var(--checkbox-size);
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 span.checkbox:has(input[type="checkbox"]:disabled) {
@@ -25,7 +27,6 @@ span.checkbox.small {
 input[type="checkbox"] {
   /* Hide actual checkbox */
   cursor: pointer;
-  position: absolute;
   -webkit-appearance: none;
   appearance: none;
   padding: 0;
@@ -62,6 +63,8 @@ input[type="checkbox"]:disabled {
 
 .checkbox .check {
   cursor: pointer;
+  position: absolute;
+  top: 0;
   fill: var(--color-secondary);
   width: var(--checkbox-size);
   height: var(--checkbox-size);

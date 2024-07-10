@@ -18,27 +18,19 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route
-              index
-              path="/"
+              index={true}
               element={<LazyPageLoad factory={import("pages/season")} componentName="SeasonPage" />}
             />
             <Route
-              index
               path="/series"
               element={<LazyPageLoad factory={import("pages/season")} componentName="SeasonPage" />}
             />
+            <Route path="/cars" element={<LazyPageLoad factory={import("pages/cars")} componentName="CarsPage" />} />
             <Route
-              index
-              path="/cars"
-              element={<LazyPageLoad factory={import("pages/season")} componentName="SeasonPage" />}
-            />
-            <Route
-              index
               path="/tracks"
-              element={<LazyPageLoad factory={import("pages/season")} componentName="SeasonPage" />}
+              element={<LazyPageLoad factory={import("pages/tracks")} componentName="TracksPage" />}
             />
             <Route
-              index
               path="/summary"
               element={<LazyPageLoad factory={import("pages/season")} componentName="SeasonPage" />}
             />

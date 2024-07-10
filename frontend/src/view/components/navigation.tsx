@@ -6,7 +6,7 @@ import "./navigation.css"
 const links = [
   {
     name: "Temporada",
-    url: "",
+    url: "/",
   },
   {
     name: "Séries",

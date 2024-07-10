@@ -2,6 +2,7 @@ import { HttpClient } from "../http_client"
 import { TrackResponse } from "./track_response"
 import { LinkResponse } from "../link_response"
 import { Track } from "./track"
+import { formatCategory } from "data/season/category"
 
 export class TrackRepository {
   private static URL = "https://members-ng.iracing.com/data/track/get"
@@ -26,7 +27,7 @@ export class TrackRepository {
         acc[found].configs.push(config)
       } else {
         acc.push({
-          category: track.category,
+          category: formatCategory(track.category),
           categoryId: track.category_id,
           location: track.location,
           maxCars: track.max_cars,

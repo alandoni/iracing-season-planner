@@ -14,7 +14,7 @@
   overflow-y: hidden;
 }
 
-.page .content {
+.page .page-content {
   flex: 1;
   display: flex;
   overflow-y: hidden;

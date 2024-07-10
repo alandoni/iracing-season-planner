@@ -11,6 +11,6 @@ describe("SeasonRepository", () => {
   it("should get the season", async () => {
     await user.login()
     const season = await repo.getSeasons()
-    fs.writeFileSync("generated/test-season.json", JSON.stringify(season, null, 2), "utf8")
+    fs.writeFileSync("downloaded/test-season.json", JSON.stringify(season, null, 2), "utf8")
   }, 20000)
 })

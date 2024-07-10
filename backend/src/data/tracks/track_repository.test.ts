@@ -11,6 +11,6 @@ describe("TrackRepository", () => {
   it("should get the tracks", async () => {
     await user.login()
     const tracks = await repo.getTracks()
-    fs.writeFileSync("generated/test-track.json", JSON.stringify(tracks, null, 2), "utf8")
+    fs.writeFileSync("downloaded/test-track.json", JSON.stringify(tracks, null, 2), "utf8")
   })
 })

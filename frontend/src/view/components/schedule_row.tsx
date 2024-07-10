@@ -5,6 +5,7 @@ import { Row } from "./row"
 import { Text } from "./text"
 import { Checkbox } from "./check_box"
 import "./schedule_row.css"
+import { LicenseLetter } from "./license_letter"
 
 interface ScheduleRowProps {
   series: Series
@@ -29,16 +30,16 @@ export function ScheduleRow({
 }: ScheduleRowProps) {
   const license = series.licenses[series.licenses.length - 1]
   return (
-    <Row className="schedule-row">
+    <Row className="schedule-row list-row">
       <Column className="class">
-        <div style={{ backgroundColor: `#${license.color}` }}>{license.letter}</div>
+        <LicenseLetter license={license} />
       </Column>
       <Column className="main">
         <Row>
-          <Text>{series.name}</Text>
+          <Text tooltip={series.id}>{series.name}</Text>
         </Row>
         <Row>
-          <Text relevance="irrelevant" size="small">
+          <Text relevance="irrelevant" size="small" tooltip={schedule.raceWeekNum}>
             {schedule.track.name}
             {schedule.track.configName ? ` - ${schedule.track.configName}` : ""}
             &nbsp;&nbsp;|&nbsp;&nbsp;

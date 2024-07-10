@@ -65,13 +65,6 @@ export class SeasonController {
     return season
   }
 
-  private formatCategory(value: string) {
-    return value
-      .split("_")
-      .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
-      .join(" ")
-  }
-
   private async buildSeason(): Promise<Season> {
     await this.userRepository.login()
     const cars = await this.carRepository.getCars()

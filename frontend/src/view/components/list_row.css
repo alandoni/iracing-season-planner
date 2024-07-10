@@ -1,0 +1,15 @@
+.list-row {
+  column-gap: 10px;
+  max-width: 100%;
+  padding-top: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+}
+
+.list-row > * {
+  max-width: fit-content;
+}
+
+.list-row > *:nth-child(2) {
+  flex: 1;
+  max-width: none;
+}

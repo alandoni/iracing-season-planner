@@ -1,0 +1,13 @@
+.tracks-page {
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.tracks-page .content .list .track-row .others > .row {
+  gap: var(--spacing-small);
+}
+
+.tracks-page .content .list .track-row .others-subtitle span {
+  width: 20px;
+  text-align: end;
+}

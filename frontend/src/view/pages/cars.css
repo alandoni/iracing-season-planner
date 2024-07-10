@@ -1,0 +1,13 @@
+.cars-page {
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.cars-page .content .list .car-row .others > .row {
+  gap: var(--spacing-small);
+}
+
+.cars-page .content .list .car-row .others-subtitle span {
+  width: 20px;
+  text-align: end;
+}
