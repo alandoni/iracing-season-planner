@@ -26,6 +26,7 @@ export class CarRepository {
       const filteredClasses = classes.filter((cls) =>
         cls.cars_in_class.find((carInClass) => carInClass.car_id === car.car_id),
       )
+      const categories = car.categories.map(formatCategory).map((c) => ({ id: -1, name: c }))
       return {
         id: car.car_id,
         classes: filteredClasses.map((cls) => ({
@@ -38,13 +39,25 @@ export class CarRepository {
         types: car.car_types.map((type) => type.car_type),
         weight: car.car_weight,
         hp: car.hp,
-        categories: car.categories.map(formatCategory),
+        categories,
         forumUrl: car.forum_url,
         free: car.free_with_subscription,
         headlights: car.has_headlights,
         price: car.price,
         rainEnabled: car.rain_enabled,
         retired: car.retired,
+        licenses: [
+          {
+            id: -1,
+            name: "Fake",
+            minRaces: -1,
+            minSr: -1,
+            letter: "fake",
+            color: "fake",
+          },
+        ], // This license will be replaced
+        numberOfSeries: 0,
+        numberOfRaces: 0,
       }
     })
   }

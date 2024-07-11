@@ -6,57 +6,27 @@ import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { CarRow } from "components/car_row"
-import { License } from "data/license/license"
-import { sortLicenses } from "utils/sort-licenses"
 import { Car } from "data/cars/car"
 import "./cars.css"
 
 export function CarsPage() {
   const season = useSeasonRepository()
   const userRepository = useUserRepository()
-  const [filteredCars, setFilteredCars] = useState<
-    Car & { license: License; numberOfRaces: number; numberOfSeries: number }[]
-  >([])
+  const [filteredCars, setFilteredCars] = useState<Car[]>([])
 
   useEffect(() => {
-    const filteredCarsMap = [...(season.data?.series ?? [])]
-      .filter(
-        (series) =>
-          series.schedules.length > 0 &&
-          series.licenses.some((license) => userRepository.preferredLicenses.map((l) => l.id).includes(license.id)),
+    const filtered = [...(season.data?.cars ?? [])]
+      .filter((car) =>
+        userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)),
       )
-      .reduce((acc, series) => {
-        const filteredSchedulesOfSeries = series.schedules.filter((schedule) => {
-          const containsCategories = (userRepository.preferredCategories ?? []).find(
-            (c) => c.id === schedule.categoryId,
-          )
-          return containsCategories
-        })
-        let alreadyPassedByThisSeries = false
-        filteredSchedulesOfSeries
-          .flatMap((schedule) => schedule.cars)
-          .map((car) => {
-            if (acc[car.id]) {
-              if (!alreadyPassedByThisSeries) {
-                acc[car.id].numberOfSeries += 1
-              }
-              acc[car.id].numberOfRaces += 1
-            } else {
-              alreadyPassedByThisSeries = true
-              acc[car.id] = {
-                ...{
-                  ...car,
-                  categories: car.categories,
-                },
-                license: sortLicenses(series.licenses)[0],
-                numberOfRaces: 1,
-                numberOfSeries: 1,
-              }
-            }
-          })
-        return acc
-      }, {} as Record<number, { license: License; numberOfSeries: number; numberOfRaces: number }>)
-    setFilteredCars(Object.values(filteredCarsMap).sort((a, b) => a.license.id - b.license.id))
+      .filter((car) => {
+        const result = userRepository.preferredCategories.some((category) =>
+          car.categories.find((c) => c.id === category.id),
+        )
+        return result
+      })
+
+    setFilteredCars(filtered)
   }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.myCars, season.data])
 
   useEffect(() => {
@@ -103,9 +73,6 @@ export function CarsPage() {
             <div key={`${car.id}`}>
               <CarRow
                 car={car}
-                numberOfRaces={car.numberOfRaces}
-                numberOfSeries={car.numberOfSeries}
-                license={car.license}
                 selected={car.free || userRepository.myCars?.find((c) => car.id === c.id)}
                 onSelect={(checked) => userRepository.setCar(checked, car)}
               />

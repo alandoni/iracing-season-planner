@@ -30,15 +30,15 @@ export function useUserRepository() {
     setMyCars(myCarIds.map((id) => season.cars?.find((car) => car.id === id)))
     setMyTracks(myTrackIds.map((id) => season.tracks?.find((track) => track.id === id)))
 
-    const participatedSeries = []
+    const participatedSeriesLoaded = []
     setParticipatedRaces(
       participatedRacesIds.flatMap((id) =>
         season.series?.flatMap(
           (series) =>
             series.schedules.flatMap((schedule) => {
-              if (`${schedule.serieId}-${schedule.raceWeekNum}` === id) {
-                if (!participatedSeries.includes(series)) {
-                  participatedSeries.push(series)
+              if (`${series.id}-${schedule.raceWeekNum}` === id) {
+                if (!participatedSeriesLoaded.find((s) => s.id === series.id)) {
+                  participatedSeriesLoaded.push(series)
                 }
                 return [schedule]
               } else {
@@ -49,7 +49,7 @@ export function useUserRepository() {
       ),
     )
 
-    setParticipatedSeries(participatedSeries)
+    setParticipatedSeries(participatedSeriesLoaded)
 
     if (preferredCategories.length > 0) {
       setPreferredCategories(preferredCategories.map((id) => season.categories?.find((cat) => cat.id === id)))
@@ -106,7 +106,7 @@ export function useUserRepository() {
         old.push(serie)
       } else {
         const shouldRemoveSerie = old?.some((series) =>
-          series.schedules.map((schedule) => participatedRaces?.includes(schedule)),
+          series.schedules.map((schedule) => participatedRaces?.find((s) => schedule.id === s.id)),
         )
         if (!shouldRemoveSerie) {
           removeFromList(serie, old, (c1, c2) => c1.id === c2.id)

@@ -10,18 +10,15 @@ import "./list_row.css"
 
 interface TrackRowProps {
   track: Track
-  numberOfRaces: number
-  numberOfSeries: number
-  license: License
   selected: boolean
   onSelect: (checked: boolean, track: Track) => void
 }
 
-export function TrackRow({ track, license, numberOfRaces, numberOfSeries, selected, onSelect }: TrackRowProps) {
+export function TrackRow({ track, selected, onSelect }: TrackRowProps) {
   return (
     <Row className="track-row list-row">
       <Column className="class">
-        <LicenseLetter license={license} />
+        <LicenseLetter license={track.licenses[0]} />
       </Column>
       <Column className="main">
         <Row>
@@ -29,7 +26,7 @@ export function TrackRow({ track, license, numberOfRaces, numberOfSeries, select
         </Row>
         <Row>
           <Text relevance="irrelevant" size="small">
-            {track.category}
+            {track.categories.map((c) => c.name).join(", ")}
           </Text>
         </Row>
       </Column>
@@ -41,8 +38,12 @@ export function TrackRow({ track, license, numberOfRaces, numberOfSeries, select
       </Column>
       <Column className="others">
         <Row>
-          <Text tooltip={`Essa pista participará de ${numberOfRaces} corridas nessa temporada`}>{numberOfRaces}</Text>
-          <Text tooltip={`Essa pista participará de ${numberOfSeries} séries nessa temporada`}>{numberOfSeries}</Text>
+          <Text tooltip={`Essa pista participará de ${track.numberOfRaces} corridas nessa temporada`}>
+            {track.numberOfRaces}
+          </Text>
+          <Text tooltip={`Essa pista participará de ${track.numberOfSeries} séries nessa temporada`}>
+            {track.numberOfSeries}
+          </Text>
           <span className="checkbox-container">
             <Checkbox
               small

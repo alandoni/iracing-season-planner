@@ -32,7 +32,7 @@ function App() {
             />
             <Route
               path="/summary"
-              element={<LazyPageLoad factory={import("pages/season")} componentName="SeasonPage" />}
+              element={<LazyPageLoad factory={import("pages/summary")} componentName="SummaryPage" />}
             />
           </Routes>
         </BrowserRouter>

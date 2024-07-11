@@ -1,0 +1,18 @@
+.summary-page {
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.summary-page .content .list {
+  margin-top: var(--spacing);
+}
+
+.summary-page .content .list .summary-row {
+  gap: var(--spacing-small);
+  padding-top: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+}
+
+.summary-page .content > .text.relevance-important:not(:first-child) {
+  margin-top: var(--spacing);
+}

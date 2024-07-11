@@ -26,9 +26,11 @@ export class TrackRepository {
       if (found > -1) {
         acc[found].configs.push(config)
       } else {
+        const categoryName = formatCategory(track.category)
         acc.push({
-          category: formatCategory(track.category),
+          category: categoryName,
           categoryId: track.category_id,
+          categories: [{ id: -1, name: categoryName }],
           location: track.location,
           maxCars: track.max_cars,
           name: track.track_name,
@@ -40,6 +42,18 @@ export class TrackRepository {
           types: track.track_types.map((type) => type.track_type),
           rainEnabled: track.rain_enabled,
           configs: [config],
+          licenses: [
+            {
+              id: -1,
+              name: "Fake",
+              minRaces: -1,
+              minSr: -1,
+              letter: "fake",
+              color: "fake",
+            },
+          ], // This license will be replaced
+          numberOfRaces: 0,
+          numberOfSeries: 0,
         })
       }
 

@@ -10,26 +10,25 @@ import { formatPrice } from "utils/price-formatter"
 
 interface CarRowProps {
   car: Car
-  numberOfRaces: number
-  numberOfSeries: number
-  license: License
   selected: boolean
   onSelect: (checked: boolean, car: Car) => void
 }
 
-export function CarRow({ car, license, numberOfRaces, numberOfSeries, selected, onSelect }: CarRowProps) {
+export function CarRow({ car, selected, onSelect }: CarRowProps) {
   return (
     <Row className="car-row list-row">
-      <Column className="class">
-        <LicenseLetter license={license} />
-      </Column>
+      {car.licenses ? (
+        <Column className="class">
+          <LicenseLetter license={car.licenses[0]} />
+        </Column>
+      ) : null}
       <Column className="main">
         <Row>
           <Text tooltip={car.id}>{car.name}</Text>
         </Row>
         <Row>
           <Text relevance="irrelevant" size="small">
-            {(car.categories ?? []).join(", ")}
+            {(car.categories ?? []).map((c) => c.name).join(", ")}
           </Text>
         </Row>
       </Column>
@@ -41,8 +40,12 @@ export function CarRow({ car, license, numberOfRaces, numberOfSeries, selected, 
       </Column>
       <Column className="others">
         <Row>
-          <Text tooltip={`Esse carro participará de ${numberOfRaces} corridas nessa temporada`}>{numberOfRaces}</Text>
-          <Text tooltip={`Esse carro participará de ${numberOfSeries} séries nessa temporada`}>{numberOfSeries}</Text>
+          <Text tooltip={`Esse carro participará de ${car.numberOfRaces} corridas nessa temporada`}>
+            {car.numberOfRaces}
+          </Text>
+          <Text tooltip={`Esse carro participará de ${car.numberOfSeries} séries nessa temporada`}>
+            {car.numberOfSeries}
+          </Text>
           <span className="checkbox-container">
             <Checkbox
               small

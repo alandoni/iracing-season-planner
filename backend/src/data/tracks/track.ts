@@ -1,7 +1,11 @@
+import { License } from "data/license/license"
+import { Category } from "data/season/category"
+
 export type Track = {
   id: number
   category: string
   categoryId: number
+  categories: Category[]
   location: string
   maxCars: number
   name: string
@@ -20,4 +24,7 @@ export type Track = {
     length: number
     corners: number
   }[]
+  licenses: License[]
+  numberOfSeries: number
+  numberOfRaces: number
 }

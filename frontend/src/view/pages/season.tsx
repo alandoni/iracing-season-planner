@@ -10,7 +10,6 @@ import { Series } from "data/season/series"
 import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
 import "./season.css"
-import { sortLicenses } from "utils/sort-licenses"
 
 export function SeasonPage() {
   const season = useSeasonRepository()
@@ -38,7 +37,6 @@ export function SeasonPage() {
           series.schedules.length > 0 &&
           series.licenses.find((license) => userRepository.preferredLicenses.map((l) => l.id).includes(license.id)),
       )
-      .sort((a, b) => sortLicenses(a.licenses)[0].id - sortLicenses(b.licenses)[0].id)
     setFilteredSeries([...filtered])
   }, [userRepository.preferredLicenses, userRepository.preferredCategories, week, season.data])
 
