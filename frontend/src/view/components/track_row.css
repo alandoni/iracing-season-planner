@@ -1,5 +1,5 @@
 .track-row {
-  column-gap: 10px;
+  column-gap: var(--spacing-small);
   max-width: 100%;
   padding-top: var(--spacing-small);
   padding-bottom: var(--spacing-small);
@@ -14,9 +14,6 @@
 }
 
 .track-row .others {
-  width: 100px;
-  min-width: 100px;
-  max-width: 100px;
   align-items: end;
 }
 
@@ -30,7 +27,7 @@
 }
 
 .track-row .others .row .text {
-  width: 20px;
+  width: 25px;
   justify-content: end;
 }
 

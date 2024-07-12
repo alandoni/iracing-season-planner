@@ -7,12 +7,37 @@
   margin-top: var(--spacing);
 }
 
-.summary-page .content .list .summary-row {
-  gap: var(--spacing-small);
-  padding-top: var(--spacing-small);
-  padding-bottom: var(--spacing-small);
+.summary-page .content .list.two-columns {
+  gap: var(--spacing);
+}
+
+.summary-page .content .list.two-columns div {
+  width: 100%;
 }
 
 .summary-page .content > .text.relevance-important:not(:first-child) {
+  margin-top: var(--spacing-large);
+  margin-bottom: var(--spacing-small);
+}
+
+.summary-page .content .side-bar {
+  padding-top: var(--spacing);
+  min-height: 100%;
+}
+
+.summary-page .content .side-bar .row .checkbox {
+  margin-right: var(--spacing-smaller);
+}
+
+.summary-page .content .best-buy .list {
+  margin-left: var(--spacing);
+}
+
+.summary-page .content .best-buy .list .text.text.relevance-important:not(:first-child) {
   margin-top: var(--spacing);
+}
+
+.summary-page .content .best-buy .list .others-subtitle span {
+  width: 25px;
+  text-align: end;
 }

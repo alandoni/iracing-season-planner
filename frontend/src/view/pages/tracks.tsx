@@ -19,11 +19,9 @@ export function TracksPage() {
       .filter((track) =>
         userRepository.preferredLicenses.some((license) => track.licenses.find((l) => l.id === license.id)),
       )
-      .filter((track) => {
-        return (userRepository.preferredCategories ?? []).some((category) =>
-          track.categories.find((c) => c.id === category.id),
-        )
-      })
+      .filter((track) =>
+        userRepository.preferredCategories.some((category) => track.categories.find((c) => c.id === category.id)),
+      )
     setFilteredTracks(filtered)
   }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.myTracks, season.data])
 

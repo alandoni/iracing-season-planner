@@ -154,80 +154,72 @@ export class SeasonController {
       name: formatCategory(value.category),
     }))
 
-    const seasonCars = season
-      .filter((series) => series.schedules.length > 0)
-      .reduce(
-        (acc, series) => {
-          let alreadyPassedByThisSeries = false
-          series.schedules.forEach((schedule) => {
-            schedule.cars.forEach((car) => {
-              if (acc[car.id]) {
-                if (!alreadyPassedByThisSeries) {
-                  alreadyPassedByThisSeries = true
-                  acc[car.id].numberOfSeries += 1
-                }
-                acc[car.id].numberOfRaces += 1
-                acc[car.id].licenses = this.sortLicenses(
-                  this.removeDuplicates([...acc[car.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
-                )
-                acc[car.id].categories = this.removeDuplicates(
-                  [...acc[car.id].categories, { id: schedule.categoryId, name: schedule.category }],
-                  (a, b) => a.id === b.id,
-                )
-              } else {
-                alreadyPassedByThisSeries = true
-                acc[car.id] = {
-                  ...car,
-                  categories: [{ id: schedule.categoryId, name: schedule.category }],
-                  licenses: this.sortLicenses(series.licenses),
-                  numberOfRaces: 1,
-                  numberOfSeries: 1,
-                }
+    const seasonCars = season.reduce(
+      (acc, series) => {
+        series.schedules.forEach((schedule) => {
+          schedule.cars.forEach((car) => {
+            if (acc[car.id]) {
+              if (!acc[car.id].seriesIds.includes(series.id)) {
+                acc[car.id].numberOfSeries += 1
+                acc[car.id].seriesIds.push(series.id)
               }
-            })
-          })
-          return acc
-        },
-        {} as Record<number, Car>,
-      )
-
-    const seasonTracks = season
-      .filter((series) => series.schedules.length > 0)
-      .reduce(
-        (acc, series) => {
-          let alreadyPassedByThisSeries = false
-          series.schedules.forEach((schedule) => {
-            const track = schedule.track
-            if (acc[track.id]) {
-              if (!alreadyPassedByThisSeries) {
-                alreadyPassedByThisSeries = true
-                acc[track.id].numberOfSeries += 1
-              }
-              acc[track.id].numberOfRaces += 1
-              acc[track.id].licenses = this.sortLicenses(
-                this.removeDuplicates([...acc[track.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
+              acc[car.id].numberOfRaces += 1
+              acc[car.id].licenses = this.sortLicenses(
+                this.removeDuplicates([...acc[car.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
               )
-              acc[track.id].categories = this.removeDuplicates(
-                [...acc[track.id].categories, { id: schedule.categoryId, name: schedule.category }],
+              acc[car.id].categories = this.removeDuplicates(
+                [...acc[car.id].categories, { id: schedule.categoryId, name: schedule.category }],
                 (a, b) => a.id === b.id,
               )
             } else {
-              alreadyPassedByThisSeries = true
-              acc[track.id] = {
-                ...{
-                  ...track,
-                },
+              acc[car.id] = {
+                ...car,
                 categories: [{ id: schedule.categoryId, name: schedule.category }],
                 licenses: this.sortLicenses(series.licenses),
                 numberOfRaces: 1,
                 numberOfSeries: 1,
+                seriesIds: [series.id],
               }
             }
           })
-          return acc
-        },
-        {} as Record<number, Track>,
-      )
+        })
+        return acc
+      },
+      {} as Record<number, Car>,
+    )
+
+    const seasonTracks = season.reduce(
+      (acc, series) => {
+        series.schedules.forEach((schedule) => {
+          const track = schedule.track
+          if (acc[track.id]) {
+            if (!acc[track.id].seriesIds.includes(series.id)) {
+              acc[track.id].numberOfSeries += 1
+              acc[track.id].seriesIds.push(series.id)
+            }
+            acc[track.id].numberOfRaces += 1
+            acc[track.id].licenses = this.sortLicenses(
+              this.removeDuplicates([...acc[track.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
+            )
+            acc[track.id].categories = this.removeDuplicates(
+              [...acc[track.id].categories, { id: schedule.categoryId, name: schedule.category }],
+              (a, b) => a.id === b.id,
+            )
+          } else {
+            acc[track.id] = {
+              ...track,
+              categories: [{ id: schedule.categoryId, name: schedule.category }],
+              licenses: this.sortLicenses(series.licenses),
+              numberOfRaces: 1,
+              numberOfSeries: 1,
+              seriesIds: [series.id],
+            }
+          }
+        })
+        return acc
+      },
+      {} as Record<number, Track>,
+    )
 
     return {
       cachedDate: new Date(),

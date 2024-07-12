@@ -19,12 +19,9 @@ export function CarsPage() {
       .filter((car) =>
         userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)),
       )
-      .filter((car) => {
-        const result = userRepository.preferredCategories.some((category) =>
-          car.categories.find((c) => c.id === category.id),
-        )
-        return result
-      })
+      .filter((car) =>
+        userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id)),
+      )
 
     setFilteredCars(filtered)
   }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.myCars, season.data])

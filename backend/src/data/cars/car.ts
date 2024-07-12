@@ -20,4 +20,5 @@ export type Car = {
   licenses: License[]
   numberOfSeries: number
   numberOfRaces: number
+  seriesIds: number[]
 }

@@ -1,0 +1,5 @@
+.participated-series-row {
+  gap: var(--spacing-small);
+  padding-top: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+}

@@ -27,4 +27,5 @@ export type Track = {
   licenses: License[]
   numberOfSeries: number
   numberOfRaces: number
+  seriesIds: number[]
 }

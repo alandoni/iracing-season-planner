@@ -46,18 +46,10 @@ export class CarRepository {
         price: car.price,
         rainEnabled: car.rain_enabled,
         retired: car.retired,
-        licenses: [
-          {
-            id: -1,
-            name: "Fake",
-            minRaces: -1,
-            minSr: -1,
-            letter: "fake",
-            color: "fake",
-          },
-        ], // This license will be replaced
+        licenses: [],
         numberOfSeries: 0,
         numberOfRaces: 0,
+        seriesIds: [],
       }
     })
   }
