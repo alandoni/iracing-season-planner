@@ -11,13 +11,14 @@ import { formatPrice } from "utils/price-formatter"
 interface CarRowProps {
   car: Car
   selected: boolean
+  showCategory?: boolean
   onSelect: (checked: boolean, car: Car) => void
 }
 
-export function CarRow({ car, selected, onSelect }: CarRowProps) {
+export function CarRow({ car, selected, showCategory = true, onSelect }: CarRowProps) {
   return (
     <Row className="car-row list-row">
-      {car.licenses ? (
+      {car.licenses && car.licenses.length > 0 ? (
         <Column className="class">
           <LicenseLetter license={car.licenses[0]} />
         </Column>
@@ -26,11 +27,13 @@ export function CarRow({ car, selected, onSelect }: CarRowProps) {
         <Row>
           <Text tooltip={car.id}>{car.name}</Text>
         </Row>
-        <Row>
-          <Text relevance="irrelevant" size="small">
-            {(car.categories ?? []).map((c) => c.name).join(", ")}
-          </Text>
-        </Row>
+        {showCategory ? (
+          <Row>
+            <Text relevance="irrelevant" size="small">
+              {(car.categories ?? []).map((c) => c.name).join(", ")}
+            </Text>
+          </Row>
+        ) : null}
       </Column>
       {/* <Column className="image">
         <img src="" />

@@ -1,4 +1,4 @@
-import { memo, ReactNode } from "react"
+import { forwardRef, memo, ReactNode } from "react"
 import "./column.css"
 
 export type ColumnHorizontalAlignment = "normal" | "start" | "center" | "end"
@@ -12,15 +12,21 @@ interface ColumnProps {
   onClick?: () => void
 }
 
-export const Column = memo(
-  ({ children, className = "", alignHorizontally = "normal", alignVertically = "start", onClick }: ColumnProps) => {
-    return (
-      <div
-        className={`column ${className} column-halign-${alignHorizontally} column-valign-${alignVertically}`}
-        onClick={onClick}
-      >
-        {children}
-      </div>
-    )
-  },
-)
+const ColumnView = function (
+  { children, className = "", alignHorizontally = "normal", alignVertically = "start", onClick }: ColumnProps,
+  ref?: ForwardedRef<HTMLDivElement>,
+) {
+  return (
+    <div
+      ref={ref}
+      className={`column ${className} column-halign-${alignHorizontally} column-valign-${alignVertically}`}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  )
+}
+
+const forwardedView = forwardRef(ColumnView)
+
+export const Column = memo(forwardedView)

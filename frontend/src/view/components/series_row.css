@@ -1,0 +1,46 @@
+.series-row > * {
+  min-width: none !important;
+}
+
+.series-row .text {
+  margin-top: 2px;
+}
+
+.series-row .class {
+  max-width: fit-content !important;
+}
+
+.series-row .main {
+  flex: 1;
+  max-width: none;
+}
+
+.series-row .others .row {
+  column-gap: var(--spacing);
+}
+
+.series-row .car-row {
+  padding: 0;
+}
+
+.series-row .track-row {
+  padding: 0;
+}
+
+.series-row .details {
+  overflow: hidden;
+  display: none;
+}
+
+.series-row .details.expanded {
+  display: block;
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: all 500ms;
+}
+
+.series-row .details.collapsed {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: all 500ms;
+}

@@ -17,9 +17,12 @@ interface TrackRowProps {
 export function TrackRow({ track, selected, onSelect }: TrackRowProps) {
   return (
     <Row className="track-row list-row">
-      <Column className="class">
-        <LicenseLetter license={track.licenses[0]} />
-      </Column>
+      {track.licenses && track.licenses.length > 0 ? (
+        <Column className="class">
+          <LicenseLetter license={track.licenses[0]} />
+        </Column>
+      ) : null}
+
       <Column className="main">
         <Row>
           <Text tooltip={track.id}>{track.name}</Text>

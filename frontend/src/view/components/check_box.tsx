@@ -6,7 +6,7 @@ interface CheckboxProps {
   small?: boolean
   name?: string
   enabled?: boolean
-  onChange: (checked: boolean, target: { name: string }) => void
+  onChange?: (checked: boolean, target: { name: string }) => void
   tooltip?: string
 }
 
@@ -22,10 +22,9 @@ export const Checkbox = ({ isChecked, name = "", enabled = true, onChange, toolt
         disabled={!enabled}
         checked={isChecked}
         onChange={(event) => {
-          onChange(event.target.checked, event.target)
+          onChange?.(event.target.checked, event.target)
         }}
       />
-      {/* <img src={check} className="check" /> */}
       <Check className="check" viewBox="0 0 48 48" />
     </span>
   )
