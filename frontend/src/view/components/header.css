@@ -5,10 +5,11 @@
 .header .text {
   color: var(--color-background);
   font-style: italic;
+  flex-grow: 1;
 }
 
 .header .logo-container {
-  height: 37px;
+  height: 44px;
   overflow-y: clip;
 }
 
@@ -46,5 +47,22 @@
 }
 
 .header .logo:last-of-type {
+  margin-right: var(--spacing);
+}
+
+.header .header-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing);
+}
+
+.header .header-buttons .icon {
+  fill: white;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.header .header-buttons .icon.export {
   margin-right: var(--spacing);
 }

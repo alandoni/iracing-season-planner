@@ -5,6 +5,7 @@ import { Header } from "components/header"
 import { Navigation } from "components/navigation"
 import { Column } from "components/column"
 import { Page } from "components/page"
+import { Warning } from "components/warning"
 import "./App.css"
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <Column className="main-column">
       <Header />
       <Navigation />
+      <Warning />
       <Page>
         <BrowserRouter>
           <Routes>

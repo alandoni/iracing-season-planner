@@ -1,0 +1,21 @@
+.warning {
+  background-color: #f9f1e7;
+  padding-top: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+  padding-left: var(--spacing-larger);
+  padding-right: var(--spacing-larger);
+  border-bottom: 1px solid var(--color-border);
+  height: fit-content;
+  flex-grow: 0;
+}
+
+.warning .warning-icon {
+  margin-right: var(--spacing);
+  width: 36px;
+  height: 36px;
+}
+
+.warning .close {
+  width: 16px;
+  cursor: pointer;
+}

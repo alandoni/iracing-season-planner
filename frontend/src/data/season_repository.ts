@@ -2,9 +2,10 @@ import { Season } from "data/season/season"
 import { useRequest } from "./use_request"
 import { useEffect, useState } from "react"
 
+export const LOCAL_STORAGE_CACHED_DATE_KEY = "cachedDate"
+
 export function useSeasonRepository() {
   const MAX_DAYS_TO_VALIDATE_CACHE = 14
-  const LOCAL_STORAGE_CACHED_DATE_KEY = "cachedDate"
   const LOCAL_STORAGE_CARS_KEY = "cars"
   const LOCAL_STORAGE_TRACKS_KEY = "tracks"
   const LOCAL_STORAGE_SERIES_KEY = "series"

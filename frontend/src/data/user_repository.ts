@@ -4,6 +4,19 @@ import { Season } from "data/season/season"
 import { Series } from "data/season/series"
 import { useState } from "react"
 import { removeFromList } from "utils/list"
+import { LOCAL_STORAGE_CACHED_DATE_KEY } from "./season_repository"
+
+export class ImportingOlderFileError extends Error {}
+
+type ImportedData = {
+  myCarsIds: number[]
+  myTracksIds: number[]
+  participatedRacesSeriesIdsAndWeekNumber: string[]
+  preferredLicensesIds: number[]
+  preferredCategoriesIds: number[]
+  cachedDateString: string
+  updatedDateString: string
+}
 
 export function useUserRepository() {
   const LOCAL_STORAGE_MY_CARS_KEY = "myCars"
@@ -11,6 +24,7 @@ export function useUserRepository() {
   const LOCAL_STORAGE_PARTICIPATED_RACES_KEY = "participatedRaces"
   const LOCAL_STORAGE_PREFERRED_CATEGORIES_KEY = "preferredCategories"
   const LOCAL_STORAGE_PREFERRED_LICENSES_KEY = "preferredLicenses"
+  const LOCAL_STORAGE_LAST_UPDATE_KEY = "lastUpdateKey"
 
   const [myCars, setMyCars] = useState<Car[]>([])
   const [myTracks, setMyTracks] = useState<Track[]>([])
@@ -23,7 +37,7 @@ export function useUserRepository() {
   const load = (season: Season) => {
     const myCarIds: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_MY_CARS_KEY)) ?? []
     const myTrackIds: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_MY_TRACKS_KEY)) ?? []
-    const participatedRacesIds: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PARTICIPATED_RACES_KEY)) ?? []
+    const participatedRacesIds: string[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PARTICIPATED_RACES_KEY)) ?? []
     const preferredCategories: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PREFERRED_CATEGORIES_KEY)) ?? []
     const preferredLicenses: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PREFERRED_LICENSES_KEY)) ?? []
 
@@ -73,6 +87,7 @@ export function useUserRepository() {
       localStorage.setItem(LOCAL_STORAGE_MY_CARS_KEY, JSON.stringify(old.map((i) => i.id)))
       return [...old]
     })
+    updateLastChangedDate()
   }
 
   const setTrack = (checked: boolean, car: Track) => {
@@ -85,6 +100,7 @@ export function useUserRepository() {
       localStorage.setItem(LOCAL_STORAGE_MY_TRACKS_KEY, JSON.stringify(old.map((i) => i.id)))
       return [...old]
     })
+    updateLastChangedDate()
   }
 
   const setParticipatedRace = (checked: boolean, serie: Series, schedule: Schedule) => {
@@ -114,6 +130,7 @@ export function useUserRepository() {
       }
       return [...old]
     })
+    updateLastChangedDate()
   }
 
   const setPreferredLicense = (checked: boolean, license: License) => {
@@ -140,6 +157,65 @@ export function useUserRepository() {
     })
   }
 
+  const updateLastChangedDate = () => {
+    localStorage.setItem(LOCAL_STORAGE_LAST_UPDATE_KEY, new Date().toISOString())
+  }
+
+  const importData = async (path: string, force = false) => {
+    const reader = new FileReader()
+
+    const content = await new Promise<ImportedData>((resolve, reject) => {
+      reader.onload = (() => {
+        return (e) => {
+          const contentOfFile = JSON.parse(e.target.result)
+          if (contentOfFile) {
+            resolve(contentOfFile)
+          } else {
+            reject()
+          }
+        }
+      })(path)
+      reader.readAsText(path)
+    })
+    console.log(content)
+    const date = new Date(localStorage.getItem(LOCAL_STORAGE_LAST_UPDATE_KEY))
+    if (!force && date.getTime() > new Date(content.cachedDateString).getTime()) {
+      throw new ImportingOlderFileError()
+    }
+
+    localStorage.setItem(LOCAL_STORAGE_MY_CARS_KEY, JSON.stringify(content.myCarsIds))
+    localStorage.setItem(LOCAL_STORAGE_MY_TRACKS_KEY, JSON.stringify(content.myTracksIds))
+    localStorage.setItem(
+      LOCAL_STORAGE_PARTICIPATED_RACES_KEY,
+      JSON.stringify(content.participatedRacesSeriesIdsAndWeekNumber),
+    )
+    localStorage.setItem(LOCAL_STORAGE_PREFERRED_CATEGORIES_KEY, JSON.stringify(content.preferredCategoriesIds))
+    localStorage.setItem(LOCAL_STORAGE_PREFERRED_LICENSES_KEY, JSON.stringify(content.preferredLicensesIds))
+    localStorage.setItem(LOCAL_STORAGE_LAST_UPDATE_KEY, new Date().toISOString())
+  }
+
+  const exportData = async () => {
+    const myCarsIds: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_MY_CARS_KEY)) ?? []
+    const myTracksIds: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_MY_TRACKS_KEY)) ?? []
+    const participatedRacesIds: string[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PARTICIPATED_RACES_KEY)) ?? []
+    const preferredCategories: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PREFERRED_CATEGORIES_KEY)) ?? []
+    const preferredLicenses: number[] = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PREFERRED_LICENSES_KEY)) ?? []
+
+    const dataToExport: ImportedData = {
+      myCarsIds,
+      myTracksIds,
+      participatedRacesSeriesIdsAndWeekNumber: participatedRacesIds,
+      preferredLicensesIds: preferredLicenses,
+      preferredCategoriesIds: preferredCategories,
+      cachedDateString: localStorage.getItem(LOCAL_STORAGE_CACHED_DATE_KEY),
+      updatedDateString: localStorage.getItem(LOCAL_STORAGE_LAST_UPDATE_KEY),
+    }
+    const content = JSON.stringify(dataToExport)
+    const blob = new Blob([content], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    return url
+  }
+
   return {
     load,
     myCars,
@@ -153,5 +229,7 @@ export function useUserRepository() {
     setPreferredLicense,
     preferredCategories,
     setPreferredCategory,
+    importData,
+    exportData,
   }
 }
