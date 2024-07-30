@@ -22,14 +22,14 @@
     "incremental": true,
     "rootDir": "../",
     "sourceRoot": "./src",
-    "outDir": "./build/src",
+    "outDir": "./build",
     "paths": {
       "utils/*": ["./src/utils/*"],
-      "data/*": ["./src/data/*"],
+      "data/*": ["./src/data/*", "../shared/models/*"],
       "src/*": ["./src/*"]
     }
   },
-  "include": ["./src"],
+  "include": ["./src", "../shared/models"],
   "exclude": ["./node_modules"],
   "ts-node": {
     "files": true

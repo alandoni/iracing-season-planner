@@ -1,9 +1,9 @@
 import { HttpClient } from "../http_client"
 import { CarResponse } from "./car_response"
 import { LinkResponse } from "../link_response"
-import { Car } from "./car"
+import { Car } from "data/car"
+import { formatCategory } from "data/category"
 import { CarClassResponse } from "./car_class_response"
-import { formatCategory } from "data/season/category"
 
 export class CarRepository {
   private static URL = "https://members-ng.iracing.com/data/car/get"

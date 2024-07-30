@@ -1,4 +1,4 @@
-import { Schedule } from "./ir_schedule"
+import { IrSchedule } from "./ir_schedule"
 
 export type SeasonResponse = {
   season_id: number
@@ -49,7 +49,7 @@ export type SeasonResponse = {
   restrict_viewing: boolean
   rookie_season: string
   schedule_description: string
-  schedules: Schedule[]
+  schedules: IrSchedule[]
   season_quarter: number
   season_short_name: string
   season_year: number

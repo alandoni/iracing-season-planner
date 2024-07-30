@@ -1,4 +1,4 @@
-import { License } from "data/license/license"
+import { License } from "data/license"
 import "./license_letter.css"
 
 interface LicenseLetterProps {

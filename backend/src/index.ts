@@ -2,10 +2,13 @@ import "dotenv/config"
 import { logger } from "./logger"
 import { getSeasonController, getUserRepository } from "./dependency-injection"
 import { ExpressServer } from "./express-server"
+import express from "express"
 
 const version = "/api/v1"
 
 const app = new ExpressServer()
+
+app.use(express.static("../../frontend/build"))
 
 app.get("/", (_, res) => {
   res.status(200).send("Server is working, try v1/season")

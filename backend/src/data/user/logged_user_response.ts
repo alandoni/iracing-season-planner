@@ -1,4 +1,4 @@
-import { License } from "../license/ir_license"
+import { IrLicense } from "../license/ir_license"
 import { MemberResponse } from "./member_response"
 import { Package } from "../package"
 
@@ -20,7 +20,7 @@ export type LoggedUserResponse = MemberResponse & {
     color3: "ffffff"
     body_type: 0
   }
-  licenses: Record<string, License>
+  licenses: Record<string, IrLicense>
   car_packages: Package[]
   track_packages: Package[]
   other_owned_packages: number[]

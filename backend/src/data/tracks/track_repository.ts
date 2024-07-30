@@ -1,8 +1,8 @@
 import { HttpClient } from "../http_client"
 import { TrackResponse } from "./track_response"
 import { LinkResponse } from "../link_response"
-import { Track } from "./track"
-import { formatCategory } from "data/season/category"
+import { Track } from "data/track"
+import { formatCategory } from "data/category"
 
 export class TrackRepository {
   private static URL = "https://members-ng.iracing.com/data/track/get"
@@ -50,6 +50,6 @@ export class TrackRepository {
       }
 
       return acc
-    }, [])
+    }, new Array<Track>())
   }
 }

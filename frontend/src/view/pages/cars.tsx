@@ -6,7 +6,7 @@ import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { CarRow } from "components/car_row"
-import { Car } from "data/cars/car"
+import { Car } from "data/car"
 import "./cars.css"
 
 export function CarsPage() {
@@ -70,7 +70,7 @@ export function CarsPage() {
             <div key={`${car.id}`}>
               <CarRow
                 car={car}
-                selected={car.free || userRepository.myCars?.find((c) => car.id === c.id)}
+                selected={car.free || userRepository.myCars?.find((c) => car.id === c.id) !== undefined}
                 onSelect={(checked) => userRepository.setCar(checked, car)}
               />
               {index < array.length - 1 ? <hr /> : null}

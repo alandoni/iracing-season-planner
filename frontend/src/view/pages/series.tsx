@@ -6,7 +6,7 @@ import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { SeriesRow } from "components/series_row"
-import { Series } from "data/season/series"
+import { Series } from "data/series"
 import "./series.css"
 
 export function SeriesPage() {
@@ -25,7 +25,7 @@ export function SeriesPage() {
         ),
       )
     setFilteredSeries(filtered)
-  }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.mySeries, season.data])
+  }, [userRepository.preferredLicenses, userRepository.preferredCategories, season.data])
 
   useEffect(() => {
     if (season.data) {

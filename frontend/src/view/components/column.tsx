@@ -1,4 +1,4 @@
-import { forwardRef, memo, ReactNode } from "react"
+import { ForwardedRef, forwardRef, memo, ReactNode } from "react"
 import "./column.css"
 
 export type ColumnHorizontalAlignment = "normal" | "start" | "center" | "end"

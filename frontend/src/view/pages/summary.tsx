@@ -1,10 +1,12 @@
+import { Car } from "data/car"
+import { TrackWithConfigName } from "data/track"
+import { Series } from "data/series"
 import { Column } from "components/column"
-import { Row } from "components/row"
-import { Text } from "components/text"
 import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
-import { Car } from "data/cars/car"
+import { Row } from "components/row"
+import { Text } from "components/text"
 import { CarRow } from "components/car_row"
 import { TrackRow } from "components/track_row"
 import { CheckableList } from "components/checkable_list"
@@ -14,9 +16,6 @@ import {
   MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS,
 } from "components/participated_series_row"
 import { Checkbox } from "components/check_box"
-import { Series } from "data/season/series"
-import { Schedule } from "data/season/schedule"
-import { Season } from "data/season/season"
 import "./summary.css"
 
 export function SummaryPage() {
@@ -24,10 +23,10 @@ export function SummaryPage() {
   const userRepository = useUserRepository()
   const [participatedSeries, setParticipatedSeries] = useState<SeriesWithSummary[]>([])
   const [bestCarsToBuy, setBestCarsToBuy] = useState<Car[]>([])
-  const [bestTracksToBuy, setBestTracksToBuy] = useState<Track[]>([])
+  const [bestTracksToBuy, setBestTracksToBuy] = useState<TrackWithConfigName[]>([])
   const [showOwnedContent, setShowOwnedContent] = useState<boolean>(true)
 
-  const summarizeSeries = (series: Series) => {
+  const summarizeSeries = (series: Series): SeriesWithSummary => {
     let numberOfOwnedTracks = 0
     let numberOfOwnedCars = 0
     let eligible = 0
@@ -56,46 +55,49 @@ export function SummaryPage() {
     }
   }
 
-  const filterBestBuys = (
+  const filterBestBuys = <T extends Car | TrackWithConfigName>(
     filteredSeries: Series[],
-    propertyToFilter: keyof Schedule,
-    propertyToSearchFor: keyof Season,
-    userRepository: ReturnType<typeof useSeasonRepository>,
-    propertyOfOwnedContent: keyof typeof userRepository.data,
-  ) => {
-    return filteredSeries
-      .flatMap((series) => series.schedules.flatMap((s) => s[propertyToFilter]))
-      .filter(
-        (car) =>
-          !car.free && (showOwnedContent || !userRepository[propertyOfOwnedContent].find((c) => car.id === c.id)),
-      )
-      .filter((value, index, array) => {
-        return (
-          array.findIndex((value2) => {
-            return value.id === value2.id
-          }) === index
+    propertyToFilter: "cars" | "track",
+    propertyToSearchFor: "cars" | "tracks",
+    userRepository: ReturnType<typeof useUserRepository>,
+    propertyOfOwnedContent: "myCars" | "myTracks",
+  ): T[] => {
+    return (
+      filteredSeries
+        .flatMap((series) => series.schedules.flatMap((s) => s[propertyToFilter] as T))
+        .filter(
+          (value) =>
+            !value.free && (showOwnedContent || !userRepository[propertyOfOwnedContent].find((c) => value.id === c.id)),
         )
-      })
-      .map((car) => season.data[propertyToSearchFor].find((c) => c.id === car.id))
-      .filter((car) =>
-        userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)),
-      )
-      .filter((car) =>
-        userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id)),
-      )
-      .filter((_, index) => index < 10)
-      .sort((a, b) => b.numberOfSeries - a.numberOfSeries)
-      .sort((a, b) => b.numberOfRaces - a.numberOfRaces)
+        // remove duplicates
+        .filter((value, index, array) => {
+          return (
+            array.findIndex((value2) => {
+              return value.id === value2.id
+            }) === index
+          )
+        })
+        .flatMap((car) => season.data?.[propertyToSearchFor]?.find((c) => c.id === car.id) ?? [])
+        .filter((car) =>
+          userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)),
+        )
+        .filter((car) =>
+          userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id)),
+        )
+        .filter((_, index) => index < 10)
+        .sort((a, b) => b.numberOfSeries - a.numberOfSeries)
+        .sort((a, b) => b.numberOfRaces - a.numberOfRaces) as T[]
+    )
   }
 
   useEffect(() => {
     const seriesWithSummary = (season.data?.series ?? []).map(summarizeSeries)
     setParticipatedSeries(seriesWithSummary.filter((s) => s.participatedRaces > 0))
     const filteredSeries = seriesWithSummary.filter((a) => a.eligible < MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS)
-    const cars = filterBestBuys(filteredSeries, "cars", "cars", userRepository, "myCars")
+    const cars = filterBestBuys<Car>(filteredSeries, "cars", "cars", userRepository, "myCars")
     setBestCarsToBuy(cars)
 
-    const tracks = filterBestBuys(filteredSeries, "track", "tracks", userRepository, "myTracks")
+    const tracks = filterBestBuys<TrackWithConfigName>(filteredSeries, "track", "tracks", userRepository, "myTracks")
     setBestTracksToBuy(tracks)
   }, [
     season.data,
@@ -189,7 +191,7 @@ export function SummaryPage() {
                 <div key={`${car.id}`}>
                   <CarRow
                     car={car}
-                    selected={car.free || userRepository.myCars.find((c) => c.id === car.id)}
+                    selected={car.free || userRepository.myCars.find((c) => c.id === car.id) !== undefined}
                     onSelect={userRepository.setCar}
                   />
                   {index < array.length - 1 ? <hr /> : null}
@@ -212,7 +214,7 @@ export function SummaryPage() {
                 <div key={`${track.id}`}>
                   <TrackRow
                     track={track}
-                    selected={track.free || userRepository.myTracks.find((c) => c.id === track.id)}
+                    selected={track.free || userRepository.myTracks.find((c) => c.id === track.id) !== undefined}
                     onSelect={userRepository.setTrack}
                   />
                   {index < array.length - 1 ? <hr /> : null}

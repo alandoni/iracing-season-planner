@@ -1,11 +1,11 @@
-import { Schedule } from "data/season/schedule"
-import { Series } from "data/season/series"
+import { Schedule } from "data/schedule"
+import { Series } from "data/series"
 import { Column } from "./column"
 import { Row } from "./row"
 import { Text } from "./text"
 import { Checkbox } from "./check_box"
-import "./schedule_row.css"
 import { LicenseLetter } from "./license_letter"
+import "./schedule_row.css"
 
 interface ScheduleRowProps {
   series: Series
@@ -36,10 +36,10 @@ export function ScheduleRow({
       </Column>
       <Column className="main">
         <Row>
-          <Text tooltip={series.id}>{series.name}</Text>
+          <Text tooltip={series.id.toString()}>{series.name}</Text>
         </Row>
         <Row>
-          <Text relevance="irrelevant" size="small" tooltip={schedule.raceWeekNum}>
+          <Text relevance="irrelevant" size="small" tooltip={schedule.raceWeekNum.toString()}>
             {schedule.track.name}
             {schedule.track.configName ? ` - ${schedule.track.configName}` : ""}
             &nbsp;&nbsp;|&nbsp;&nbsp;

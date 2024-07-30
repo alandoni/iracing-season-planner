@@ -1,16 +1,16 @@
 import { logger } from "src/logger"
-import { Season } from "./season"
+import { Season } from "data/season"
 import { SeasonRepository } from "./season_repository"
 import { CarRepository } from "data/cars/car_repository"
 import { TrackRepository } from "data/tracks/track_repository"
 import { LicenseRepository } from "data/license/license_repository"
-import { Series } from "./series"
-import { Schedule } from "./schedule"
+import { Series } from "data/series"
+import { Schedule } from "data/schedule"
 import { UserRepository } from "data/user/user_repository"
-import { formatCategory } from "./category"
-import { License } from "data/license/license"
-import { Car } from "data/cars/car"
-import { Track } from "data/tracks/track"
+import { formatCategory } from "data/category"
+import { License } from "data/license"
+import { Car } from "data/car"
+import { Track } from "data/track"
 import fs from "fs"
 
 export class SeasonController {
@@ -50,7 +50,7 @@ export class SeasonController {
 
   private validateCache(cache: Season | null): boolean {
     const lastValidDate = new Date().setDate(new Date().getDate() - SeasonController.MAX_DAYS_TO_VALIDATE_CACHE)
-    return cache?.cachedDate?.getDate() < lastValidDate
+    return (cache?.cachedDate?.getDate() ?? 0) < lastValidDate
   }
 
   private async getCachedSeason(): Promise<Season | null> {
@@ -67,7 +67,7 @@ export class SeasonController {
 
   private readFile(file: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      fs.readFile(file, { encoding: "utf8" }, (error, data) => {
+      fs.readFile(file, { encoding: "utf8" }, (error: unknown, data: string) => {
         if (error) {
           reject(error)
         } else {
@@ -91,13 +91,17 @@ export class SeasonController {
 
     const season = (await this.seasonRepository.getSeasons())
       .filter((series) => series.active)
-      .map(
-        (series): Series => ({
+      .flatMap((series): Series => {
+        return {
           id: series.season_id,
           name: series.season_name,
-          licenses: series.license_group_types.map((licenseGroup) =>
-            licenses.find((license) => license.id === licenseGroup.license_group_type),
-          ),
+          licenses: series.license_group_types.map((licenseGroup) => {
+            const license = licenses.find((license) => license.id === licenseGroup.license_group_type)
+            if (!license) {
+              throw new Error(`License with ID ${licenseGroup.license_group_type} is not found in licenses array`)
+            }
+            return license
+          }),
           fixedSetup: series.fixed_setup,
           maxWeeks: series.max_weeks,
           multiclass: series.multiclass,
@@ -122,6 +126,10 @@ export class SeasonController {
                 ) ?? []),
               )
             }
+            const track = tracks.find((track) => track.configs.find((config) => config.id === schedule.track.track_id))
+            if (!track) {
+              throw new Error(`Couldn't find the track with ID ${schedule.track.track_id} inside of tracks list`)
+            }
             return {
               raceWeekNum: schedule.race_week_num,
               cars: carsOfSchedule,
@@ -131,13 +139,13 @@ export class SeasonController {
               name: schedule.schedule_name,
               serieId: series.season_id,
               track: {
-                ...tracks.find((track) => track.configs.find((config) => config.id === schedule.track.track_id)),
+                ...track,
                 configName: schedule.track.config_name,
               },
             }
           }),
-        }),
-      )
+        }
+      })
       .sort((a, b) => {
         const licenseSorted = this.sortLicenses(a.licenses)[0].id - this.sortLicenses(b.licenses)[0].id
         if (licenseSorted !== 0) {
@@ -234,7 +242,7 @@ export class SeasonController {
 
   private storeFile(file: string, content: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      fs.writeFile(file, content, (error) => {
+      fs.writeFile(file, content, (error: unknown) => {
         if (error) {
           reject(error)
         } else {

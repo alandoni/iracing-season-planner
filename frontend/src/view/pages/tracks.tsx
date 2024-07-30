@@ -6,7 +6,7 @@ import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { TrackRow } from "components/track_row"
-import { Track } from "data/tracks/track"
+import { Track } from "../../../../shared/models/track"
 import "./tracks.css"
 
 export function TracksPage() {
@@ -69,7 +69,7 @@ export function TracksPage() {
             <div key={`${track.id}`}>
               <TrackRow
                 track={track}
-                selected={track.free || userRepository.myTracks?.find((c) => track.id === c.id)}
+                selected={track.free || userRepository.myTracks?.find((c) => track.id === c.id) !== undefined}
                 onSelect={(checked) => userRepository.setTrack(checked, track)}
               />
               {index < array.length - 1 ? <hr /> : null}

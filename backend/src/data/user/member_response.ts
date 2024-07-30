@@ -1,4 +1,4 @@
-import { License } from "../license/ir_license"
+import { IrLicense } from "../license/ir_license"
 
 export type MemberResponse = {
   cust_id: number
@@ -14,5 +14,5 @@ export type MemberResponse = {
   member_since: Date
   club_id: number
   club_name: string
-  licenses: License[]
+  licenses: IrLicense[]
 }

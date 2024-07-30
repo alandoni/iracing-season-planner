@@ -1,12 +1,12 @@
-import { Car } from "data/cars/car"
+import { Car } from "data/car"
 import { Row } from "./row"
 import { Column } from "./column"
 import { Text } from "./text"
 import { Checkbox } from "./check_box"
 import { LicenseLetter } from "./license_letter"
+import { formatPrice } from "utils/price-formatter"
 import "./car_row.css"
 import "./list_row.css"
-import { formatPrice } from "utils/price-formatter"
 
 interface CarRowProps {
   car: Car
@@ -25,7 +25,7 @@ export function CarRow({ car, selected, showCategory = true, onSelect }: CarRowP
       ) : null}
       <Column className="main">
         <Row>
-          <Text tooltip={car.id}>{car.name}</Text>
+          <Text tooltip={car.id.toString()}>{car.name}</Text>
         </Row>
         {showCategory ? (
           <Row>

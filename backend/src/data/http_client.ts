@@ -9,13 +9,15 @@ export class HttpClient {
 
   private parseCookies(response: AxiosResponse) {
     const raw = response.headers["set-cookie"]
-    return raw
-      ?.map((entry) => {
-        const parts = entry.split(";")
-        const cookiePart = parts[0]
-        return cookiePart
-      })
-      .join(";")
+    return (
+      raw
+        ?.map((entry) => {
+          const parts = entry.split(";")
+          const cookiePart = parts[0]
+          return cookiePart
+        })
+        ?.join(";") ?? ""
+    )
   }
 
   async get<R>(url: string): Promise<R> {

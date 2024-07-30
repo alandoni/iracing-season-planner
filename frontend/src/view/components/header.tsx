@@ -3,20 +3,22 @@ import { Row } from "./row"
 import Import from "assets/import.svg?react"
 import Export from "assets/export.svg?react"
 import { ImportingOlderFileError, useUserRepository } from "data/user_repository"
-import { useRef } from "react"
+import { ChangeEvent, useRef } from "react"
 import "./header.css"
 
 export function Header() {
   const userRepository = useUserRepository()
-  const ref = useRef()
+  const ref = useRef<HTMLInputElement>(null)
 
   const onImportClick = () => {
-    ref.current.click()
+    ref.current?.click()
   }
 
-  const onFileChanged = async (event: Event) => {
-    const file = event.target.files[0]
-    console.log(file)
+  const onFileChanged = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target?.files?.[0]
+    if (!file) {
+      throw new Error("File not found")
+    }
     try {
       await userRepository.importData(file)
       window.location.reload()

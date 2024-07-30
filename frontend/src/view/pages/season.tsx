@@ -6,7 +6,7 @@ import { ScheduleRow } from "components/schedule_row"
 import { Text } from "components/text"
 import { useSeasonRepository } from "data/season_repository"
 import { useEffect, useState } from "react"
-import { Series } from "data/season/series"
+import { Series } from "data/series"
 import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
 import { isDateBetween } from "utils/date"
@@ -43,7 +43,11 @@ export function SeasonPage() {
 
   useEffect(() => {
     if (season.data) {
+      userRepository.load(season.data)
       const firstSeries = season.data.series.find((s) => s.schedules.length > 11)
+      if (!firstSeries) {
+        return
+      }
       const currentSchedule = firstSeries.schedules.find((s, i, array) => {
         if (i < array.length - 1) {
           return isDateBetween(new Date(), s.startDate, firstSeries.schedules[i + 1].startDate)
@@ -51,8 +55,7 @@ export function SeasonPage() {
           return true
         }
       })
-      setWeek(currentSchedule?.raceWeekNum)
-      userRepository.load(season.data)
+      setWeek(currentSchedule?.raceWeekNum ?? 0)
     }
   }, [season.data])
 
@@ -115,16 +118,18 @@ export function SeasonPage() {
                           series={series}
                           selectedTrack={
                             schedule.track.free ||
-                            userRepository.myTracks?.find((track) => schedule.track.id === track.id)
+                            userRepository.myTracks?.find((track) => schedule.track.id === track.id) !== undefined
                           }
                           selectedCar={
                             schedule.cars.filter(
-                              (car) => car.free || userRepository.myCars?.find((c) => car.id === c.id),
+                              (car) => car.free || userRepository.myCars?.find((c) => car.id === c.id) !== undefined,
                             ).length > 0
                           }
-                          selectedSchedule={userRepository.participatedRaces?.find(
-                            (s) => s.raceWeekNum === schedule.raceWeekNum && s.serieId === schedule.serieId,
-                          )}
+                          selectedSchedule={
+                            userRepository.participatedRaces?.find(
+                              (s) => s.raceWeekNum === schedule.raceWeekNum && s.serieId === schedule.serieId,
+                            ) !== undefined
+                          }
                           onSelectParticipate={(checked) =>
                             userRepository.setParticipatedRace(checked, series, schedule)
                           }

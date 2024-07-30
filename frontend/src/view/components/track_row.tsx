@@ -1,4 +1,4 @@
-import { Track } from "data/tracks/track"
+import { Track } from "../../../../shared/models/track"
 import { Row } from "./row"
 import { Column } from "./column"
 import { Text } from "./text"
@@ -25,7 +25,7 @@ export function TrackRow({ track, selected, onSelect }: TrackRowProps) {
 
       <Column className="main">
         <Row>
-          <Text tooltip={track.id}>{track.name}</Text>
+          <Text tooltip={track.id.toString()}>{track.name}</Text>
         </Row>
         <Row>
           <Text relevance="irrelevant" size="small">

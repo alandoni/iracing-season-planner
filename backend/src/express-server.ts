@@ -31,4 +31,8 @@ export class ExpressServer implements ServerInterface<Request, Response, NextFun
       logger.info(`End of getting season with Request ID: ${requestId}`)
     })
   }
+
+  use(handler: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
+    this.app.use(handler)
+  }
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from "data/http_client"
 import { LinkResponse } from "data/link_response"
 import { LicenseResponse } from "./license_response"
-import { License } from "./license"
+import { License } from "../../../../shared/models/license"
 
 export class LicenseRepository {
   static URL = "https://members-ng.iracing.com/data/lookup/licenses"

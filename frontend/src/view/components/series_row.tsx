@@ -1,4 +1,7 @@
 import { Series } from "data/series"
+import { Schedule } from "data/schedule"
+import { Car } from "data/car"
+import { Track } from "data/track"
 import { Row } from "./row"
 import { Column } from "./column"
 import { Text } from "./text"
@@ -9,7 +12,6 @@ import { ExpandCollapseButton } from "./expand_collapse_button"
 import { CarRow } from "./car_row"
 import { TrackRow } from "./track_row"
 import { removeDuplicates } from "utils/list"
-import { Schedule } from "data/season/schedule"
 import "./list_row.css"
 import "./series_row.css"
 
@@ -32,7 +34,7 @@ export function SeriesRow({
 }: SeriesRowProps) {
   const [isExpanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(-1)
-  const ref = useRef<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!ref.current) {
@@ -69,11 +71,11 @@ export function SeriesRow({
         </Column>
         <Column className="main">
           <Row>
-            <Text tooltip={series.id}>{series.name}</Text>
+            <Text tooltip={series.id.toString()}>{series.name}</Text>
           </Row>
           <Row>
             <Text relevance="irrelevant" size="small">
-              {series.category}
+              {series.schedules.flatMap((s) => s.category).join(", ")}
             </Text>
           </Row>
         </Column>
@@ -105,7 +107,7 @@ export function SeriesRow({
                 key={car.id}
                 car={car}
                 showCategory={false}
-                selected={car.free || ownedCars.find((c) => car.id === c.id)}
+                selected={car.free || ownedCars.find((c) => car.id === c.id) !== undefined}
                 onSelect={onSetOwnedCar}
               />
             ))}
@@ -121,7 +123,7 @@ export function SeriesRow({
               <TrackRow
                 key={track.id}
                 track={track}
-                selected={track.free || ownedTracks.find((t) => track.id === t.id)}
+                selected={track.free || ownedTracks.find((t) => track.id === t.id) !== undefined}
                 onSelect={onSetOwnedTrack}
               />
             ))}

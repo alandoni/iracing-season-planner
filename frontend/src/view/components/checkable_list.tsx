@@ -10,7 +10,12 @@ interface CheckableListProps<T extends { id: number; name: string }> {
   onCheck: (checked: boolean, item: T) => void
 }
 
-export function CheckableList<T>({ title, list, checkedList, onCheck }: CheckableListProps<T>) {
+export function CheckableList<T extends { id: number; name: string }>({
+  title,
+  list,
+  checkedList,
+  onCheck,
+}: CheckableListProps<T>) {
   return (
     <div className="checkable-list">
       <Text>{title}</Text>
@@ -20,7 +25,7 @@ export function CheckableList<T>({ title, list, checkedList, onCheck }: Checkabl
             <Row key={item.id}>
               <Checkbox
                 small
-                isChecked={checkedList?.find((c) => c.id === item.id) ?? false}
+                isChecked={checkedList?.find((c) => c.id === item.id) !== undefined}
                 onChange={(checked) => onCheck(checked, item)}
               />
               <Text size="small">{item.name}</Text>

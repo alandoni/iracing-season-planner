@@ -1,4 +1,6 @@
-import { Season } from "data/season/season"
+import { Series } from "data/series"
+import { Season } from "data/season"
+import { Schedule } from "data/schedule"
 import { useRequest } from "./use_request"
 import { useEffect, useState } from "react"
 
@@ -23,9 +25,9 @@ export function useSeasonRepository() {
       const cachedSeason: Season = {
         cars: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CARS_KEY) ?? ""),
         tracks: JSON.parse(localStorage.getItem(LOCAL_STORAGE_TRACKS_KEY) ?? ""),
-        series: JSON.parse(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? "").map((s) => ({
+        series: JSON.parse(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? "").map((s: Series) => ({
           ...s,
-          schedules: s.schedules.map((sc) => ({ ...sc, startDate: new Date(sc.startDate) })),
+          schedules: s.schedules.map((sc: Schedule) => ({ ...sc, startDate: new Date(sc.startDate) })),
         })),
         licenses: JSON.parse(localStorage.getItem(LOCAL_STORAGE_LICENSES_KEY) ?? ""),
         categories: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEY) ?? ""),
