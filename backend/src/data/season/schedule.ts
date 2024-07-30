@@ -6,6 +6,7 @@ export type Schedule = {
   cars: Car[]
   category: string
   categoryId: number
+  startDate: Date
   name: string
   serieId: number
   track: Track & { configName: string }

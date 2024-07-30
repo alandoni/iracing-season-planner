@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import { Series } from "data/season/series"
 import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
+import { isDateBetween } from "utils/date"
 import "./season.css"
 
 export function SeasonPage() {
@@ -42,6 +43,15 @@ export function SeasonPage() {
 
   useEffect(() => {
     if (season.data) {
+      const firstSeries = season.data.series.find((s) => s.schedules.length > 11)
+      const currentSchedule = firstSeries.schedules.find((s, i, array) => {
+        if (i < array.length - 1) {
+          return isDateBetween(new Date(), s.startDate, firstSeries.schedules[i + 1].startDate)
+        } else {
+          return true
+        }
+      })
+      setWeek(currentSchedule?.raceWeekNum)
       userRepository.load(season.data)
     }
   }, [season.data])

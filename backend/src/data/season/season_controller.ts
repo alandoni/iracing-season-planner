@@ -127,6 +127,7 @@ export class SeasonController {
               cars: carsOfSchedule,
               category: formatCategory(schedule.category),
               categoryId: schedule.category_id,
+              startDate: new Date(schedule.start_date),
               name: schedule.schedule_name,
               serieId: series.season_id,
               track: {

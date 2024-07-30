@@ -23,7 +23,10 @@ export function useSeasonRepository() {
       const cachedSeason: Season = {
         cars: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CARS_KEY) ?? ""),
         tracks: JSON.parse(localStorage.getItem(LOCAL_STORAGE_TRACKS_KEY) ?? ""),
-        series: JSON.parse(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? ""),
+        series: JSON.parse(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? "").map((s) => ({
+          ...s,
+          schedules: s.schedules.map((sc) => ({ ...sc, startDate: new Date(sc.startDate) })),
+        })),
         licenses: JSON.parse(localStorage.getItem(LOCAL_STORAGE_LICENSES_KEY) ?? ""),
         categories: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEY) ?? ""),
         cachedDate: new Date(cachedDate),

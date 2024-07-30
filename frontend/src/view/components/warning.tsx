@@ -12,7 +12,7 @@ export function Warning() {
     <Row className={`warning ${show ? "" : "hidden"}`}>
       <WarningIcon className="svg icon warning-icon" />
       <Column>
-        <Text>Devido aos altos custos de manutenção, os dados deste website serão armazenados localmente.</Text>
+        <Text>Devido aos altos custos de manutenção, os dados deste website serão armazenados apenas localmente.</Text>
         <Text>Use os botões acima para importar e exportar seus dados entre diferentes aparelhos.</Text>
       </Column>
       <Close className={`svg icon close`} onClick={() => setShow(false)} />
