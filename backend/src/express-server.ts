@@ -32,7 +32,7 @@ export class ExpressServer implements ServerInterface<Request, Response, NextFun
     })
   }
 
-  use(handler: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
-    this.app.use(handler)
+  use(url: string, handler: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
+    this.app.use(url, handler)
   }
 }

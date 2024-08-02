@@ -3,20 +3,17 @@ import { logger } from "./logger"
 import { getSeasonController, getUserRepository } from "./dependency-injection"
 import { ExpressServer } from "./express-server"
 import express from "express"
+import path from "path"
 
 const version = "/api/v1"
 
 const app = new ExpressServer()
 
-app.use(express.static("../../frontend/build"))
-
-app.get("/", (_, res) => {
-  res.status(200).send("Server is working, try v1/season")
-})
+app.use("/", express.static(path.resolve(__dirname + "/../../build")))
 
 app.get(`${version}`, (_, res) => {
   logger.info("Server is working")
-  res.status(200).send(`Server is working /season`)
+  res.status(200).send(`Server is working, try calling: /api/v1/season`)
 })
 
 app.get(`${version}/season`, async (_, res) => {

@@ -21,8 +21,7 @@
     "sourceMap": true,
     "incremental": true,
     "rootDir": "../",
-    "sourceRoot": "./src",
-    "outDir": "./build",
+    "outDir": "../build",
     "paths": {
       "utils/*": ["./src/utils/*"],
       "data/*": ["./src/data/*", "../shared/models/*"],
