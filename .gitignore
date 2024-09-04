@@ -8,3 +8,5 @@ build
 
 **/*.log
 **/downloaded
+
+**/package-lock.json
