@@ -12,9 +12,11 @@ import { License } from "data/license"
 import { Car } from "data/car"
 import { Track } from "data/track"
 import fs from "fs"
+import path from "path"
 
 export class SeasonController {
-  static SEASON_FILE = `downloaded/file-season.json`
+  static DOWNLOAD_PATH = `downloaded`
+  static SEASON_FILE = `${SeasonController.DOWNLOAD_PATH}/file-season.json`
   static MAX_DAYS_TO_VALIDATE_CACHE = 14
 
   constructor(
@@ -42,13 +44,18 @@ export class SeasonController {
   async getSeason(): Promise<Season> {
     const cache = await this.getCachedSeason()
     if (this.validateCache(cache)) {
+      logger.debug(`Using cache ${cache?.cachedDate}`)
       return cache
     } else {
+      logger.debug("Downloading season")
       return await this.downloadSeason()
     }
   }
 
   private validateCache(cache: Season | null): boolean {
+    if (!cache) {
+      return false
+    }
     const lastValidDate = new Date().setDate(new Date().getDate() - SeasonController.MAX_DAYS_TO_VALIDATE_CACHE)
     return (cache?.cachedDate?.getDate() ?? 0) < lastValidDate
   }
@@ -66,8 +73,9 @@ export class SeasonController {
   }
 
   private readFile(file: string): Promise<string> {
+    logger.debug(`Reading file ${path.resolve(file)}`)
     return new Promise((resolve, reject) => {
-      fs.readFile(file, { encoding: "utf8" }, (error: unknown, data: string) => {
+      fs.readFile(path.resolve(file), { encoding: "utf8" }, (error: unknown, data: string) => {
         if (error) {
           reject(error)
         } else {
@@ -79,6 +87,9 @@ export class SeasonController {
 
   async downloadSeason(): Promise<Season> {
     const season = await this.buildSeason()
+    if (!(await this.checkPathExists(SeasonController.DOWNLOAD_PATH))) {
+      await this.createFolder(SeasonController.DOWNLOAD_PATH)
+    }
     await this.storeFile(SeasonController.SEASON_FILE, JSON.stringify(season, null, 2))
     return season
   }
@@ -163,60 +174,25 @@ export class SeasonController {
       name: formatCategory(value.category),
     }))
 
-    const seasonCars = season.reduce(
-      (acc, series) => {
-        series.schedules.forEach((schedule) => {
-          schedule.cars.forEach((car) => {
-            if (acc[car.id]) {
-              if (!acc[car.id].seriesIds.includes(series.id)) {
-                acc[car.id].numberOfSeries += 1
-                acc[car.id].seriesIds.push(series.id)
-              }
-              acc[car.id].numberOfRaces += 1
-              acc[car.id].licenses = this.sortLicenses(
-                this.removeDuplicates([...acc[car.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
-              )
-              acc[car.id].categories = this.removeDuplicates(
-                [...acc[car.id].categories, { id: schedule.categoryId, name: schedule.category }],
-                (a, b) => a.id === b.id,
-              )
-            } else {
-              acc[car.id] = {
-                ...car,
-                categories: [{ id: schedule.categoryId, name: schedule.category }],
-                licenses: this.sortLicenses(series.licenses),
-                numberOfRaces: 1,
-                numberOfSeries: 1,
-                seriesIds: [series.id],
-              }
+    const seasonCars = season.reduce((acc, series) => {
+      series.schedules.forEach((schedule) => {
+        schedule.cars.forEach((car) => {
+          if (acc[car.id]) {
+            if (!acc[car.id].seriesIds.includes(series.id)) {
+              acc[car.id].numberOfSeries += 1
+              acc[car.id].seriesIds.push(series.id)
             }
-          })
-        })
-        return acc
-      },
-      {} as Record<number, Car>,
-    )
-
-    const seasonTracks = season.reduce(
-      (acc, series) => {
-        series.schedules.forEach((schedule) => {
-          const track = schedule.track
-          if (acc[track.id]) {
-            if (!acc[track.id].seriesIds.includes(series.id)) {
-              acc[track.id].numberOfSeries += 1
-              acc[track.id].seriesIds.push(series.id)
-            }
-            acc[track.id].numberOfRaces += 1
-            acc[track.id].licenses = this.sortLicenses(
-              this.removeDuplicates([...acc[track.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
+            acc[car.id].numberOfRaces += 1
+            acc[car.id].licenses = this.sortLicenses(
+              this.removeDuplicates([...acc[car.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
             )
-            acc[track.id].categories = this.removeDuplicates(
-              [...acc[track.id].categories, { id: schedule.categoryId, name: schedule.category }],
+            acc[car.id].categories = this.removeDuplicates(
+              [...acc[car.id].categories, { id: schedule.categoryId, name: schedule.category }],
               (a, b) => a.id === b.id,
             )
           } else {
-            acc[track.id] = {
-              ...track,
+            acc[car.id] = {
+              ...car,
               categories: [{ id: schedule.categoryId, name: schedule.category }],
               licenses: this.sortLicenses(series.licenses),
               numberOfRaces: 1,
@@ -225,10 +201,39 @@ export class SeasonController {
             }
           }
         })
-        return acc
-      },
-      {} as Record<number, Track>,
-    )
+      })
+      return acc
+    }, {} as Record<number, Car>)
+
+    const seasonTracks = season.reduce((acc, series) => {
+      series.schedules.forEach((schedule) => {
+        const track = schedule.track
+        if (acc[track.id]) {
+          if (!acc[track.id].seriesIds.includes(series.id)) {
+            acc[track.id].numberOfSeries += 1
+            acc[track.id].seriesIds.push(series.id)
+          }
+          acc[track.id].numberOfRaces += 1
+          acc[track.id].licenses = this.sortLicenses(
+            this.removeDuplicates([...acc[track.id].licenses, ...series.licenses], (a, b) => a.id === b.id),
+          )
+          acc[track.id].categories = this.removeDuplicates(
+            [...acc[track.id].categories, { id: schedule.categoryId, name: schedule.category }],
+            (a, b) => a.id === b.id,
+          )
+        } else {
+          acc[track.id] = {
+            ...track,
+            categories: [{ id: schedule.categoryId, name: schedule.category }],
+            licenses: this.sortLicenses(series.licenses),
+            numberOfRaces: 1,
+            numberOfSeries: 1,
+            seriesIds: [series.id],
+          }
+        }
+      })
+      return acc
+    }, {} as Record<number, Track>)
 
     return {
       cachedDate: new Date(),
@@ -241,8 +246,35 @@ export class SeasonController {
   }
 
   private storeFile(file: string, content: string): Promise<void> {
+    logger.debug(`File will be stored in ${path.resolve(file)}`)
     return new Promise((resolve, reject) => {
-      fs.writeFile(file, content, (error: unknown) => {
+      fs.writeFile(path.resolve(file), content, (error: unknown) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
+  private checkPathExists(file: string): Promise<boolean> {
+    logger.debug(`Check if ${path.resolve(file)} exist`)
+    return new Promise((resolve) => {
+      fs.readFile(path.resolve(file), (error: unknown) => {
+        if (error) {
+          resolve(false)
+        } else {
+          resolve(true)
+        }
+      })
+    })
+  }
+
+  private createFolder(folder: string): Promise<void> {
+    logger.debug(`Creating folder ${path.resolve(folder)}`)
+    return new Promise((resolve, reject) => {
+      fs.mkdir(path.resolve(folder), (error: unknown) => {
         if (error) {
           reject(error)
         } else {

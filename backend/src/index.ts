@@ -1,13 +1,22 @@
-import "dotenv/config"
+import express from "express"
+import path from "path"
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 import { logger } from "./logger"
 import { getSeasonController, getUserRepository } from "./dependency-injection"
 import { ExpressServer } from "./express-server"
-import express from "express"
-import path from "path"
 
 const version = "/api/v1"
 
 const app = new ExpressServer()
+
+const buildPath = process.env.NODE_ENV === 'production' ? '../../' : '../../build'
+app.useMiddleware(express.static(path.resolve(__dirname, buildPath)))
+app.get('/*', (_req, res) => {
+  res.sendFile(path.resolve(__dirname, buildPath, "index.html"))
+})
 
 app.get(`${version}`, (_, res) => {
   logger.info("Server is working")
@@ -37,11 +46,6 @@ app.get(`${version}/user/{id}/{displayName}`, async (req, res) => {
     logger.error(`Error: ${error} -- Request ID: ${res.getHeader("requestId")}`)
     res.status(500).send(`Unknown error - Request ID: ${res.getHeader("requestId")}`)
   }
-})
-
-app.useMiddleware(express.static(path.resolve(__dirname, "../../build")))
-app.get("/*", (_req, res) => {
-  res.sendFile(path.resolve(__dirname, "../../build", "index.html"))
 })
 
 app.init().then(async () => {

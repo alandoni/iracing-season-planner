@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "build": "cd backend && yarn install"
+    "start": "cd build/backend/src && node index.js",
+    "build": "cd frontend && yarn install && yarn build && cd ../backend && yarn install && yarn build"
   },
   "author": "Alan Donizete Quintiliano",
   "license": "ISC"

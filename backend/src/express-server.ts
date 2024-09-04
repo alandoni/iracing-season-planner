@@ -22,7 +22,7 @@ export class ExpressServer implements ServerInterface<Request, Response, NextFun
     })
   }
 
-  get(url: string, callback: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
+  get(url: string | RegExp, callback: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
     this.app.get(url, async (req, res, next) => {
       const requestId = randomUUID()
       logger.info(`Getting ${url} with Request ID: ${requestId}`)

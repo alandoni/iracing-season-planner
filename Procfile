@@ -1,1 +1,1 @@
-web: cd backend && yarn build
+web: yarn start
