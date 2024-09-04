@@ -6,7 +6,7 @@ import cors from "cors"
 
 export class ExpressServer implements ServerInterface<Request, Response, NextFunction> {
   app: Express
-  port = 3001
+  port = process.env.PORT ?? 3001
 
   constructor() {
     this.app = express()
@@ -34,5 +34,9 @@ export class ExpressServer implements ServerInterface<Request, Response, NextFun
 
   use(url: string, handler: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
     this.app.use(url, handler)
+  }
+
+  useMiddleware(handler: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
+    this.app.use(handler)
   }
 }

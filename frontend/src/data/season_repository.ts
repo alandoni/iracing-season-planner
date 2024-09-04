@@ -55,7 +55,10 @@ export function useSeasonRepository() {
       setSeason({
         cars: data.cars,
         tracks: data.tracks,
-        series: data.series,
+        series: data.series.map((s: Series) => ({
+          ...s,
+          schedules: s.schedules.map((sc: Schedule) => ({ ...sc, startDate: new Date(sc.startDate) })),
+        })),
         licenses: data.licenses,
         cachedDate: new Date(data.cachedDate),
         categories: data.categories,

@@ -4,7 +4,8 @@
   "description": "An app to help to plan the season on iRacing",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc --build --verbose",
+    "build": "ts-node --transpile-only -r tsconfig-paths/register ./src/index.ts",
+    "postbuild": "cp package.json ../build/backend/package.json && cd ../build/backend && yarn install --only=production",
     "start": "ts-node-dev -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts --diagnostics --ignore-watch node_modules",
     "test": "jest"
   },

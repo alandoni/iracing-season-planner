@@ -9,8 +9,6 @@ const version = "/api/v1"
 
 const app = new ExpressServer()
 
-app.use("/", express.static(path.resolve(__dirname + "/../../build")))
-
 app.get(`${version}`, (_, res) => {
   logger.info("Server is working")
   res.status(200).send(`Server is working, try calling: /api/v1/season`)
@@ -39,6 +37,11 @@ app.get(`${version}/user/{id}/{displayName}`, async (req, res) => {
     logger.error(`Error: ${error} -- Request ID: ${res.getHeader("requestId")}`)
     res.status(500).send(`Unknown error - Request ID: ${res.getHeader("requestId")}`)
   }
+})
+
+app.useMiddleware(express.static(path.resolve(__dirname, "../../build")))
+app.get("/*", (_req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../build", "index.html"))
 })
 
 app.init().then(async () => {
