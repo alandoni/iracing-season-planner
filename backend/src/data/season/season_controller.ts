@@ -92,6 +92,11 @@ export class SeasonController {
       const file = await this.readFile(SeasonController.SEASON_FILE)
       const content = JSON.parse(file) as Season
       content.cachedDate = new Date(content.cachedDate)
+      content.series.forEach((s) => {
+        s.schedules.forEach((sc) => {
+          sc.startDate = new Date(sc.startDate)
+        })
+      })
       return content
     } catch (error) {
       logger.warn(`File not loaded: ${error}`)
