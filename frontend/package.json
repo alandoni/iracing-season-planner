@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "prebuild": "echo \"VITE_API_ADDRESS=$VITE_API_ADDRESS\" >> .env",
+    "prebuild": "echo \"VITE_API_ADDRESS=$VITE_API_ADDRESS\" > .env",
     "build": "tsc --build --verbose && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
