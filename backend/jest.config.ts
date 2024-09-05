@@ -1,8 +1,7 @@
 import type { JestConfigWithTsJest } from "ts-jest"
-import { compilerOptions } from "./tsconfig.json"
 
 const jestConfig: JestConfigWithTsJest = {
-  rootDir: compilerOptions.rootDir,
+  rootDir: "./",
   verbose: false,
   collectCoverage: true,
   collectCoverageFrom: ["!**/node_modules/**", "!src/**/test*/**", "!<rootDir>/**/*interface.ts"],
@@ -15,6 +14,8 @@ const jestConfig: JestConfigWithTsJest = {
   roots: ["<rootDir>/src"],
   moduleNameMapper: {
     "^src/(.*)$": "<rootDir>/src/$1",
+    "^utils/(.*)$": ["<rootDir>/src/utils/$1"],
+    "^data/(.*)$": ["<rootDir>/src/data/$1", "<rootDir>/../shared/models/$1"],
   },
   modulePathIgnorePatterns: ["<rootDir>/build/"],
   modulePaths: ["<rootDir>/node_modules", "<rootDir>/src"],

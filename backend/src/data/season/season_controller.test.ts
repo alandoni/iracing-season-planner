@@ -2,8 +2,9 @@ import fs from "fs"
 import { getSeasonController } from "src/dependency-injection"
 import { SeasonController } from "./season_controller"
 import { logger } from "src/logger"
+import { Season } from "data/season"
 
-describe("SeasonController", () => {
+fdescribe("SeasonController", () => {
   it("0 - should store the season in the cache", async () => {
     try {
       fs.readFileSync(SeasonController.SEASON_FILE, { encoding: "utf8" })
@@ -27,4 +28,178 @@ describe("SeasonController", () => {
     const newFile = fs.readFileSync(SeasonController.SEASON_FILE, { encoding: "utf8" })
     expect(JSON.stringify(season)).toStrictEqual(newFile)
   }, 30000)
+
+  describe("Cache validation", () => {
+    it("should validate the cache", () => {
+      jest.useFakeTimers().setSystemTime(new Date("2024-01-17 02:59"))
+      const season: Season = {
+        cachedDate: new Date("2024-01-10 03:00"),
+        cars: [],
+        tracks: [],
+        licenses: [],
+        categories: [],
+        series: [
+          {
+            schedules: [
+              {
+                startDate: new Date("2024-01-11 03:00"),
+                raceWeekNum: 0,
+                cars: [],
+                category: "",
+                categoryId: 0,
+                name: "",
+                serieId: 0,
+                track: undefined,
+              },
+              {
+                startDate: new Date("2024-01-01 03:00"),
+                raceWeekNum: 0,
+                cars: [],
+                category: "",
+                categoryId: 0,
+                name: "",
+                serieId: 0,
+                track: undefined,
+              },
+            ],
+            id: 0,
+            name: "",
+            licenses: [],
+            fixedSetup: false,
+            maxWeeks: 0,
+            multiclass: false,
+            official: false,
+          },
+        ],
+      }
+      expect(getSeasonController().validateCache(season)).toBeTruthy()
+    })
+
+    it("should not validate the cache if no series are included", () => {
+      jest.useFakeTimers().setSystemTime(new Date("2024-01-01"))
+      const season = {
+        cachedDate: new Date("2024-05-01"),
+        cars: [],
+        tracks: [],
+        licenses: [],
+        categories: [],
+        series: [],
+      }
+      expect(getSeasonController().validateCache(season)).toBeFalsy()
+    })
+
+    it("should not validate the cache if no schedules are included", () => {
+      jest.useFakeTimers().setSystemTime(new Date("2024-01-01"))
+      const season = {
+        cachedDate: new Date("2024-05-01"),
+        cars: [],
+        tracks: [],
+        licenses: [],
+        categories: [],
+        series: [
+          {
+            schedules: [],
+            id: 0,
+            name: "",
+            licenses: [],
+            fixedSetup: false,
+            maxWeeks: 0,
+            multiclass: false,
+            official: false,
+          },
+        ],
+      }
+      expect(getSeasonController().validateCache(season)).toBeFalsy()
+    })
+
+    it("should not validate the cache if the cached date is too old", () => {
+      jest.useFakeTimers().setSystemTime(new Date("2024-01-17 03:00"))
+      const season: Season = {
+        cachedDate: new Date("2024-01-10 03:00"),
+        cars: [],
+        tracks: [],
+        licenses: [],
+        categories: [],
+        series: [
+          {
+            schedules: [
+              {
+                startDate: new Date("2024-01-11 03:00"),
+                raceWeekNum: 0,
+                cars: [],
+                category: "",
+                categoryId: 0,
+                name: "",
+                serieId: 0,
+                track: undefined,
+              },
+              {
+                startDate: new Date("2024-01-01 03:00"),
+                raceWeekNum: 0,
+                cars: [],
+                category: "",
+                categoryId: 0,
+                name: "",
+                serieId: 0,
+                track: undefined,
+              },
+            ],
+            id: 0,
+            name: "",
+            licenses: [],
+            fixedSetup: false,
+            maxWeeks: 0,
+            multiclass: false,
+            official: false,
+          },
+        ],
+      }
+      expect(getSeasonController().validateCache(season)).toBeFalsy()
+    })
+
+    it("should not validate the cache if the last schedule of the bigger season is too old", () => {
+      jest.useFakeTimers().setSystemTime(new Date("2024-01-17 03:00"))
+      const season: Season = {
+        cachedDate: new Date("2024-01-12 03:00"),
+        cars: [],
+        tracks: [],
+        licenses: [],
+        categories: [],
+        series: [
+          {
+            schedules: [
+              {
+                startDate: new Date("2024-01-11 03:00"),
+                raceWeekNum: 0,
+                cars: [],
+                category: "",
+                categoryId: 0,
+                name: "",
+                serieId: 0,
+                track: undefined,
+              },
+              {
+                startDate: new Date("2024-01-01 03:00"),
+                raceWeekNum: 0,
+                cars: [],
+                category: "",
+                categoryId: 0,
+                name: "",
+                serieId: 0,
+                track: undefined,
+              },
+            ],
+            id: 0,
+            name: "",
+            licenses: [],
+            fixedSetup: false,
+            maxWeeks: 0,
+            multiclass: false,
+            official: false,
+          },
+        ],
+      }
+      expect(getSeasonController().validateCache(season)).toBeFalsy()
+    })
+  })
 })
