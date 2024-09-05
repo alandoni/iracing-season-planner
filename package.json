@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "cd build/backend/src && node index.js",
-    "postinstall": "cd frontend && yarn install && cd ../backend && yarn install",
+    "postinstall": "cd frontend && yarn install --production=false && cd ../backend && yarn install --production=false",
     "build": "cd frontend && yarn build && cd ../backend && yarn build"
   },
   "author": "Alan Donizete Quintiliano",
