@@ -50,10 +50,10 @@ export function Header() {
           iRacing Season Planner
         </Text>
         <div className="header-buttons">
-          <span title="Importar dados - Salvar em arquivo no seu computador">
+          <span title="Importar dados - Ler de um arquivo no seu computador">
             <Import className="svg icon import" viewBox="0 0 24 24" onClick={onImportClick} />
           </span>
-          <span title="Exportar dados - Ler de um arquivo no seu computador">
+          <span title="Exportar dados - Salvar em um arquivo no seu computador">
             <Export className="svg icon export" viewBox="0 0 24 24" onClick={onExportClick} />
           </span>
         </div>

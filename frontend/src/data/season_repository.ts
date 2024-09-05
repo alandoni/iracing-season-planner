@@ -44,7 +44,7 @@ export function useSeasonRepository() {
     if (season) {
       return
     }
-    if (data) {
+    if (data && data.cachedDate) {
       console.log(`Data not found, requested: ${data}`)
       localStorage.setItem(LOCAL_STORAGE_CARS_KEY, JSON.stringify(data.cars))
       localStorage.setItem(LOCAL_STORAGE_TRACKS_KEY, JSON.stringify(data.tracks))

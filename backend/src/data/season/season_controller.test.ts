@@ -4,7 +4,7 @@ import { SeasonController } from "./season_controller"
 import { logger } from "src/logger"
 import { Season } from "data/season"
 
-fdescribe("SeasonController", () => {
+describe("SeasonController", () => {
   it("0 - should store the season in the cache", async () => {
     try {
       fs.readFileSync(SeasonController.SEASON_FILE, { encoding: "utf8" })

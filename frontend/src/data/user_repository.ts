@@ -187,6 +187,9 @@ export function useUserRepository() {
           }
         }
       }
+      reader.onerror = (event: ProgressEvent<FileReader>) => {
+        reject(event.target?.error)
+      }
       reader.readAsText(path)
     })
     console.log(content)
