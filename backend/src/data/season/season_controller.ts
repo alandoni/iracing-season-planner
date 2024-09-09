@@ -41,6 +41,18 @@ export class SeasonController {
     })
   }
 
+  async invalidateCache(): Promise<void> {
+    return await new Promise((resolve, reject) => {
+      fs.rm(SeasonController.DOWNLOAD_PATH, { recursive: true, force: true }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
   async getSeason(): Promise<Season> {
     const cache = await this.getCachedSeason()
     if (this.validateCache(cache)) {
