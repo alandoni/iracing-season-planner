@@ -126,16 +126,20 @@ export function SummaryPage() {
     content: Car | Track,
     userRepository: ReturnType<typeof useUserRepository>,
   ): boolean => {
-    return !!series.schedules.find((s) => {
-      const ownedTrack = s.track.free || userRepository.myTracks.find((t) => t.id === s.track.id)
-      const ownedCarsInSchedule = s.cars.filter((car) => car.free || userRepository.myCars.find((c) => car.id === c.id))
+    return (
+      series.schedules.find((s) => {
+        const ownedTrack = s.track.free || userRepository.myTracks.find((t) => t.id === s.track.id) !== undefined
+        const ownedCarsInSchedule = s.cars.filter(
+          (car) => car.free || userRepository.myCars.find((c) => car.id === c.id),
+        )
 
-      if ("location" in content && "id" in content) {
-        return ownedTrack && s.track.id !== content.id
-      } else {
-        return ownedCarsInSchedule.length === 0 && !s.cars.find((car) => car.id === content.id)
-      }
-    })
+        if ("location" in content && "id" in content) {
+          return !ownedTrack && s.track.id === content.id
+        } else {
+          return ownedCarsInSchedule.length === 0 && !s.cars.find((car) => car.id === content.id)
+        }
+      }) !== undefined
+    )
   }
 
   const filterAlmostEligibleSeries = (
