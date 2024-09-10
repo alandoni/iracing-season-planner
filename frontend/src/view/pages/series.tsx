@@ -16,14 +16,29 @@ export function SeriesPage() {
 
   useEffect(() => {
     const filtered = [...(season.data?.series ?? [])]
-      .filter((series) =>
-        userRepository.preferredLicenses.some((license) => series.licenses.find((l) => l.id === license.id)),
+      .filter(
+        (series) =>
+          userRepository.preferredLicenses.some((license) => series.licenses.find((l) => l.id === license.id)) &&
+          userRepository.preferredCategories.some((category) =>
+            series.schedules.find((s) => s.categoryId === category.id),
+          ),
       )
-      .filter((series) =>
-        userRepository.preferredCategories.some((category) =>
-          series.schedules.find((s) => s.categoryId === category.id),
-        ),
-      )
+      .map((series) => {
+        return {
+          ...series,
+          schedules: series.schedules.map((s) => {
+            const track = season.data?.tracks.find((t) => s.track.id === t.id) ?? s.track
+            return {
+              ...s,
+              track: {
+                ...track,
+                configName: s.track.configName,
+              },
+              cars: s.cars.map((car) => season.data?.cars.find((c) => c.id === car.id) ?? car),
+            }
+          }),
+        }
+      })
     setFilteredSeries(filtered)
   }, [userRepository.preferredLicenses, userRepository.preferredCategories, season.data])
 
