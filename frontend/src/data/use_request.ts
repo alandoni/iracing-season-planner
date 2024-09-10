@@ -21,9 +21,11 @@ export function useRequest<T>(
     axios
       .get<T>(`${VITE_API_ADDRESS}/${endpoint}`)
       .then((data) => {
-        console.log(data)
-        JSON.parse(data.data as string)
-        return data
+        if (typeof data.data === "string") {
+          return JSON.parse(data.data)
+        } else {
+          return data
+        }
       })
       .then((data) => {
         setLoading(false)
