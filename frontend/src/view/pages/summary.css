@@ -15,7 +15,11 @@
   width: 100%;
 }
 
-.summary-page .content > .text.relevance-important:not(:first-child) {
+.summary-page .content .list.two-columns div {
+  background-color: var(--color-background);
+}
+
+.summary-page .content .list div.subtitle:has(.text.relevance-important):not(:first-child) {
   margin-top: var(--spacing-large);
   margin-bottom: var(--spacing-small);
 }
@@ -44,4 +48,8 @@
 .summary-page .content .best-buy .list .others-subtitle span {
   width: 25px;
   text-align: end;
+}
+
+.summary-page .title {
+  margin-top: var(--spacing);
 }

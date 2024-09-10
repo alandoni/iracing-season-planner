@@ -1,5 +1,5 @@
 import { Car } from "data/car"
-import { TrackWithConfigName } from "data/track"
+import { Track, TrackWithConfigName } from "data/track"
 import { Series } from "data/series"
 import { Column } from "components/column"
 import { useSeasonRepository } from "data/season_repository"
@@ -13,10 +13,31 @@ import { CheckableList } from "components/checkable_list"
 import {
   ParticipatedSeriesRow,
   SeriesWithSummary,
-  MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS,
+  calculateMinimumParticipation,
 } from "components/participated_series_row"
 import { Checkbox } from "components/check_box"
 import "./summary.css"
+import {
+  AlmostEligibleSeries,
+  AlmostEligibleSeriesAndContentsToBuy,
+} from "components/series_eligible_and_needed_content"
+import { Season } from "data/season"
+
+declare global {
+  interface Array<T> {
+    removeDuplicates(compare: (a: T, b: T) => boolean): Array<T>
+  }
+}
+
+Array.prototype.removeDuplicates = function (compare: (a: unknown, b: unknown) => boolean) {
+  return this.filter((value, index, array) => {
+    return (
+      array.findIndex((value2) => {
+        return compare(value, value2)
+      }) === index
+    )
+  })
+}
 
 export function SummaryPage() {
   const season = useSeasonRepository()
@@ -24,25 +45,43 @@ export function SummaryPage() {
   const [participatedSeries, setParticipatedSeries] = useState<SeriesWithSummary[]>([])
   const [bestCarsToBuy, setBestCarsToBuy] = useState<Car[]>([])
   const [bestTracksToBuy, setBestTracksToBuy] = useState<TrackWithConfigName[]>([])
+  const [almostEligibleseriesAndContentToBuy, setAlmostEligibleSeriesAndContentToBuy] = useState<
+    AlmostEligibleSeriesAndContentsToBuy[]
+  >([])
   const [showOwnedContent, setShowOwnedContent] = useState<boolean>(false)
   const [showSeriesEligible, setShowSeriesEligible] = useState<boolean>(false)
 
   const summarizeSeries = (series: Series): SeriesWithSummary => {
-    let numberOfOwnedTracks = 0
-    let numberOfOwnedCars = 0
+    const tracks: number[] = []
+    const cars: number[] = []
+    const ownedTracks: number[] = []
+    const ownedCars: number[] = []
     let eligible = 0
 
     series.schedules.forEach((s) => {
       const ownedTrack = s.track.free || userRepository.myTracks.find((t) => t.id === s.track.id)
-      const ownedCars = s.cars.filter((car) => car.free || userRepository.myCars.find((c) => car.id === c.id))
+      const ownedCarsInSchedule = s.cars.filter((car) => car.free || userRepository.myCars.find((c) => car.id === c.id))
 
-      if (ownedTrack) {
-        numberOfOwnedTracks++
+      if (!tracks.includes(s.track.id)) {
+        tracks.push(s.track.id)
       }
-      if (ownedCars.length > 0) {
-        numberOfOwnedCars += ownedCars.length
+      s.cars.forEach((car) => {
+        if (!cars.includes(car.id)) {
+          cars.push(car.id)
+        }
+      })
+
+      if (ownedTrack && !ownedTracks.includes(s.track.id)) {
+        ownedTracks.push(s.track.id)
       }
-      if (ownedCars.length > 0 && ownedTrack) {
+      if (ownedCarsInSchedule.length > 0) {
+        ownedCarsInSchedule.forEach((car) => {
+          if (!ownedCars.includes(car.id)) {
+            ownedCars.push(car.id)
+          }
+        })
+      }
+      if (ownedCarsInSchedule.length > 0 && ownedTrack) {
         eligible++
       }
     })
@@ -50,8 +89,10 @@ export function SummaryPage() {
     return {
       ...series,
       participatedRaces: userRepository.participatedRaces.filter((r) => r.serieId === series.id).length,
-      ownedCars: numberOfOwnedCars,
-      ownedTracks: numberOfOwnedTracks,
+      ownedCars: ownedCars.length,
+      totalCars: cars.length,
+      ownedTracks: ownedTracks.length,
+      totalTracks: tracks.length,
       eligible,
     }
   }
@@ -63,47 +104,125 @@ export function SummaryPage() {
     userRepository: ReturnType<typeof useUserRepository>,
     propertyOfOwnedContent: "myCars" | "myTracks",
   ): T[] => {
-    return (
-      filteredSeries
-        .flatMap((series) => series.schedules.flatMap((s) => s[propertyToFilter] as T))
-        .filter(
-          (value) =>
-            !value.free && (showOwnedContent || !userRepository[propertyOfOwnedContent].find((c) => value.id === c.id)),
-        )
-        // remove duplicates
-        .filter((value, index, array) => {
-          return (
-            array.findIndex((value2) => {
-              return value.id === value2.id
-            }) === index
-          )
-        })
-        .flatMap((car) => season.data?.[propertyToSearchFor]?.find((c) => c.id === car.id) ?? [])
-        .filter((car) =>
-          userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)),
-        )
-        .filter((car) =>
+    return filteredSeries
+      .flatMap((series) => series.schedules.flatMap((s) => s[propertyToFilter] as T))
+      .filter(
+        (value) =>
+          !value.free && (showOwnedContent || !userRepository[propertyOfOwnedContent].find((c) => value.id === c.id)),
+      )
+      .removeDuplicates((value, value2) => value.id === value2.id)
+      .flatMap((car) => season.data?.[propertyToSearchFor]?.find((c) => c.id === car.id) ?? [])
+      .filter(
+        (car) =>
+          userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)) &&
           userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id)),
-        )
-        .sort((a, b) => b.numberOfSeries - a.numberOfSeries)
-        .sort((a, b) => b.numberOfRaces - a.numberOfRaces)
-        .filter((_, index) => index < 10) as T[]
-    )
+      )
+      .sort((a, b) => b.numberOfSeries - a.numberOfSeries || b.numberOfRaces - a.numberOfRaces)
+      .filter((_, index) => index < 10) as T[]
+  }
+
+  const wouldBuyingThisContentIncreasesSeriesEligible = (
+    series: SeriesWithSummary,
+    content: Car | Track,
+    userRepository: ReturnType<typeof useUserRepository>,
+  ): boolean => {
+    return !!series.schedules.find((s) => {
+      const ownedTrack = s.track.free || userRepository.myTracks.find((t) => t.id === s.track.id)
+      const ownedCarsInSchedule = s.cars.filter((car) => car.free || userRepository.myCars.find((c) => car.id === c.id))
+
+      if ("location" in content && "id" in content) {
+        return ownedTrack && s.track.id !== content.id
+      } else {
+        return ownedCarsInSchedule.length === 0 && !s.cars.find((car) => car.id === content.id)
+      }
+    })
+  }
+
+  const filterAlmostEligibleSeries = (
+    season: Season,
+    seriesWithSummary: SeriesWithSummary[],
+    userRepository: ReturnType<typeof useUserRepository>,
+  ): AlmostEligibleSeriesAndContentsToBuy[] => {
+    const filtered = seriesWithSummary
+      .filter(
+        (serie) =>
+          userRepository.preferredLicenses.some((license) => serie.licenses.find((l) => l.id === license.id)) &&
+          userRepository.preferredCategories.some((category) =>
+            serie.schedules.find((c) => c.categoryId === category.id),
+          ) &&
+          serie.eligible < calculateMinimumParticipation(serie),
+      )
+      .sort(
+        (b, a) =>
+          a.eligible - b.eligible ||
+          a.totalCars - a.ownedCars - (b.totalCars - b.ownedCars) ||
+          a.totalTracks - a.ownedTracks - (b.totalTracks - b.ownedTracks),
+      )
+      .filter((_, index) => index < 10)
+
+    return filtered.map((series) => {
+      const allCarsOfSeries = series.schedules
+        .flatMap((s) => s.cars)
+        .removeDuplicates((c1, c2) => c1.id === c2.id)
+        .filter((car) => wouldBuyingThisContentIncreasesSeriesEligible(series, car, userRepository))
+        .sort((b, a) => a.numberOfSeries - b.numberOfSeries || a.numberOfRaces - b.numberOfRaces)
+        .filter((_, index) => index < 5)
+        .flatMap((car) => season.cars.find((c) => c.id === car.id) ?? [])
+
+      const allTracksOfSeries = series.schedules
+        .map((s) => s.track)
+        .removeDuplicates((t1, t2) => t1.id === t2.id)
+        .filter((track) => wouldBuyingThisContentIncreasesSeriesEligible(series, track, userRepository))
+        .sort((b, a) => a.numberOfSeries - b.numberOfSeries || a.numberOfRaces - b.numberOfRaces)
+        .filter((_, index) => index < 5)
+        .flatMap((track) => season.tracks.find((t) => t.id === track.id) ?? [])
+      return {
+        series,
+        cars: allCarsOfSeries,
+        tracks: allTracksOfSeries,
+      }
+    })
   }
 
   useEffect(() => {
-    const seriesWithSummary = (season.data?.series ?? []).map(summarizeSeries)
-    setParticipatedSeries(seriesWithSummary.filter((s) => s.participatedRaces > 0))
+    if (!season.data) {
+      return
+    }
+    const seriesWithSummary = (season.data.series ?? []).map(summarizeSeries)
+    setParticipatedSeries(
+      seriesWithSummary.filter(
+        (s) =>
+          (calculateMinimumParticipation(s) > 0 &&
+            s.eligible > calculateMinimumParticipation(s) &&
+            userRepository.preferredLicenses.some((license) =>
+              s.licenses.find((l) => l.id === license.id && license.letter !== "R"),
+            ) &&
+            userRepository.preferredCategories.some((category) =>
+              s.schedules.find((sc) => sc.categoryId === category.id),
+            )) ||
+          s.participatedRaces > 0,
+      ),
+    )
 
     const filteredSeries = seriesWithSummary.filter(
-      (a) => showSeriesEligible || a.eligible < MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS,
+      (a) => showSeriesEligible || a.eligible < calculateMinimumParticipation(a),
     )
+
     const cars = filterBestBuys<Car>(filteredSeries, "cars", "cars", userRepository, "myCars")
     setBestCarsToBuy(cars)
 
     const tracks = filterBestBuys<TrackWithConfigName>(filteredSeries, "track", "tracks", userRepository, "myTracks")
     setBestTracksToBuy(tracks)
-  }, [season.data, showOwnedContent, showSeriesEligible])
+
+    const almostEligibleSeries = filterAlmostEligibleSeries(season.data, seriesWithSummary, userRepository)
+    setAlmostEligibleSeriesAndContentToBuy(almostEligibleSeries)
+  }, [
+    season.data,
+    showOwnedContent,
+    showSeriesEligible,
+    userRepository.preferredLicenses,
+    userRepository.preferredCategories,
+  ])
 
   useEffect(() => {
     if (season.data) {
@@ -114,9 +233,11 @@ export function SummaryPage() {
   return (
     <Row className="summary-page" alignVertically="start">
       <Column className="content">
-        <Text size="large" relevance="important">
-          Séries com participação nessa temporada
-        </Text>
+        <div className="title">
+          <Text size="large" relevance="important">
+            Séries com participação nessa temporada
+          </Text>
+        </div>
         <Row className="list two-columns" alignVertically="start" alignHorizontally="start">
           <Column alignVertically="start" alignHorizontally="start">
             {participatedSeries.slice(0, Math.ceil(participatedSeries.length / 2)).flatMap((series, index, array) => (
@@ -145,9 +266,11 @@ export function SummaryPage() {
           </Column> */}
         </Row>
 
-        <Text size="large" relevance="important">
-          Melhores conteúdos para comprar
-        </Text>
+        <div className="title">
+          <Text size="large" relevance="important">
+            Melhores conteúdos para comprar
+          </Text>
+        </div>
         <Row alignVertically="start" alignHorizontally="start">
           <Column className="side-bar" alignVertically="start" alignHorizontally="start">
             <CheckableList
@@ -173,9 +296,23 @@ export function SummaryPage() {
           </Column>
           <Column className="best-buy">
             <div className="list">
-              <Text size="regular" relevance="important">
-                Carros:
-              </Text>
+              <div className="subtitle">
+                <Text size="regular" relevance="important">
+                  Melhores séries com conteúdos não possuídos:
+                </Text>
+              </div>
+              {almostEligibleseriesAndContentToBuy.flatMap((series, index, array) => (
+                <div key={`${series.series.id}`}>
+                  <AlmostEligibleSeries series={series} />
+                  {index < array.length - 1 ? <hr /> : null}
+                </div>
+              ))}
+
+              <div className="subtitle">
+                <Text size="regular" relevance="important">
+                  Carros:
+                </Text>
+              </div>
               <Row className="car-row subtitle">
                 <Column className="main"></Column>
                 <Column className="others">
@@ -196,9 +333,11 @@ export function SummaryPage() {
                   {index < array.length - 1 ? <hr /> : null}
                 </div>
               ))}
-              <Text size="regular" relevance="important">
-                Pistas:
-              </Text>
+              <div className="subtitle">
+                <Text size="regular" relevance="important">
+                  Pistas:
+                </Text>
+              </div>
               <Row className="car-row subtitle">
                 <Column className="main"></Column>
                 <Column className="others">

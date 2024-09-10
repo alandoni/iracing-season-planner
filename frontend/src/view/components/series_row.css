@@ -44,3 +44,11 @@
   transform-origin: top;
   transition: all 500ms;
 }
+
+.series-row .car-row:hover {
+  background-color: #d7e1e9;
+}
+
+.series-row .track-row:hover {
+  background-color: #d7e1e9;
+}

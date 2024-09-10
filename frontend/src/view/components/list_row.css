@@ -13,3 +13,7 @@
   flex: 1;
   max-width: none;
 }
+
+.list > *:nth-child(odd):not(.subtitle) {
+  background-color: #eef3f7;
+}
