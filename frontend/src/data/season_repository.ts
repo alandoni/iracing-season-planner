@@ -17,6 +17,10 @@ export function useSeasonRepository() {
   const [season, setSeason] = useState<Season>()
 
   useEffect(() => {
+    if (localStorage.getItem(LOCAL_STORAGE_CACHED_DATE_KEY) === "undefined") {
+      makeRequest()
+      return
+    }
     const cachedDate = new Date(localStorage.getItem(LOCAL_STORAGE_CACHED_DATE_KEY) ?? "")
     const seasonData = {
       cars: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CARS_KEY) ?? "[]"),
@@ -67,5 +71,15 @@ export function useSeasonRepository() {
     }
   }, [season, data])
 
-  return { data: season, loading, error, success }
+  const invalidateCache = () => {
+    localStorage.removeItem(LOCAL_STORAGE_CARS_KEY)
+    localStorage.removeItem(LOCAL_STORAGE_TRACKS_KEY)
+    localStorage.removeItem(LOCAL_STORAGE_SERIES_KEY)
+    localStorage.removeItem(LOCAL_STORAGE_LICENSES_KEY)
+    localStorage.removeItem(LOCAL_STORAGE_CATEGORIES_KEY)
+    localStorage.removeItem(LOCAL_STORAGE_CACHED_DATE_KEY)
+    makeRequest()
+  }
+
+  return { data: season, loading, error, success, invalidateCache }
 }

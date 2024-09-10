@@ -2,12 +2,15 @@ import { Text } from "./text"
 import { Row } from "./row"
 import Import from "assets/import.svg?react"
 import Export from "assets/export.svg?react"
+import Update from "assets/update.svg?react"
 import { ImportingOlderFileError, useUserRepository } from "data/user_repository"
 import { ChangeEvent, useRef } from "react"
 import "./header.css"
+import { useSeasonRepository } from "data/season_repository"
 
 export function Header() {
   const userRepository = useUserRepository()
+  const seasonRepository = useSeasonRepository()
   const ref = useRef<HTMLInputElement>(null)
 
   const onImportClick = () => {
@@ -41,6 +44,10 @@ export function Header() {
     a.click() // Start downloading
   }
 
+  const onUpdateClick = async () => {
+    seasonRepository.invalidateCache()
+  }
+
   return (
     <div className="header">
       <Row className="logo-container">
@@ -50,6 +57,9 @@ export function Header() {
           iRacing Season Planner
         </Text>
         <div className="header-buttons">
+          <span title="Atualizar Dados">
+            <Update className="svg icon update" viewBox="0 0 24 24" onClick={onUpdateClick} />
+          </span>
           <span title="Importar dados - Ler de um arquivo no seu computador">
             <Import className="svg icon import" viewBox="0 0 24 24" onClick={onImportClick} />
           </span>

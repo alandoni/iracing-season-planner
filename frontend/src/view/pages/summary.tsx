@@ -21,7 +21,6 @@ import {
   AlmostEligibleSeries,
   AlmostEligibleSeriesAndContentsToBuy,
 } from "components/series_eligible_and_needed_content"
-import { Season } from "data/season"
 
 declare global {
   interface Array<T> {
@@ -100,7 +99,6 @@ export function SummaryPage() {
   const filterBestBuys = <T extends Car | TrackWithConfigName>(
     filteredSeries: Series[],
     propertyToFilter: "cars" | "track",
-    propertyToSearchFor: "cars" | "tracks",
     userRepository: ReturnType<typeof useUserRepository>,
     propertyOfOwnedContent: "myCars" | "myTracks",
   ): T[] => {
@@ -111,7 +109,6 @@ export function SummaryPage() {
           !value.free && (showOwnedContent || !userRepository[propertyOfOwnedContent].find((c) => value.id === c.id)),
       )
       .removeDuplicates((value, value2) => value.id === value2.id)
-      .flatMap((car) => season.data?.[propertyToSearchFor]?.find((c) => c.id === car.id) ?? [])
       .filter(
         (car) =>
           userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)) &&
@@ -143,7 +140,6 @@ export function SummaryPage() {
   }
 
   const filterAlmostEligibleSeries = (
-    season: Season,
     seriesWithSummary: SeriesWithSummary[],
     userRepository: ReturnType<typeof useUserRepository>,
   ): AlmostEligibleSeriesAndContentsToBuy[] => {
@@ -169,7 +165,6 @@ export function SummaryPage() {
         .flatMap((s) => s.cars)
         .removeDuplicates((c1, c2) => c1.id === c2.id)
         .filter((car) => wouldBuyingThisContentIncreasesSeriesEligible(series, car, userRepository))
-        .flatMap((car) => season.cars.find((c) => c.id === car.id) ?? [])
         .sort((b, a) => a.numberOfSeries - b.numberOfSeries || a.numberOfRaces - b.numberOfRaces)
         .filter((_, index) => index < 5)
 
@@ -177,7 +172,6 @@ export function SummaryPage() {
         .map((s) => s.track)
         .removeDuplicates((t1, t2) => t1.id === t2.id)
         .filter((track) => wouldBuyingThisContentIncreasesSeriesEligible(series, track, userRepository))
-        .flatMap((track) => season.tracks.find((t) => t.id === track.id) ?? [])
         .sort((b, a) => a.numberOfSeries - b.numberOfSeries || a.numberOfRaces - b.numberOfRaces)
         .filter((_, index) => index < 5)
       return {
@@ -212,13 +206,13 @@ export function SummaryPage() {
       (a) => showSeriesEligible || a.eligible < calculateMinimumParticipation(a),
     )
 
-    const cars = filterBestBuys<Car>(filteredSeries, "cars", "cars", userRepository, "myCars")
+    const cars = filterBestBuys<Car>(filteredSeries, "cars", userRepository, "myCars")
     setBestCarsToBuy(cars)
 
-    const tracks = filterBestBuys<TrackWithConfigName>(filteredSeries, "track", "tracks", userRepository, "myTracks")
+    const tracks = filterBestBuys<TrackWithConfigName>(filteredSeries, "track", userRepository, "myTracks")
     setBestTracksToBuy(tracks)
 
-    const almostEligibleSeries = filterAlmostEligibleSeries(season.data, seriesWithSummary, userRepository)
+    const almostEligibleSeries = filterAlmostEligibleSeries(seriesWithSummary, userRepository)
     setAlmostEligibleSeriesAndContentToBuy(almostEligibleSeries)
   }, [
     season.data,

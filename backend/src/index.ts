@@ -63,6 +63,7 @@ app.get(`${version}/user/{id}/{displayName}`, async (req, res) => {
   }
 })
 
+logger.info(`Running on: ${process.env.NODE_ENV}`)
 const buildPath = process.env.NODE_ENV === "production" ? "../../" : "../../build"
 app.useMiddleware(express.static(path.resolve(__dirname, buildPath)))
 app.get("/*", (_req, res) => {

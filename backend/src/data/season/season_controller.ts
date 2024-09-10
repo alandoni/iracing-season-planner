@@ -253,7 +253,22 @@ export class SeasonController {
       tracks: Object.values(seasonTracks).sort((a, b) => a.licenses[0].id - b.licenses[0].id),
       licenses,
       categories,
-      series: season,
+      series: season.map((series) => {
+        return {
+          ...series,
+          schedules: series.schedules.map((s) => {
+            const track = seasonTracks[s.track.id]
+            return {
+              ...s,
+              track: {
+                ...track,
+                configName: s.track.configName,
+              },
+              cars: s.cars.map((car) => seasonCars[car.id]),
+            }
+          }),
+        }
+      }),
     })
   }
 
