@@ -8,15 +8,25 @@ import { ParticipatedSeriesRow, SeriesWithSummary } from "./participated_series_
 
 export type AlmostEligibleSeriesAndContentsToBuy = {
   series: SeriesWithSummary
-  cars: Car[]
   tracks: Track[]
+  cars: Car[]
 }
 
 type AlmostEligibleSeriesProps = {
   series: AlmostEligibleSeriesAndContentsToBuy
+  isCarOwned: (car: Car) => boolean
+  isTrackOwned: (track: Track) => boolean
+  onChangeOwnedCar: (checked: boolean, car: Car) => void
+  onChangeOwnedTrack: (checked: boolean, track: Track) => void
 }
 
-export function AlmostEligibleSeries({ series }: AlmostEligibleSeriesProps) {
+export function AlmostEligibleSeries({
+  series,
+  isCarOwned,
+  isTrackOwned,
+  onChangeOwnedCar,
+  onChangeOwnedTrack,
+}: AlmostEligibleSeriesProps) {
   return (
     <Row>
       <Column>
@@ -24,13 +34,7 @@ export function AlmostEligibleSeries({ series }: AlmostEligibleSeriesProps) {
         {series.cars.map((car) => {
           return (
             <div key={car.id}>
-              <CarRow
-                car={car}
-                selected={false}
-                onSelect={(checked: boolean, car: Car) => {
-                  throw new Error("Function not implemented.")
-                }}
-              />
+              <CarRow car={car} selected={isCarOwned(car)} onSelect={onChangeOwnedCar} />
             </div>
           )
         })}
@@ -38,13 +42,7 @@ export function AlmostEligibleSeries({ series }: AlmostEligibleSeriesProps) {
         {series.tracks.map((track) => {
           return (
             <div key={track.id}>
-              <TrackRow
-                track={track}
-                selected={false}
-                onSelect={(checked: boolean, track: Track) => {
-                  throw new Error("Function not implemented.")
-                }}
-              />
+              <TrackRow track={track} selected={isTrackOwned(track)} onSelect={onChangeOwnedTrack} />
             </div>
           )
         })}

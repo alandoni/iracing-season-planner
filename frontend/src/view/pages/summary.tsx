@@ -317,7 +317,13 @@ export function SummaryPage() {
               </Row>
               {almostEligibleseriesAndContentToBuy.flatMap((series, index, array) => (
                 <div key={`${series.series.id}`}>
-                  <AlmostEligibleSeries series={series} />
+                  <AlmostEligibleSeries
+                    series={series}
+                    isCarOwned={(car) => userRepository.myCars.find((c) => c.id === car.id) !== undefined}
+                    isTrackOwned={(track) => userRepository.myTracks.find((c) => c.id === track.id) !== undefined}
+                    onChangeOwnedCar={userRepository.setCar}
+                    onChangeOwnedTrack={userRepository.setTrack}
+                  />
                   {index < array.length - 1 ? <hr /> : null}
                 </div>
               ))}

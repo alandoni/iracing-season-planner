@@ -97,12 +97,12 @@ export function useUserRepository() {
     updateLastChangedDate()
   }
 
-  const setTrack = (checked: boolean, car: Track) => {
+  const setTrack = (checked: boolean, track: Track) => {
     setMyTracks((old) => {
       if (checked) {
-        old.push(car)
+        old.push(track)
       } else {
-        removeFromList(car, old, (c1, c2) => c1.id === c2.id)
+        removeFromList(track, old, (c1, c2) => c1.id === c2.id)
       }
       localStorage.setItem(LOCAL_STORAGE_MY_TRACKS_KEY, JSON.stringify(old.map((i) => i.id)))
       return [...old]
