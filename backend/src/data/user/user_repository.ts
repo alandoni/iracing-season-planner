@@ -21,8 +21,8 @@ export class UserRepository {
 
   async login() {
     const loginRequest = this.encriptLogin({
-      email: process.env.IRACING_EMAIL,
-      password: process.env.IRACING_PASSWORD,
+      email: process.env.IRACING_EMAIL ?? "",
+      password: process.env.IRACING_PASSWORD ?? "",
     })
     return await this.httpClient.post(UserRepository.URL, loginRequest)
   }

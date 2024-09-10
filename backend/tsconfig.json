@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -25,6 +25,7 @@
     "paths": {
       "utils/*": ["./src/utils/*"],
       "data/*": ["./src/data/*", "../shared/models/*"],
+      "models/*": ["../shared/models/*"],
       "src/*": ["./src/*"]
     }
   },
