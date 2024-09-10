@@ -136,7 +136,7 @@ export function SummaryPage() {
         if ("location" in content && "id" in content) {
           return !ownedTrack && s.track.id === content.id
         } else {
-          return ownedCarsInSchedule.length === 0 && !s.cars.find((car) => car.id === content.id)
+          return ownedCarsInSchedule.length === 0 && s.cars.find((car) => car.id === content.id)
         }
       }) !== undefined
     )
@@ -169,17 +169,17 @@ export function SummaryPage() {
         .flatMap((s) => s.cars)
         .removeDuplicates((c1, c2) => c1.id === c2.id)
         .filter((car) => wouldBuyingThisContentIncreasesSeriesEligible(series, car, userRepository))
+        .flatMap((car) => season.cars.find((c) => c.id === car.id) ?? [])
         .sort((b, a) => a.numberOfSeries - b.numberOfSeries || a.numberOfRaces - b.numberOfRaces)
         .filter((_, index) => index < 5)
-        .flatMap((car) => season.cars.find((c) => c.id === car.id) ?? [])
 
       const allTracksOfSeries = series.schedules
         .map((s) => s.track)
         .removeDuplicates((t1, t2) => t1.id === t2.id)
         .filter((track) => wouldBuyingThisContentIncreasesSeriesEligible(series, track, userRepository))
+        .flatMap((track) => season.tracks.find((t) => t.id === track.id) ?? [])
         .sort((b, a) => a.numberOfSeries - b.numberOfSeries || a.numberOfRaces - b.numberOfRaces)
         .filter((_, index) => index < 5)
-        .flatMap((track) => season.tracks.find((t) => t.id === track.id) ?? [])
       return {
         series,
         cars: allCarsOfSeries,
@@ -305,6 +305,16 @@ export function SummaryPage() {
                   Melhores séries com conteúdos não possuídos:
                 </Text>
               </div>
+              <Row className="car-row subtitle">
+                <Column className="main"></Column>
+                <Column className="others">
+                  <Row className="others-subtitle">
+                    <span title="Número de corridas com essa pista na temporada">R</span>
+                    <span title="Número de séries com essa pista na temporada">S</span>
+                    <span title="Você já tem essa pista?">C?</span>
+                  </Row>
+                </Column>
+              </Row>
               {almostEligibleseriesAndContentToBuy.flatMap((series, index, array) => (
                 <div key={`${series.series.id}`}>
                   <AlmostEligibleSeries series={series} />
