@@ -24,7 +24,8 @@ export function SummaryPage() {
   const [participatedSeries, setParticipatedSeries] = useState<SeriesWithSummary[]>([])
   const [bestCarsToBuy, setBestCarsToBuy] = useState<Car[]>([])
   const [bestTracksToBuy, setBestTracksToBuy] = useState<TrackWithConfigName[]>([])
-  const [showOwnedContent, setShowOwnedContent] = useState<boolean>(true)
+  const [showOwnedContent, setShowOwnedContent] = useState<boolean>(false)
+  const [showSeriesEligible, setShowSeriesEligible] = useState<boolean>(false)
 
   const summarizeSeries = (series: Series): SeriesWithSummary => {
     let numberOfOwnedTracks = 0
@@ -84,31 +85,25 @@ export function SummaryPage() {
         .filter((car) =>
           userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id)),
         )
-        .filter((_, index) => index < 10)
         .sort((a, b) => b.numberOfSeries - a.numberOfSeries)
-        .sort((a, b) => b.numberOfRaces - a.numberOfRaces) as T[]
+        .sort((a, b) => b.numberOfRaces - a.numberOfRaces)
+        .filter((_, index) => index < 10) as T[]
     )
   }
 
   useEffect(() => {
     const seriesWithSummary = (season.data?.series ?? []).map(summarizeSeries)
     setParticipatedSeries(seriesWithSummary.filter((s) => s.participatedRaces > 0))
-    const filteredSeries = seriesWithSummary.filter((a) => a.eligible < MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS)
+
+    const filteredSeries = seriesWithSummary.filter(
+      (a) => showSeriesEligible || a.eligible < MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS,
+    )
     const cars = filterBestBuys<Car>(filteredSeries, "cars", "cars", userRepository, "myCars")
     setBestCarsToBuy(cars)
 
     const tracks = filterBestBuys<TrackWithConfigName>(filteredSeries, "track", "tracks", userRepository, "myTracks")
     setBestTracksToBuy(tracks)
-  }, [
-    season.data,
-    userRepository.participatedSeries,
-    userRepository.participatedRaces,
-    userRepository.preferredCategories,
-    userRepository.preferredLicenses,
-    userRepository.myCars,
-    userRepository.myTracks,
-    showOwnedContent,
-  ])
+  }, [season.data, showOwnedContent, showSeriesEligible])
 
   useEffect(() => {
     if (season.data) {
@@ -170,6 +165,10 @@ export function SummaryPage() {
             <Row>
               <Checkbox small isChecked={showOwnedContent} onChange={setShowOwnedContent} />
               <Text size="small">Mostrar conteúdos possuídos</Text>
+            </Row>
+            <Row>
+              <Checkbox small isChecked={showSeriesEligible} onChange={setShowSeriesEligible} />
+              <Text size="small">Mostrar conteúdos de séries já elegíveis</Text>
             </Row>
           </Column>
           <Column className="best-buy">

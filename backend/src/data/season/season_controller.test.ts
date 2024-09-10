@@ -32,7 +32,7 @@ describe("SeasonController", () => {
   describe("Cache validation", () => {
     it("should validate the cache", () => {
       jest.useFakeTimers().setSystemTime(new Date("2024-01-17 02:59"))
-      const season: Season = {
+      const season = Object.assign(new Season(), {
         cachedDate: new Date("2024-01-10 03:00"),
         cars: [],
         tracks: [],
@@ -71,26 +71,26 @@ describe("SeasonController", () => {
             official: false,
           },
         ],
-      }
-      expect(getSeasonController().validateCache(season)).toBeTruthy()
+      })
+      expect(season.validate()).toBeTruthy()
     })
 
     it("should not validate the cache if no series are included", () => {
       jest.useFakeTimers().setSystemTime(new Date("2024-01-01"))
-      const season = {
+      const season = Object.assign(new Season(), {
         cachedDate: new Date("2024-05-01"),
         cars: [],
         tracks: [],
         licenses: [],
         categories: [],
         series: [],
-      }
-      expect(getSeasonController().validateCache(season)).toBeFalsy()
+      })
+      expect(season.validate()).toBeFalsy()
     })
 
     it("should not validate the cache if no schedules are included", () => {
       jest.useFakeTimers().setSystemTime(new Date("2024-01-01"))
-      const season = {
+      const season = Object.assign(new Season(), {
         cachedDate: new Date("2024-05-01"),
         cars: [],
         tracks: [],
@@ -108,13 +108,13 @@ describe("SeasonController", () => {
             official: false,
           },
         ],
-      }
-      expect(getSeasonController().validateCache(season)).toBeFalsy()
+      })
+      expect(season.validate()).toBeFalsy()
     })
 
     it("should not validate the cache if the cached date is too old", () => {
       jest.useFakeTimers().setSystemTime(new Date("2024-01-17 03:00"))
-      const season: Season = {
+      const season = Object.assign(new Season(), {
         cachedDate: new Date("2024-01-10 03:00"),
         cars: [],
         tracks: [],
@@ -153,13 +153,13 @@ describe("SeasonController", () => {
             official: false,
           },
         ],
-      }
-      expect(getSeasonController().validateCache(season)).toBeFalsy()
+      })
+      expect(season.validate()).toBeFalsy()
     })
 
     it("should not validate the cache if the last schedule of the bigger season is too old", () => {
       jest.useFakeTimers().setSystemTime(new Date("2024-01-17 03:00"))
-      const season: Season = {
+      const season = Object.assign(new Season(), {
         cachedDate: new Date("2024-01-12 03:00"),
         cars: [],
         tracks: [],
@@ -198,8 +198,8 @@ describe("SeasonController", () => {
             official: false,
           },
         ],
-      }
-      expect(getSeasonController().validateCache(season)).toBeFalsy()
+      })
+      expect(season.validate()).toBeFalsy()
     })
   })
 })

@@ -29,6 +29,10 @@
   margin-right: var(--spacing-smaller);
 }
 
+.summary-page .content .side-bar .row {
+  margin-top: var(--spacing);
+}
+
 .summary-page .content .best-buy .list {
   margin-left: var(--spacing);
 }

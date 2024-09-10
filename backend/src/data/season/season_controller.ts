@@ -17,7 +17,6 @@ import path from "path"
 export class SeasonController {
   static DOWNLOAD_PATH = `downloaded`
   static SEASON_FILE = `${SeasonController.DOWNLOAD_PATH}/file-season.json`
-  static MAX_DAYS_TO_VALIDATE_CACHE = 7
 
   constructor(
     private seasonRepository: SeasonRepository,
@@ -53,50 +52,19 @@ export class SeasonController {
     })
   }
 
+  async getRawSeason(): Promise<string> {
+    return await this.readFile(SeasonController.SEASON_FILE)
+  }
+
   async getSeason(): Promise<Season> {
     const cache = await this.getCachedSeason()
-    if (this.validateCache(cache)) {
+    if (cache?.validate()) {
       logger.debug(`Using cache ${cache?.cachedDate}`)
       return cache
     } else {
       logger.debug("Downloading season")
       return await this.downloadSeason()
     }
-  }
-
-  public validateCache(cache: Season | null): boolean {
-    if (!cache) {
-      return false
-    }
-
-    const sortedSeries = cache.series.sort((a, b) => b.schedules.length - a.schedules.length)
-    if (sortedSeries.length === 0) {
-      logger.info("No series found")
-      return false
-    }
-    const longestSerie = sortedSeries[0]
-    const sortedSchedules = longestSerie.schedules.sort((a, b) => {
-      return b.startDate.getTime() - a.startDate.getTime() //inverted
-    })
-    if (sortedSchedules.length === 0) {
-      return false
-    }
-    const lastSchedule = sortedSchedules[0]
-    const lastScheduleLastDate = new Date(
-      lastSchedule.startDate.setDate(
-        lastSchedule.startDate.getDate() + SeasonController.MAX_DAYS_TO_VALIDATE_CACHE - 1,
-      ),
-    )
-    logger.info(`Cached date: ${cache.cachedDate}`)
-    const lastValidDate = new Date(
-      cache.cachedDate.setDate(cache.cachedDate.getDate() + SeasonController.MAX_DAYS_TO_VALIDATE_CACHE),
-    )
-
-    logger.info(`Last Schedule date: ${lastScheduleLastDate}`)
-    logger.info(`Last Valid date: ${lastValidDate}`)
-    logger.info(`Current date: ${new Date()}`)
-
-    return new Date().getTime() < lastValidDate.getTime() && new Date().getTime() < lastScheduleLastDate.getTime()
   }
 
   private async getCachedSeason(): Promise<Season | null> {
@@ -109,7 +77,7 @@ export class SeasonController {
           sc.startDate = new Date(sc.startDate)
         })
       })
-      return content
+      return Object.assign(new Season(), content)
     } catch (error) {
       logger.warn(`File not loaded: ${error}`)
       return null
@@ -279,14 +247,14 @@ export class SeasonController {
       return acc
     }, {} as Record<number, Track>)
 
-    return {
+    return Object.assign(new Season(), {
       cachedDate: new Date(),
       cars: Object.values(seasonCars).sort((a, b) => a.licenses[0].id - b.licenses[0].id),
       tracks: Object.values(seasonTracks).sort((a, b) => a.licenses[0].id - b.licenses[0].id),
       licenses,
       categories,
       series: season,
-    }
+    })
   }
 
   private storeFile(file: string, content: string): Promise<void> {

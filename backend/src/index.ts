@@ -38,6 +38,16 @@ app.get(`${version}/season/clear-cache`, async (_, res) => {
   }
 })
 
+app.get(`${version}/season/raw`, async (_, res) => {
+  try {
+    const seasons = await getSeasonController().getRawSeason()
+    res.status(200).send(seasons)
+  } catch (error) {
+    logger.error(`Error: ${error} -- Request ID: ${res.getHeader("requestId")}`)
+    res.status(500).send(`Unknown error - Request ID: ${res.getHeader("requestId")}`)
+  }
+})
+
 app.get(`${version}/user/{id}/{displayName}`, async (req, res) => {
   try {
     const id = req.params.id
