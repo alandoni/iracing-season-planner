@@ -1,9 +1,15 @@
 .license-letter {
   width: 24px;
   height: 24px;
-  color: white;
+  color: var(--color-text);
   text-align: center;
   border-radius: 50%;
   padding-left: 1px;
   padding-top: 1px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .license-letter {
+    color: var(--color-background);
+  }
 }

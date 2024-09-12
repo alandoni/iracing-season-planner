@@ -1,5 +1,5 @@
 .warning {
-  background-color: #f9f1e7;
+  background-color: var(--color-warning-background);
   padding-top: var(--spacing-small);
   padding-bottom: var(--spacing-small);
   padding-left: var(--spacing-larger);

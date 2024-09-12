@@ -57,7 +57,7 @@
 }
 
 .header .header-buttons .icon {
-  fill: white;
+  fill: var(--color-background);
   width: 32px;
   height: 32px;
   cursor: pointer;
@@ -65,4 +65,22 @@
 
 .header .header-buttons .icon.export {
   margin-right: var(--spacing);
+}
+
+@media (prefers-color-scheme: dark) {
+  .header .text {
+    color: var(--color-text);
+  }
+
+  .header {
+    background-color: var(--color-background);
+  }
+
+  .header .blue {
+    background-color: var(--color-primary);
+  }
+
+  .header .header-buttons .icon {
+    fill: var(--color-text);
+  }
 }

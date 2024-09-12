@@ -2,4 +2,6 @@
   gap: var(--spacing-small);
   padding-top: var(--spacing-small);
   padding-bottom: var(--spacing-small);
+  padding-left: var(--spacing);
+  padding-right: var(--spacing);
 }

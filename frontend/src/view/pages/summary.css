@@ -37,12 +37,9 @@
   margin-top: var(--spacing);
 }
 
-.summary-page .content .best-buy .list {
-  margin-left: var(--spacing);
-}
-
-.summary-page .content .best-buy .list .text.text.relevance-important:not(:first-child) {
-  margin-top: var(--spacing);
+.summary-page .content .subtitle {
+  padding-left: var(--spacing);
+  padding-right: var(--spacing);
 }
 
 .summary-page .content .best-buy .list .others-subtitle span {

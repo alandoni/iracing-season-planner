@@ -5,6 +5,10 @@
   padding-bottom: var(--spacing-small);
 }
 
+.car-row .main {
+  flex-grow: 1;
+}
+
 .car-row .price {
   width: 50px;
   min-width: 50px;

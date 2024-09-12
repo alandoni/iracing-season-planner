@@ -23,7 +23,7 @@ export function useSeasonRepository() {
     }
     const cachedDate = new Date(localStorage.getItem(LOCAL_STORAGE_CACHED_DATE_KEY) ?? "")
 
-    decompress(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? "")
+    decompress(JSON.parse(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? "[]"))
       .then((data) => {
         const seasonData = {
           cars: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CARS_KEY) ?? "[]"),
@@ -45,7 +45,8 @@ export function useSeasonRepository() {
           makeRequest()
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error(error)
         makeRequest()
       })
   }, [])
@@ -58,7 +59,7 @@ export function useSeasonRepository() {
       console.log(`Data not found, requested: ${data}`)
 
       compress(JSON.stringify(data.series)).then((buffer) => {
-        localStorage.setItem(LOCAL_STORAGE_SERIES_KEY, buffer)
+        localStorage.setItem(LOCAL_STORAGE_SERIES_KEY, JSON.stringify(buffer))
       })
 
       localStorage.setItem(LOCAL_STORAGE_CARS_KEY, JSON.stringify(data.cars))
@@ -92,7 +93,7 @@ export function useSeasonRepository() {
     makeRequest()
   }
 
-  const compress = async (string: string): Promise<string> => {
+  const compress = async (string: string): Promise<Array<number>> => {
     const byteArray = new TextEncoder().encode(string)
     const cs = new CompressionStream("gzip")
     const writer = cs.writable.getWriter()
@@ -118,19 +119,21 @@ export function useSeasonRepository() {
       concatenated.set(array, offset)
       offset += array.byteLength
     }
-    return concatenated.join()
+    return Array.from(concatenated)
   }
 
-  const decompress = async (byteArrayInBase64: string): Promise<string> => {
-    if (byteArrayInBase64.length === 0) {
+  const decompress = async (byteArray: Array<number>): Promise<string> => {
+    if (byteArray.length === 0) {
       throw new Error("Invalid string")
     }
-    const cs = new DecompressionStream("gzip")
-    const writer = cs.writable.getWriter()
-    writer.write(byteArrayInBase64)
+    const ds = new DecompressionStream("gzip")
+    const writer = ds.writable.getWriter()
+
+    const uintArray = new Uint8Array(byteArray)
+    writer.write(uintArray)
     writer.close()
     //create the reader
-    const reader = cs.readable.getReader()
+    const reader = ds.readable.getReader()
     let totalSize = 0
     //go through each chunk and add it to the output
     let finished = true
@@ -150,7 +153,7 @@ export function useSeasonRepository() {
       concatenated.set(array, offset)
       offset += array.byteLength
     }
-    return concatenated.join()
+    return new TextDecoder().decode(concatenated)
   }
 
   return { data: season, loading, error, success, invalidateCache }

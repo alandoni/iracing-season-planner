@@ -1,0 +1,5 @@
+.series-eligible-and-needed-content .section {
+  padding-left: var(--spacing);
+  display: flex;
+  flex-direction: column;
+}

@@ -5,6 +5,7 @@ import { Column } from "./column"
 import { CarRow } from "./car_row"
 import { TrackRow } from "./track_row"
 import { ParticipatedSeriesRow, SeriesWithSummary } from "./participated_series_row"
+import "./series_eligible_and_needed_content.css"
 
 export type AlmostEligibleSeriesAndContentsToBuy = {
   series: SeriesWithSummary
@@ -28,24 +29,26 @@ export function AlmostEligibleSeries({
   onChangeOwnedTrack,
 }: AlmostEligibleSeriesProps) {
   return (
-    <Row>
+    <Row className="series-eligible-and-needed-content">
       <Column>
         <ParticipatedSeriesRow series={series.series} />
-        {series.cars.map((car) => {
-          return (
-            <div key={car.id}>
-              <CarRow car={car} selected={isCarOwned(car)} onSelect={onChangeOwnedCar} />
-            </div>
-          )
-        })}
+        <div className="section">
+          {series.cars.map((car) => {
+            return (
+              <div key={car.id}>
+                <CarRow car={car} selected={isCarOwned(car)} onSelect={onChangeOwnedCar} />
+              </div>
+            )
+          })}
 
-        {series.tracks.map((track) => {
-          return (
-            <div key={track.id}>
-              <TrackRow track={track} selected={isTrackOwned(track)} onSelect={onChangeOwnedTrack} />
-            </div>
-          )
-        })}
+          {series.tracks.map((track) => {
+            return (
+              <div key={track.id}>
+                <TrackRow track={track} selected={isTrackOwned(track)} onSelect={onChangeOwnedTrack} />
+              </div>
+            )
+          })}
+        </div>
       </Column>
     </Row>
   )

@@ -17,30 +17,32 @@ body {
   line-height: 24px;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: var(--color-primary);
-  background-color: var(--color-background);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --color-background: #33343a;
-  --color-background-transparent: #33343a88;
-  --color-highlight: #434656;
-  --color-menu-background: #2c2e38;
-  --color-navigation-background: #434656;
-  --color-topbar-background: var(--color-menu-background);
-  --color-primary: #8c9dc4;
-  --color-secondary: #616e8b;
-  --color-secondary-background: #4e5065;
-  --color-irrelevant: #858cb2;
-  --color-border: #4a506e;
-  --color-icon: #858cb2;
-  --color-icon-primary: #a8a5ef;
-  --color-text: #e2e5ee;
+  --color-background: #1f1f22;
+  --color-background-transparent: #28272e88;
+  --color-secondary-background: #28272e;
+  --color-primary: #87a0c4;
+  --color-icon-primary: #252285;
+  --color-secondary: #e05b5b;
+  --color-irrelevant: #627288;
+  --color-border: #36363a;
+  --color-text: #ffffff;
+  --color-menu-background: #050114;
+  --color-highlight: #dedfe9;
+  --color-icon: #4e5a6b;
+  --color-row-list-odd: #28272e;
+  --color-row-list-odd-hover: #312f38;
+
+  --color-custom-default-1: #b95d5d;
+  --color-custom-default-2: #9ea04b;
+  --color-custom-default-3: #4d9248;
+  --color-custom-default-4: #3b8899;
+  --color-custom-default-5: #893992;
 
   --color-error-background: #ebc7c7;
   --color-error-text: #683827;
@@ -48,14 +50,8 @@ body {
   --color-success-background: #afe0af;
   --color-success-text: #1e741e;
 
-  --color-warning-background: #c5ca83;
+  --color-warning-background: #14141688;
   --color-warning-text: #77700c;
-
-  --color-custom-default-1: #dda0a0;
-  --color-custom-default-2: #dcdda0;
-  --color-custom-default-3: #a4dda0;
-  --color-custom-default-4: #a0d2dd;
-  --color-custom-default-5: #d7a0dd;
 
   --spacing-smaller: 4px;
   --spacing-small: 8px;
@@ -70,6 +66,9 @@ body {
   --max-width-for-phones: 992px;
 
   overflow: hidden;
+  color-scheme: dark light;
+  color: var(--color-primary);
+  background-color: var(--color-background);
 }
 
 #root {
@@ -130,9 +129,12 @@ svg {
   max-width: 100%;
   max-height: 100%;
   padding-top: var(--spacing-small);
+  overflow: auto;
+}
+
+.content .text.size-large.relevance-important {
   padding-left: var(--spacing);
   padding-right: var(--spacing);
-  overflow: auto;
 }
 
 .hidden {
@@ -197,6 +199,9 @@ svg {
     --color-menu-background: #f2f3f8;
     --color-highlight: #dedfe9;
     --color-icon: #1a4785;
+    --color-row-list-odd: #eef3f7;
+    --color-row-list-odd-hover: #d7e1e9;
+    --color-warning-background: #f9f1e7;
 
     --color-custom-default-1: #b95d5d;
     --color-custom-default-2: #9ea04b;
