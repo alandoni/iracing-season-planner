@@ -16,70 +16,76 @@ export function useSeasonRepository() {
   const [data, loading, success, error, makeRequest] = useRequest<Season>("season", false)
   const [season, setSeason] = useState<Season>()
 
-  useEffect(() => {
-    if (localStorage.getItem(LOCAL_STORAGE_CACHED_DATE_KEY) === "undefined") {
-      makeRequest()
-      return
-    }
-    const cachedDate = new Date(localStorage.getItem(LOCAL_STORAGE_CACHED_DATE_KEY) ?? "")
-
-    decompress(JSON.parse(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? "[]"))
-      .then((data) => {
-        const seasonData = {
-          cars: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CARS_KEY) ?? "[]"),
-          tracks: JSON.parse(localStorage.getItem(LOCAL_STORAGE_TRACKS_KEY) ?? "[]"),
-          series: JSON.parse(data ?? "[]").map((s: Series) => ({
-            ...s,
-            schedules: s.schedules.map((sc: Schedule) => ({ ...sc, startDate: new Date(sc.startDate) })),
-          })),
-          licenses: JSON.parse(localStorage.getItem(LOCAL_STORAGE_LICENSES_KEY) ?? "[]"),
-          categories: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEY) ?? "[]"),
-          cachedDate: cachedDate,
-        }
-        const cachedSeason = Object.assign(new Season(), seasonData)
-        if (cachedSeason.validate()) {
-          console.log(`Using cache, it will expire on ${cachedDate}`)
-          setSeason(cachedSeason)
-        } else {
-          console.log("Making request")
-          makeRequest()
-        }
-      })
-      .catch((error) => {
-        console.error(error)
+  const onLoad = async () => {
+    try {
+      const cachedDateInLocalStorage = localStorage.getItem(LOCAL_STORAGE_CACHED_DATE_KEY)
+      if (!cachedDateInLocalStorage || cachedDateInLocalStorage === "undefined") {
         makeRequest()
-      })
+        return
+      }
+      const cachedDate = new Date(cachedDateInLocalStorage ?? "")
+      const data = await decompress(JSON.parse(localStorage.getItem(LOCAL_STORAGE_SERIES_KEY) ?? "[]"))
+      const seasonData = {
+        cars: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CARS_KEY) ?? "[]"),
+        tracks: JSON.parse(localStorage.getItem(LOCAL_STORAGE_TRACKS_KEY) ?? "[]"),
+        series: JSON.parse(data ?? "[]").map((s: Series) => ({
+          ...s,
+          schedules: s.schedules.map((sc: Schedule) => ({ ...sc, startDate: new Date(sc.startDate) })),
+        })),
+        licenses: JSON.parse(localStorage.getItem(LOCAL_STORAGE_LICENSES_KEY) ?? "[]"),
+        categories: JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEY) ?? "[]"),
+        cachedDate: cachedDate,
+      }
+      const cachedSeason = Object.assign(new Season(), seasonData)
+      if (cachedSeason.validate()) {
+        console.log(`Using cache, it will expire on ${cachedDate}`)
+        setSeason(cachedSeason)
+      } else {
+        console.log("Making request")
+        makeRequest()
+      }
+    } catch (error) {
+      console.error(error)
+      makeRequest()
+    }
+  }
+
+  useEffect(() => {
+    onLoad()
   }, [])
+
+  const storeData = async (data: Season) => {
+    console.log(`Data not found, requested: ${data}`)
+
+    const buffer = await compress(JSON.stringify(data.series))
+    localStorage.setItem(LOCAL_STORAGE_SERIES_KEY, JSON.stringify(buffer))
+
+    localStorage.setItem(LOCAL_STORAGE_CARS_KEY, JSON.stringify(data.cars))
+    localStorage.setItem(LOCAL_STORAGE_TRACKS_KEY, JSON.stringify(data.tracks))
+    localStorage.setItem(LOCAL_STORAGE_LICENSES_KEY, JSON.stringify(data.licenses))
+    localStorage.setItem(LOCAL_STORAGE_CATEGORIES_KEY, JSON.stringify(data.categories))
+    localStorage.setItem(LOCAL_STORAGE_CACHED_DATE_KEY, String(data.cachedDate) ?? "")
+    setSeason(
+      Object.assign(new Season(), {
+        cars: data.cars,
+        tracks: data.tracks,
+        series: data.series.map((s: Series) => ({
+          ...s,
+          schedules: s.schedules.map((sc: Schedule) => ({ ...sc, startDate: new Date(sc.startDate) })),
+        })),
+        licenses: data.licenses,
+        cachedDate: new Date(data.cachedDate),
+        categories: data.categories,
+      }),
+    )
+  }
 
   useEffect(() => {
     if (season) {
       return
     }
     if (data && data.cachedDate) {
-      console.log(`Data not found, requested: ${data}`)
-
-      compress(JSON.stringify(data.series)).then((buffer) => {
-        localStorage.setItem(LOCAL_STORAGE_SERIES_KEY, JSON.stringify(buffer))
-      })
-
-      localStorage.setItem(LOCAL_STORAGE_CARS_KEY, JSON.stringify(data.cars))
-      localStorage.setItem(LOCAL_STORAGE_TRACKS_KEY, JSON.stringify(data.tracks))
-      localStorage.setItem(LOCAL_STORAGE_LICENSES_KEY, JSON.stringify(data.licenses))
-      localStorage.setItem(LOCAL_STORAGE_CATEGORIES_KEY, JSON.stringify(data.categories))
-      localStorage.setItem(LOCAL_STORAGE_CACHED_DATE_KEY, String(data.cachedDate) ?? "")
-      setSeason(
-        Object.assign(new Season(), {
-          cars: data.cars,
-          tracks: data.tracks,
-          series: data.series.map((s: Series) => ({
-            ...s,
-            schedules: s.schedules.map((sc: Schedule) => ({ ...sc, startDate: new Date(sc.startDate) })),
-          })),
-          licenses: data.licenses,
-          cachedDate: new Date(data.cachedDate),
-          categories: data.categories,
-        }),
-      )
+      storeData(data)
     }
   }, [season, data])
 
