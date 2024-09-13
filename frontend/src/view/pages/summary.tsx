@@ -191,7 +191,7 @@ export function SummaryPage() {
       seriesWithSummary.filter(
         (s) =>
           (calculateMinimumParticipation(s) > 0 &&
-            s.eligible > calculateMinimumParticipation(s) &&
+            s.eligible >= calculateMinimumParticipation(s) &&
             userRepository.preferredLicenses.some((license) =>
               s.licenses.find((l) => l.id === license.id && license.letter !== "R"),
             ) &&
