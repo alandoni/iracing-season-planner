@@ -52,3 +52,20 @@
 .series-row .track-row:hover {
   background-color: var(--color-row-list-odd-hover);
 }
+
+.series-row .details {
+  margin-bottom: var(--spacing-small);
+}
+
+.series-row .details > .row > .column {
+  gap: var(--spacing-small);
+}
+
+.series-row .column .list-row {
+  margin-left: var(--spacing-larger);
+}
+
+.series-row .details > .row > .column > .text {
+  margin-top: var(--spacing);
+  margin-left: var(--spacing-larger);
+}
