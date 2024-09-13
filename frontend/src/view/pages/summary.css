@@ -33,7 +33,7 @@
   margin-right: var(--spacing-smaller);
 }
 
-.summary-page .content .side-bar .row {
+.summary-page .content .side-bar .row:not(.checkable-list-row) {
   margin-top: var(--spacing);
 }
 
@@ -49,4 +49,8 @@
 
 .summary-page .title {
   margin-top: var(--spacing);
+}
+
+.summary-page .content .side-bar .row-with-2-lines .checkbox {
+  margin-top: -2px;
 }

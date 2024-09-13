@@ -10,6 +10,10 @@
   margin-bottom: var(--spacing-smaller);
 }
 
-.checkable-list ul .checkbox {
+.checkable-list ul .checkable-list-row .checkbox {
   margin-right: var(--spacing-smaller);
+}
+
+.checkable-list ul .checkable-list-row .text.size-small {
+  margin-top: 1px !important;
 }

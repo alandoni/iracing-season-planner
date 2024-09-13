@@ -19,3 +19,15 @@
 .season-page .content .list .schedule-row .others-subtitle span {
   width: 16px;
 }
+
+.season-page .side-bar .row {
+  flex-grow: initial;
+}
+
+.season-page .side-bar .row .checkbox {
+  margin-right: var(--spacing-small);
+}
+
+.season-page .side-bar .row .text.size-small {
+  margin-top: 2px;
+}

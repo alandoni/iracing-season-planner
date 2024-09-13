@@ -11,6 +11,7 @@ import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
 import { isDateBetween } from "utils/date"
 import "./season.css"
+import { Checkbox } from "components/check_box"
 
 export function SeasonPage() {
   const season = useSeasonRepository()
@@ -19,6 +20,7 @@ export function SeasonPage() {
   const [filteredSeries, setFilteredSeries] = useState<Series[]>([])
 
   const [week, setWeek] = useState(0)
+  const [showOnlySeriesEligible, setShowOnlySeriesEligible] = useState(false)
 
   useEffect(() => {
     const filtered = [...(season.data?.series ?? [])]
@@ -29,7 +31,12 @@ export function SeasonPage() {
           const containsCategories = (userRepository.preferredCategories ?? []).find(
             (c) => c.id === schedule.categoryId,
           )
-          return correctWeek && containsCategories
+          const ownedTrack = schedule.track.free || userRepository.myTracks.find((t) => t.id === schedule.track.id)
+          const ownedCarsInSchedule = schedule.cars.filter(
+            (car) => car.free || userRepository.myCars.find((c) => car.id === c.id),
+          )
+          const eligible = ownedTrack && ownedCarsInSchedule.length > 0
+          return correctWeek && containsCategories && (!showOnlySeriesEligible || (showOnlySeriesEligible && eligible))
         })
         return copy
       })
@@ -39,7 +46,7 @@ export function SeasonPage() {
           series.licenses.find((license) => userRepository.preferredLicenses.map((l) => l.id).includes(license.id)),
       )
     setFilteredSeries([...filtered])
-  }, [userRepository.preferredLicenses, userRepository.preferredCategories, week, season.data])
+  }, [userRepository.preferredLicenses, userRepository.preferredCategories, week, season.data, showOnlySeriesEligible])
 
   useEffect(() => {
     if (season.data) {
@@ -90,6 +97,10 @@ export function SeasonPage() {
           checkedList={userRepository.preferredCategories}
           onCheck={userRepository.setPreferredCategory}
         />
+        <Row alignVertically="start">
+          <Checkbox small isChecked={showOnlySeriesEligible} onChange={setShowOnlySeriesEligible} />
+          <Text size="small">Mostrar apenas séries elegíveis</Text>
+        </Row>
       </Column>
       <Column className="content">
         <div>

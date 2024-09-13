@@ -287,7 +287,7 @@ export function SummaryPage() {
               <Checkbox small isChecked={showOwnedContent} onChange={setShowOwnedContent} />
               <Text size="small">Mostrar conteúdos possuídos</Text>
             </Row>
-            <Row>
+            <Row className="row-with-2-lines">
               <Checkbox small isChecked={showSeriesEligible} onChange={setShowSeriesEligible} />
               <Text size="small">Mostrar conteúdos de séries já elegíveis</Text>
             </Row>

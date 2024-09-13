@@ -22,7 +22,7 @@ export function CheckableList<T extends { id: number; name: string }>({
       <ul>
         {list?.map((item) => {
           return (
-            <Row key={item.id}>
+            <Row className="checkable-list-row" key={item.id}>
               <Checkbox
                 small
                 isChecked={checkedList?.find((c) => c.id === item.id) !== undefined}
