@@ -125,6 +125,7 @@ export class SeasonController {
             }
             return license
           }),
+          droppedWeeks: series.drops,
           fixedSetup: series.fixed_setup,
           maxWeeks: series.max_weeks,
           multiclass: series.multiclass,

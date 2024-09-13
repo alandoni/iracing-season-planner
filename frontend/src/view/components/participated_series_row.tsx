@@ -4,16 +4,12 @@ import { Column } from "./column"
 import { Text } from "./text"
 import "./participated_series_row.css"
 
-export const MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS = 8
-const DEFAULT_NUMBER_OF_WEEKS = 12
+export const DEFAULT_DROPPED_WEEKS = 4
 
 export function calculateMinimumParticipation(series: Series) {
-  if (series.schedules.length >= DEFAULT_NUMBER_OF_WEEKS) {
-    return MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS
-  } else {
-    const diff = DEFAULT_NUMBER_OF_WEEKS - series.schedules.length
-    return Math.max(0, MINIMUM_NUMBER_OF_RACES_TO_GET_CREDITS - diff)
-  }
+  const droppedWeeks = series.droppedWeeks ?? DEFAULT_DROPPED_WEEKS
+  const minimumParticipationWeeks = series.schedules.length - droppedWeeks
+  return Math.max(minimumParticipationWeeks)
 }
 
 export type SeriesWithSummary = Series & {

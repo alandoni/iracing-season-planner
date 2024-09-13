@@ -10,4 +10,5 @@ export type Series = {
   multiclass: boolean;
   official: boolean;
   schedules: Schedule[];
+  droppedWeeks: number;
 };
