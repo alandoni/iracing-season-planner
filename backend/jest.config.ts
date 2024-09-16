@@ -14,6 +14,7 @@ const jestConfig = {
     "^src/(.*)$": "<rootDir>/src/$1",
     "^utils/(.*)$": ["<rootDir>/src/utils/$1"],
     "^data/(.*)$": ["<rootDir>/src/data/$1", "<rootDir>/../shared/models/$1"],
+    "^models/(.*)$": ["<rootDir>/src/data/$1", "<rootDir>/../shared/models/$1"],
   },
   modulePathIgnorePatterns: ["<rootDir>/build/"],
   modulePaths: ["<rootDir>/node_modules", "<rootDir>/src"],

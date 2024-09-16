@@ -16,6 +16,7 @@ export class TrackRepository {
     return tracks.reduce((acc, track) => {
       if (track.sku === 0 && track.config_name.includes("Gesamtstrecke")) {
         track.sku = TrackRepository.NURBURGRING_COMBINED_NEW_ID
+        track.price = 5.0
       }
       const found = acc.findIndex((t) => {
         return track.sku === t.id

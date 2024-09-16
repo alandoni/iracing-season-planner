@@ -11,7 +11,7 @@ import { formatCategory } from "data/category"
 import { License } from "data/license"
 import { Car } from "data/car"
 import { Track } from "data/track"
-import fs from "fs"
+import { promises as fs } from "fs"
 import path from "path"
 
 export class SeasonController {
@@ -41,15 +41,7 @@ export class SeasonController {
   }
 
   async invalidateCache(): Promise<void> {
-    return await new Promise((resolve, reject) => {
-      fs.rm(SeasonController.DOWNLOAD_PATH, { recursive: true, force: true }, (error) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve()
-        }
-      })
-    })
+    return await fs.rm(SeasonController.DOWNLOAD_PATH, { recursive: true, force: true })
   }
 
   async getRawSeason(): Promise<string> {
@@ -84,17 +76,9 @@ export class SeasonController {
     }
   }
 
-  private readFile(file: string): Promise<string> {
-    logger.debug(`Reading file ${path.resolve(file)}`)
-    return new Promise((resolve, reject) => {
-      fs.readFile(path.resolve(file), { encoding: "utf8" }, (error: unknown, data: string) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve(data)
-        }
-      })
-    })
+  private async readFile(file: string): Promise<string> {
+    logger.info(`Reading file ${path.resolve(file)}`)
+    return await fs.readFile(path.resolve(file), { encoding: "utf8" })
   }
 
   async downloadSeason(): Promise<Season> {
@@ -273,42 +257,23 @@ export class SeasonController {
     })
   }
 
-  private storeFile(file: string, content: string): Promise<void> {
+  private async storeFile(file: string, content: string): Promise<void> {
     logger.debug(`File will be stored in ${path.resolve(file)}`)
-    return new Promise((resolve, reject) => {
-      fs.writeFile(path.resolve(file), content, (error: unknown) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve()
-        }
-      })
-    })
+    return await fs.writeFile(path.resolve(file), content)
   }
 
-  private checkPathExists(file: string): Promise<boolean> {
-    logger.debug(`Check if ${path.resolve(file)} exist`)
-    return new Promise((resolve) => {
-      fs.readFile(path.resolve(file), (error: unknown) => {
-        if (error) {
-          resolve(false)
-        } else {
-          resolve(true)
-        }
-      })
-    })
+  private async checkPathExists(file: string): Promise<boolean> {
+    logger.info(`Check if ${path.resolve(file)} exist`)
+    try {
+      await fs.lstat(path.resolve(file))
+      return true
+    } catch {
+      return false
+    }
   }
 
-  private createFolder(folder: string): Promise<void> {
-    logger.debug(`Creating folder ${path.resolve(folder)}`)
-    return new Promise((resolve, reject) => {
-      fs.mkdir(path.resolve(folder), (error: unknown) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve()
-        }
-      })
-    })
+  private async createFolder(folder: string): Promise<void> {
+    logger.info(`Creating folder ${path.resolve(folder)}`)
+    return await fs.mkdir(path.resolve(folder))
   }
 }
