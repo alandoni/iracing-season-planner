@@ -20,7 +20,7 @@
     "emitDecoratorMetadata": true,
     "sourceMap": true,
     "incremental": true,
-    "rootDir": "./",
+    "rootDir": "../", //do not touch this, otherwise, the build not work
     "outDir": "../build",
     "paths": {
       "utils/*": ["./src/utils/*"],
