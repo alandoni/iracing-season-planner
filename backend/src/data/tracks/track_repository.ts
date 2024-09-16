@@ -6,6 +6,7 @@ import { formatCategory } from "data/category"
 
 export class TrackRepository {
   private static URL = "https://members-ng.iracing.com/data/track/get"
+  private static NURBURGRING_COMBINED_NEW_ID = 999999
 
   constructor(private httpClient: HttpClient) {}
 
@@ -13,7 +14,12 @@ export class TrackRepository {
     const response = await this.httpClient.get<LinkResponse>(TrackRepository.URL)
     const tracks = await this.httpClient.get<TrackResponse[]>(response.link)
     return tracks.reduce((acc, track) => {
-      const found = acc.findIndex((t) => track.sku === t.id)
+      if (track.sku === 0 && track.config_name.includes("Gesamtstrecke")) {
+        track.sku = TrackRepository.NURBURGRING_COMBINED_NEW_ID
+      }
+      const found = acc.findIndex((t) => {
+        return track.sku === t.id
+      })
       const config = {
         name: track.config_name,
         closes: track.closes,
