@@ -5,6 +5,8 @@ import { SeasonController } from "data/season/season_controller"
 import { SeasonRepository } from "data/season/season_repository"
 import { TrackRepository } from "data/tracks/track_repository"
 import { UserRepository } from "data/user/user_repository"
+import { DonationController } from "data/donation/donation_controller"
+import { DonationRepository } from "data/donation/donation_repository"
 
 const httpClient = new HttpClient()
 
@@ -34,10 +36,18 @@ export function getSeasonController() {
   )
 }
 
+export function getDonationController() {
+  return new DonationController(getDonationRepository())
+}
+
 export function getCarRepository() {
   return new CarRepository(getHttpClient())
 }
 
 export function getTracksRepository() {
   return new TrackRepository(getHttpClient())
+}
+
+export function getDonationRepository() {
+  return new DonationRepository()
 }

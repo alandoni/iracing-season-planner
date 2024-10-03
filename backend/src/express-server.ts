@@ -1,8 +1,9 @@
-import express, { Express, Request, Response, NextFunction } from "express"
+import express, { Express, Request, Response, NextFunction, Router } from "express"
 import { ServerInterface } from "./server-interface"
 import { logger } from "./logger"
 import { randomUUID } from "crypto"
 import cors from "cors"
+import { json } from "body-parser"
 
 export class ExpressServer implements ServerInterface<Request, Response, NextFunction> {
   app: Express
@@ -11,6 +12,7 @@ export class ExpressServer implements ServerInterface<Request, Response, NextFun
   constructor() {
     this.app = express()
     this.app.use(cors())
+    this.app.use(json())
   }
 
   init(): Promise<void> {
@@ -38,5 +40,15 @@ export class ExpressServer implements ServerInterface<Request, Response, NextFun
 
   useMiddleware(handler: (req: Request, res: Response, next: NextFunction) => void | Promise<void>) {
     this.app.use(handler)
+  }
+
+  route(prefix: string) {
+    return this.app.route(prefix)
+  }
+
+  router(prefix: string) {
+    const router = Router()
+    this.app.use(prefix, router)
+    return router
   }
 }

@@ -1,12 +1,19 @@
-import axios from "axios"
-import { useEffect, useMemo, useState } from "react"
+import axios, { AxiosResponse, Method } from "axios"
+import { useEffect, useState } from "react"
 
 export const VITE_API_ADDRESS = import.meta.env.VITE_API_ADDRESS
 
 export function useRequest<T>(
   endpoint: string,
   startOnUse = true,
-): [T | undefined, boolean, boolean, unknown, () => void] {
+): [
+  T | undefined,
+  boolean,
+  boolean,
+  unknown,
+  <R>(method: Method, payload?: R, headers?: Record<string, string>) => void,
+  () => void,
+] {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<unknown>()
@@ -14,19 +21,12 @@ export function useRequest<T>(
 
   const [shouldStart, setShouldStartState] = useState(startOnUse)
 
-  const makeRequest = () => () => {
+  const makeRequest = <R>(method: Method = "GET", data?: R, headers?: Record<string, string>) => {
     setLoading(true)
     setSuccess(false)
     setError(undefined)
     axios
-      .get<T>(`${VITE_API_ADDRESS}/${endpoint}`)
-      .then((data) => {
-        if (typeof data.data === "string") {
-          return JSON.parse(data.data)
-        } else {
-          return data
-        }
-      })
+      .request<T, AxiosResponse<T>, R>({ method, url: `${VITE_API_ADDRESS}/${endpoint}`, data, headers })
       .then((data) => {
         setLoading(false)
         setData(data.data)
@@ -39,7 +39,12 @@ export function useRequest<T>(
       })
   }
 
-  const request = useMemo<() => void>(makeRequest, [endpoint])
+  const reset = () => {
+    setLoading(false)
+    setSuccess(false)
+    setError(undefined)
+    setData(undefined)
+  }
 
   useEffect(() => {
     if (!shouldStart) {
@@ -47,9 +52,9 @@ export function useRequest<T>(
       return
     }
     console.log(`Requesting /${endpoint}`)
-    request()
+    makeRequest()
     setShouldStartState(false)
-  }, [endpoint, shouldStart, request])
+  }, [endpoint, shouldStart])
 
-  return [data, loading, success, error, request]
+  return [data, loading, success, error, makeRequest, reset]
 }

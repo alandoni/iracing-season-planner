@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { LazyPageLoad } from "components/lazy_page_load"
 import { Header } from "components/header"
@@ -9,8 +8,6 @@ import { Warning } from "components/warning"
 import "./App.css"
 
 function App() {
-  useEffect(() => {})
-
   return (
     <Column className="main-column">
       <Header />
