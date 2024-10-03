@@ -11,7 +11,7 @@ export function useRequest<T>(
   boolean,
   boolean,
   unknown,
-  <R>(method: Method, payload?: R, headers?: Record<string, string>) => void,
+  <R>(method?: Method, payload?: R, headers?: Record<string, string>) => void,
   () => void,
 ] {
   const [loading, setLoading] = useState(false)
