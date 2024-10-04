@@ -25,7 +25,8 @@ export function SeriesPage() {
         userRepository.preferredLicenses.some((license) => series.licenses.find((l) => l.id === license.id)) &&
         userRepository.preferredCategories.some((category) =>
           series.schedules.find((s) => s.categoryId === category.id),
-        )
+        ) &&
+        series.schedules.length > 0
       if (search.length === 0) {
         return shouldFilter
       }
