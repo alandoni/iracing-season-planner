@@ -84,4 +84,5 @@ input[type="range"] {
   height: var(--total-height);
   background-color: var(--color-background);
   overflow: hidden;
+  border: 0;
 }
