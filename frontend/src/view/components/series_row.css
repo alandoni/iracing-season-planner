@@ -61,7 +61,7 @@
   background-color: var(--color-row-list-odd-hover);
 }
 
-.series-row .details {
+.series-row .details > .row > .column > .track-row:last-child {
   margin-bottom: var(--spacing-small);
 }
 

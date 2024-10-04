@@ -24,7 +24,7 @@ export function SearchInput({
     clearTimeout(timeout)
     handleTimeout(
       setTimeout(() => {
-        if (text.length > minChars) {
+        if (text.length >= minChars || text.length === 0) {
           onChange(text)
         }
       }, delay),

@@ -40,6 +40,7 @@ export function SeriesRow({
     if (!ref.current) {
       return
     }
+
     ref.current.style.height = "auto"
     ref.current.style.display = "block"
     const h = ref.current.clientHeight
@@ -61,7 +62,7 @@ export function SeriesRow({
   const participatedRacesInThisSeries = participatedRaces.filter((r) => r.serieId === series.id)
 
   return (
-    <Column className="series-row">
+    <Column className={`series-row ${height > 1 ? "opaque" : ""}`}>
       <Row className="list-row">
         <Column className="class">
           <ExpandCollapseButton isExpanded={isExpanded} onSetExpanded={setExpanded} />
@@ -75,10 +76,7 @@ export function SeriesRow({
           </Row>
           <Row>
             <Text relevance="irrelevant" size="small">
-              {series.schedules
-                .flatMap((s) => s.category)
-                .removeDuplicates((a, b) => a === b)
-                .join(", ")}
+              {(series.schedules?.flatMap((s) => s.category) ?? []).removeDuplicates((a, b) => a === b).join(", ")}
             </Text>
           </Row>
         </Column>

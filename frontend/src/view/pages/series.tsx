@@ -9,8 +9,8 @@ import { SeriesRow } from "components/series_row"
 import { Series } from "data/series"
 import { SearchInput } from "components/search-input"
 import { findInName } from "utils/find"
-import "./series.css"
 import { LoadingOutlet } from "components/loading_outlet"
+import "./series.css"
 
 export function SeriesPage() {
   const season = useSeasonRepository()
