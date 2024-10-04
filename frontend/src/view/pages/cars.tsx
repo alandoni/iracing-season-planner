@@ -8,23 +8,31 @@ import { useEffect, useState } from "react"
 import { CarRow } from "components/car_row"
 import { Car } from "data/car"
 import "./cars.css"
+import { SearchInput } from "components/search-input"
+import { findInName } from "utils/find"
 
 export function CarsPage() {
   const season = useSeasonRepository()
   const userRepository = useUserRepository()
   const [filteredCars, setFilteredCars] = useState<Car[]>([])
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
-    const filtered = [...(season.data?.cars ?? [])]
-      .filter((car) =>
-        userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)),
+    const filtered = [...(season.data?.cars ?? [])].filter((car) => {
+      const shouldFilter =
+        userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)) &&
+        userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id))
+      if (search.length === 0) {
+        return shouldFilter
+      }
+      return (
+        shouldFilter &&
+        (findInName(car.name, search) || car.categories.find((cat) => findInName(cat.name, search)) !== undefined)
       )
-      .filter((car) =>
-        userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id)),
-      )
+    })
 
     setFilteredCars(filtered)
-  }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.myCars, season.data])
+  }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.myCars, season.data, search])
 
   useEffect(() => {
     if (season.data) {
@@ -52,11 +60,16 @@ export function CarsPage() {
         />
       </Column>
       <Column className="content">
-        <Text size="large" relevance="important">
-          Carros usados nessa temporada
-        </Text>
+        <Row>
+          <Text size="large" relevance="important">
+            Carros usados nessa temporada
+          </Text>
+        </Row>
+        <Row>
+          <SearchInput value={search} onChange={setSearch} />
+        </Row>
         <div className="list">
-          <Row className="car-row subtitle">
+          <Row className="car-row list-row subtitle">
             <Column className="main"></Column>
             <Column className="others">
               <Row className="others-subtitle">

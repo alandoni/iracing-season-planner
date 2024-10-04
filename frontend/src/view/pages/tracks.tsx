@@ -7,23 +7,37 @@ import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { TrackRow } from "components/track_row"
 import { Track } from "../../../../shared/models/track"
+import { SearchInput } from "components/search-input"
 import "./tracks.css"
+import { findInName } from "utils/find"
 
 export function TracksPage() {
   const season = useSeasonRepository()
   const userRepository = useUserRepository()
   const [filteredTracks, setFilteredTracks] = useState<Track[]>([])
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
-    const filtered = [...(season.data?.tracks ?? [])]
-      .filter((track) =>
-        userRepository.preferredLicenses.some((license) => track.licenses.find((l) => l.id === license.id)),
+    const filtered = [...(season.data?.tracks ?? [])].filter((track) => {
+      const shouldFilter =
+        (userRepository.preferredLicenses.some((license) => track.licenses.find((l) => l.id === license.id)),
+        userRepository.preferredCategories.some((category) => track.categories.find((c) => c.id === category.id)))
+      if (search.length === 0) {
+        return shouldFilter
+      }
+      return (
+        (shouldFilter && (findInName(track.name, search) || findInName(track.category, search))) ||
+        track.categories.find((c) => findInName(c.name, search))
       )
-      .filter((track) =>
-        userRepository.preferredCategories.some((category) => track.categories.find((c) => c.id === category.id)),
-      )
+    })
     setFilteredTracks(filtered)
-  }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.myTracks, season.data])
+  }, [
+    userRepository.preferredLicenses,
+    userRepository.preferredCategories,
+    userRepository.myTracks,
+    season.data,
+    search,
+  ])
 
   useEffect(() => {
     if (season.data) {
@@ -51,11 +65,16 @@ export function TracksPage() {
         />
       </Column>
       <Column className="content">
-        <Text size="large" relevance="important">
-          Pistas usadas nessa temporada
-        </Text>
+        <Row>
+          <Text size="large" relevance="important">
+            Pistas usadas nessa temporada
+          </Text>
+        </Row>
+        <Row>
+          <SearchInput value={search} onChange={setSearch} />
+        </Row>
         <div className="list">
-          <Row className="track-row subtitle">
+          <Row className="track-row list-row subtitle">
             <Column className="main"></Column>
             <Column className="others">
               <Row className="others-subtitle">

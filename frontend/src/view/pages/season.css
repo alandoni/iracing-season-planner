@@ -12,10 +12,6 @@
   padding-bottom: 0;
 }
 
-.season-page .content .list {
-  margin-top: var(--spacing);
-}
-
 .season-page .content .list .schedule-row .others-subtitle span {
   width: 16px;
 }

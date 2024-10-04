@@ -111,13 +111,14 @@ svg {
   aspect-ratio: 1 / 1;
 }
 
-input {
+input:not([type="checkbox"]) {
   background-color: var(--color-secondary-background);
   border: var(--color-border) 1px solid;
   padding-top: var(--spacing-small);
   padding-bottom: var(--spacing-small);
   padding-left: var(--spacing);
   padding-right: var(--spacing);
+  border-radius: var(--spacing);
 }
 
 input[type="button"]:hover,
@@ -147,9 +148,10 @@ input[type="submit"]:hover {
   overflow: auto;
 }
 
-.content .text.size-large.relevance-important {
+.content > .row {
   padding-left: var(--spacing);
   padding-right: var(--spacing);
+  margin-bottom: var(--spacing-small);
 }
 
 .hidden {

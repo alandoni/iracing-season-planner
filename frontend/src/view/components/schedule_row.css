@@ -7,7 +7,7 @@
 }
 
 .schedule-row .others {
-  max-width: 100px;
+  max-width: fit-content;
 }
 
 .schedule-row .others .row {

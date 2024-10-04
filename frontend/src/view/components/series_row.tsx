@@ -75,7 +75,10 @@ export function SeriesRow({
           </Row>
           <Row>
             <Text relevance="irrelevant" size="small">
-              {series.schedules.flatMap((s) => s.category).join(", ")}
+              {series.schedules
+                .flatMap((s) => s.category)
+                .removeDuplicates((a, b) => a === b)
+                .join(", ")}
             </Text>
           </Row>
         </Column>

@@ -45,8 +45,16 @@
   transition: all 500ms;
 }
 
+.series-row .car-row {
+  padding-right: var(--spacing);
+}
+
 .series-row .car-row:hover {
   background-color: var(--color-row-list-odd-hover);
+}
+
+.series-row .track-row {
+  padding-right: var(--spacing);
 }
 
 .series-row .track-row:hover {

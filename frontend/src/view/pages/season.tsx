@@ -11,7 +11,9 @@ import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
 import { isDateBetween } from "utils/date"
 import { Checkbox } from "components/check_box"
+import { SearchInput } from "components/search-input"
 import "./season.css"
+import { findInName } from "utils/find"
 
 export function SeasonPage() {
   const season = useSeasonRepository()
@@ -21,6 +23,7 @@ export function SeasonPage() {
 
   const [week, setWeek] = useState(0)
   const [showOnlySeriesEligible, setShowOnlySeriesEligible] = useState(false)
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     const filtered = [...(season.data?.series ?? [])]
@@ -40,13 +43,38 @@ export function SeasonPage() {
         })
         return copy
       })
-      .filter(
-        (series) =>
+      .filter((series) => {
+        const shouldFilter =
           series.schedules.length > 0 &&
-          series.licenses.find((license) => userRepository.preferredLicenses.map((l) => l.id).includes(license.id)),
-      )
+          series.licenses.find((license) => userRepository.preferredLicenses.map((l) => l.id).includes(license.id))
+        if (search.length === 0) {
+          return shouldFilter
+        }
+        const findInSeries =
+          findInName(series.name, search) || series.schedules.find((s) => findInName(s.category, search)) !== undefined
+        const findInCar =
+          series.schedules.find((s) =>
+            s.cars.find((c) => findInName(c.name, search) || c.categories.find((cat) => findInName(cat.name, search))),
+          ) !== undefined
+        const findInTrack =
+          series.schedules.find(
+            (s) =>
+              findInName(s.track.name, search) ||
+              findInName(s.category, search) ||
+              s.track.categories.find((c) => findInName(c.name, search)) !== undefined,
+          ) !== undefined
+
+        return shouldFilter && (findInSeries || findInCar || findInTrack)
+      })
     setFilteredSeries([...filtered])
-  }, [userRepository.preferredLicenses, userRepository.preferredCategories, week, season.data, showOnlySeriesEligible])
+  }, [
+    userRepository.preferredLicenses,
+    userRepository.preferredCategories,
+    week,
+    season.data,
+    showOnlySeriesEligible,
+    search,
+  ])
 
   useEffect(() => {
     if (season.data) {
@@ -105,58 +133,59 @@ export function SeasonPage() {
         </Row>
       </Column>
       <Column className="content">
-        <div>
+        <Row>
           <Text size="large" relevance="important">
             Séries da temporada
           </Text>
-          <div className="list">
-            <Row className="schedule-row subtitle">
-              <Column className="main"></Column>
-              <Column className="others">
-                <Row className="others-subtitle">
-                  <span title="Você já participou dessa corrida?">P?</span>
-                  <span title="Você já tem esse carro?">C?</span>
-                  <span title="Você já tem essa pista?">T?</span>
-                </Row>
-              </Column>
-            </Row>
-            {filteredSeries.map((series, index, array) => {
-              return (
-                <div key={`${series.id}`}>
-                  {series.schedules?.map((schedule) => {
-                    return (
-                      <div key={`${series.id}-${schedule.raceWeekNum}`}>
-                        <ScheduleRow
-                          schedule={schedule}
-                          series={series}
-                          selectedTrack={
-                            schedule.track.free ||
-                            userRepository.myTracks?.find((track) => schedule.track.id === track.id) !== undefined
-                          }
-                          selectedCar={
-                            schedule.cars.filter(
-                              (car) => car.free || userRepository.myCars?.find((c) => car.id === c.id) !== undefined,
-                            ).length > 0
-                          }
-                          selectedSchedule={
-                            userRepository.participatedRaces?.find(
-                              (s) => s.raceWeekNum === schedule.raceWeekNum && s.serieId === schedule.serieId,
-                            ) !== undefined
-                          }
-                          onSelectParticipate={(checked) =>
-                            userRepository.setParticipatedRace(checked, series, schedule)
-                          }
-                          onSelectOwnCar={(checked) => userRepository.setCar(checked, schedule.cars[0])}
-                          onSelectOwnTrack={(checked) => userRepository.setTrack(checked, schedule.track)}
-                        />
-                        {index < array.length - 1 ? <hr /> : null}
-                      </div>
-                    )
-                  })}
-                </div>
-              )
-            })}
-          </div>
+        </Row>
+        <Row>
+          <SearchInput value={search} onChange={setSearch} />
+        </Row>
+        <div className="list">
+          <Row className="schedule-row subtitle list-row">
+            <Column className="main"></Column>
+            <Column className="others">
+              <Row className="others-subtitle">
+                <span title="Você já participou dessa corrida?">P?</span>
+                <span title="Você já tem esse carro?">C?</span>
+                <span title="Você já tem essa pista?">T?</span>
+              </Row>
+            </Column>
+          </Row>
+          {filteredSeries.map((series, index, array) => {
+            return (
+              <div key={`${series.id}`}>
+                {series.schedules?.map((schedule) => {
+                  return (
+                    <div key={`${series.id}-${schedule.raceWeekNum}`}>
+                      <ScheduleRow
+                        schedule={schedule}
+                        series={series}
+                        selectedTrack={
+                          schedule.track.free ||
+                          userRepository.myTracks?.find((track) => schedule.track.id === track.id) !== undefined
+                        }
+                        selectedCar={
+                          schedule.cars.filter(
+                            (car) => car.free || userRepository.myCars?.find((c) => car.id === c.id) !== undefined,
+                          ).length > 0
+                        }
+                        selectedSchedule={
+                          userRepository.participatedRaces?.find(
+                            (s) => s.raceWeekNum === schedule.raceWeekNum && s.serieId === schedule.serieId,
+                          ) !== undefined
+                        }
+                        onSelectParticipate={(checked) => userRepository.setParticipatedRace(checked, series, schedule)}
+                        onSelectOwnCar={(checked) => userRepository.setCar(checked, schedule.cars[0])}
+                        onSelectOwnTrack={(checked) => userRepository.setTrack(checked, schedule.track)}
+                      />
+                      {index < array.length - 1 ? <hr /> : null}
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })}
         </div>
       </Column>
     </Row>

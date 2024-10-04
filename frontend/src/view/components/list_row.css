@@ -11,7 +11,12 @@
   max-width: fit-content;
 }
 
-.list-row > *:nth-child(2) {
+.list-row:has(> :last-child:nth-child(-n + 2)) > *:nth-child(1) {
+  flex: 1;
+  max-width: none;
+}
+
+.list-row > *:nth-child(2):not(:last-child) {
   flex: 1;
   max-width: none;
 }
