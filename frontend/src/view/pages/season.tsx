@@ -10,8 +10,8 @@ import { Series } from "data/series"
 import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
 import { isDateBetween } from "utils/date"
-import "./season.css"
 import { Checkbox } from "components/check_box"
+import "./season.css"
 
 export function SeasonPage() {
   const season = useSeasonRepository()
@@ -51,17 +51,19 @@ export function SeasonPage() {
   useEffect(() => {
     if (season.data) {
       userRepository.load(season.data)
-      const firstSeries = season.data.series.find((s) => s.schedules.length > 11)
+      const firstSeries = season.data.series.find((s) => s.schedules.length > 11 && s.schedules.length < 14)
       if (!firstSeries) {
         return
       }
-      const currentSchedule = firstSeries.schedules.find((s, i, array) => {
-        if (i < array.length - 1) {
-          return isDateBetween(new Date(), s.startDate, firstSeries.schedules[i + 1].startDate)
-        } else {
-          return true
-        }
-      })
+      const currentSchedule = firstSeries.schedules
+        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
+        .find((s, i, array) => {
+          if (i < array.length - 1) {
+            return isDateBetween(new Date(), s.startDate, firstSeries.schedules[i + 1].startDate)
+          } else {
+            return true
+          }
+        })
       setWeek(currentSchedule?.raceWeekNum ?? 0)
     }
   }, [season.data])
