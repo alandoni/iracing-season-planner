@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosError, AxiosResponse } from "axios"
 
 export class HttpClient {
   private axiosInstance = axios.create()
@@ -21,16 +21,46 @@ export class HttpClient {
   }
 
   async get<R>(url: string): Promise<R> {
-    return (await this.axiosInstance(url)).data
+    try {
+      return (await this.axiosInstance(url)).data
+    } catch (error) {
+      throw this.printableError(error)
+    }
   }
 
   async post<B, R>(url: string, body: B): Promise<R> {
-    const response = await this.axiosInstance<R>(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: body,
-    })
-    this.useSetCookie(response)
-    return response.data
+    try {
+      const response = await this.axiosInstance<R>(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: body,
+      })
+      this.useSetCookie(response)
+      return response.data
+    } catch (error) {
+      throw this.printableError(error)
+    }
+  }
+
+  printableError(error: unknown) {
+    if (!(error instanceof AxiosError)) {
+      return error
+    }
+    return {
+      name: error.name,
+      code: error.code,
+      request: {
+        headers: error.config?.headers,
+        method: error.config?.method,
+        url: error.config?.url,
+        body: JSON.parse(error.config?.data ?? "null"),
+      },
+      response: {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        headers: error.response?.headers,
+        data: error.response?.data,
+      },
+    }
   }
 }
