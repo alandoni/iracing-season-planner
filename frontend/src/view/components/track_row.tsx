@@ -1,10 +1,9 @@
-import { Track } from "../../../../shared/models/track"
-import { Row } from "./row"
-import { Column } from "./column"
-import { Text } from "./text"
-import { Checkbox } from "./check_box"
+import { Track } from "data/track"
+import { Row } from "frontend/components/atoms/row"
+import { Column } from "frontend/components/atoms/column"
+import { Text } from "frontend/components/atoms/text"
+import { Checkbox } from "frontend/components/atoms/checkbox"
 import { LicenseLetter } from "./license_letter"
-import { formatPrice } from "utils/price-formatter"
 import "./track_row.css"
 import "./list_row.css"
 
@@ -37,7 +36,7 @@ export function TrackRow({ track, selected, onSelect }: TrackRowProps) {
         <img src="" />
       </Column> */}
       <Column className="price">
-        <Text>{formatPrice(track.price)}</Text>
+        <Text>{track.price.formatCurrency("en-US", "USD")}</Text>
       </Column>
       <Column className="others">
         <Row>

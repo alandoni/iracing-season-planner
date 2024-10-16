@@ -1,19 +1,17 @@
-import { Column } from "components/column"
-import { LoadingPage } from "components/loading_page"
-import { Range } from "components/range"
-import { Row } from "components/row"
+import { Column } from "frontend/components/atoms/column"
+import { LoadingPage } from "frontend/components/templates/loading_page"
+import { Range } from "frontend/components/atoms/range"
+import { Row } from "frontend/components/atoms/row"
 import { ScheduleRow } from "components/schedule_row"
-import { Text } from "components/text"
+import { Text } from "frontend/components/atoms/text"
 import { useSeasonRepository } from "data/season_repository"
 import { useEffect, useState } from "react"
 import { Series } from "data/series"
 import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
-import { isDateBetween } from "utils/date"
-import { Checkbox } from "components/check_box"
+import { Checkbox } from "frontend/components/atoms/checkbox"
 import { SearchInput } from "components/search-input"
 import "./season.css"
-import { findInName } from "utils/find"
 
 export function SeasonPage() {
   const season = useSeasonRepository()
@@ -51,17 +49,17 @@ export function SeasonPage() {
           return shouldFilter
         }
         const findInSeries =
-          findInName(series.name, search) || series.schedules.find((s) => findInName(s.category, search)) !== undefined
+          series.name.find(search) || series.schedules.find((s) => s.category.find(search)) !== undefined
         const findInCar =
           series.schedules.find((s) =>
-            s.cars.find((c) => findInName(c.name, search) || c.categories.find((cat) => findInName(cat.name, search))),
+            s.cars.find((c) => c.name.find(search) || c.categories.find((cat) => cat.name.find(search))),
           ) !== undefined
         const findInTrack =
           series.schedules.find(
             (s) =>
-              findInName(s.track.name, search) ||
-              findInName(s.category, search) ||
-              s.track.categories.find((c) => findInName(c.name, search)) !== undefined,
+              s.track.find(ame, search) ||
+              s.category.find(search) ||
+              s.track.categories.find((c) => c.name.find(search)) !== undefined,
           ) !== undefined
 
         return shouldFilter && (findInSeries || findInCar || findInTrack)
@@ -87,7 +85,7 @@ export function SeasonPage() {
         .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
         .find((s, i, array) => {
           if (i < array.length - 1) {
-            return isDateBetween(new Date(), s.startDate, firstSeries.schedules[i + 1].startDate)
+            return new Date().isBetween(s.startDate, firstSeries.schedules[i + 1].startDate)
           } else {
             return true
           }

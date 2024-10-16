@@ -1,12 +1,12 @@
 import { Car } from "data/car"
 import { Track, TrackWithConfigName } from "data/track"
 import { Series } from "data/series"
-import { Column } from "components/column"
+import { Column } from "frontend/components/atoms/column"
 import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
-import { Row } from "components/row"
-import { Text } from "components/text"
+import { Row } from "frontend/components/atoms/row"
+import { Text } from "frontend/components/atoms/text"
 import { CarRow } from "components/car_row"
 import { TrackRow } from "components/track_row"
 import { CheckableList } from "components/checkable_list"
@@ -15,28 +15,12 @@ import {
   SeriesWithSummary,
   calculateMinimumParticipation,
 } from "components/participated_series_row"
-import { Checkbox } from "components/check_box"
-import "./summary.css"
+import { Checkbox } from "frontend/components/atoms/checkbox"
 import {
   AlmostEligibleSeries,
   AlmostEligibleSeriesAndContentsToBuy,
 } from "components/series_eligible_and_needed_content"
-
-declare global {
-  interface Array<T> {
-    removeDuplicates(compare: (a: T, b: T) => boolean): Array<T>
-  }
-}
-
-Array.prototype.removeDuplicates = function (compare: (a: unknown, b: unknown) => boolean) {
-  return this.filter((value, index, array) => {
-    return (
-      array.findIndex((value2) => {
-        return compare(value, value2)
-      }) === index
-    )
-  })
-}
+import "./summary.css"
 
 export function SummaryPage() {
   const season = useSeasonRepository()

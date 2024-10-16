@@ -1,6 +1,6 @@
-import { Column } from "./column"
-import { Row } from "./row"
-import { Text } from "./text"
+import { Column } from "frontend/components/atoms/column"
+import { Row } from "frontend/components/atoms/row"
+import { Text } from "frontend/components/atoms/text"
 import "./navigation.css"
 
 const links = [

@@ -1,15 +1,14 @@
 import { CheckableList } from "components/checkable_list"
-import { Column } from "components/column"
-import { Row } from "components/row"
-import { Text } from "components/text"
+import { Column } from "frontend/components/atoms/column"
+import { Row } from "frontend/components/atoms/row"
+import { Text } from "frontend/components/atoms/text"
 import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { TrackRow } from "components/track_row"
-import { Track } from "../../../../shared/models/track"
 import { SearchInput } from "components/search-input"
+import { Track } from "data/track"
 import "./tracks.css"
-import { findInName } from "utils/find"
 
 export function TracksPage() {
   const season = useSeasonRepository()
@@ -26,8 +25,8 @@ export function TracksPage() {
         return shouldFilter
       }
       return (
-        (shouldFilter && (findInName(track.name, search) || findInName(track.category, search))) ||
-        track.categories.find((c) => findInName(c.name, search))
+        (shouldFilter && (track.name.find(search) || track.category.find(search))) ||
+        track.categories.find((c) => c.name.find(search))
       )
     })
     setFilteredTracks(filtered)

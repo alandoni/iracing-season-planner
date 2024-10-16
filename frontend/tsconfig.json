@@ -1,38 +1,51 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "target": "ES2020",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "outDir": "../build",
-    "rootDir": "../",
-
+    "allowJs": false,
     /* Linting */
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "types": ["vite/client", "vite-plugin-svgr/client"],
+    /* Bundler mode */
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "preserveSymlinks": true,
+    "allowImportingTsExtensions": false,
+    "sourceMap": false,
+    "incremental": true,
+
+    "composite": true,
+    "jsx": "react-jsx",
+
+    "outDir": "./dist",
+    "rootDir": "./src",
 
     "paths": {
       "components/*": ["./src/view/components/*"],
       "pages/*": ["./src/view/pages/*"],
       "i18n/*": ["./src/view/i18n/*"],
-      "utils/*": ["./src/shared/utils/*", "./src/utils/*"],
       "assets/*": ["./src/assets/*"],
-      "data/*": ["./src/data/*", "../shared/models/*"]
+      "data/*": ["./src/data/*", "../data/*"]
     }
   },
-  "include": ["./src", "../shared/models/"]
+  "include": ["./src", "vite.config.ts"],
+  "ts-node": {
+    "files": true
+  },
+  "exclude": ["**/*.test.ts", "**/dist/*", "**/node_modules/*"]
 }

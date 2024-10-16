@@ -3,23 +3,32 @@
     "target": "ES2022",
     "module": "CommonJS",
     "lib": ["ES2022"],
+
+    /* Linting */
     "useDefineForClassFields": true,
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "strictPropertyInitialization": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+
+    /* Bundler mode */
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "preserveSymlinks": true,
-    "strictPropertyInitialization": false,
+    "allowImportingTsExtensions": true,
     "noEmit": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "sourceMap": true,
     "incremental": true,
+
     "rootDir": "../", //do not touch this, otherwise, the build not work
     "outDir": "../build",
     "paths": {

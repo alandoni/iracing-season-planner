@@ -1,7 +1,7 @@
 import { Series } from "data/series"
-import { Row } from "./row"
-import { Column } from "./column"
-import { Text } from "./text"
+import { Row } from "frontend/components/atoms/row"
+import { Column } from "frontend/components/atoms/column"
+import { Text } from "frontend/components/atoms/text"
 import "./participated_series_row.css"
 
 export const DEFAULT_DROPPED_WEEKS = 4

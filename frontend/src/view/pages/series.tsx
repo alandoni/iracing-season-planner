@@ -1,15 +1,14 @@
 import { CheckableList } from "components/checkable_list"
-import { Column } from "components/column"
-import { Row } from "components/row"
-import { Text } from "components/text"
+import { Column } from "frontend/components/atoms/column"
+import { Row } from "frontend/components/atoms/row"
+import { Text } from "frontend/components/atoms/text"
 import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { SeriesRow } from "components/series_row"
 import { Series } from "data/series"
 import { SearchInput } from "components/search-input"
-import { findInName } from "utils/find"
-import { LoadingOutlet } from "components/loading_outlet"
+import { LoadingOutlet } from "frontend/components/templates/loading_outlet"
 import "./series.css"
 
 export function SeriesPage() {
@@ -31,17 +30,17 @@ export function SeriesPage() {
         return shouldFilter
       }
       const findInSeries =
-        findInName(series.name, search) || series.schedules.find((s) => findInName(s.category, search)) !== undefined
+        series.name.find(search) || series.schedules.find((s) => s.category.find(search)) !== undefined
       const findInCar =
         series.schedules.find((s) =>
-          s.cars.find((c) => findInName(c.name, search) || c.categories.find((cat) => findInName(cat.name, search))),
+          s.cars.find((c) => c.name.find(search) || c.categories.find((cat) => cat.name.find(search))),
         ) !== undefined
       const findInTrack =
         series.schedules.find(
           (s) =>
-            findInName(s.track.name, search) ||
-            findInName(s.track.category, search) ||
-            s.track.categories.find((c) => findInName(c.name, search)) !== undefined,
+            s.track.name.find(search) ||
+            s.track.category.find(search) ||
+            s.track.categories.find((c) => c.name.find(search)) !== undefined,
         ) !== undefined
 
       return shouldFilter && (findInSeries || findInCar || findInTrack)

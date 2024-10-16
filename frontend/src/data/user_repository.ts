@@ -6,7 +6,6 @@ import { Track } from "data/track"
 import { Category } from "data/category"
 import { License } from "data/license"
 import { useState } from "react"
-import { removeFromList } from "utils/list"
 import { LOCAL_STORAGE_CACHED_DATE_KEY } from "./season_repository"
 
 export class ImportingOlderFileError extends Error {}
@@ -89,7 +88,7 @@ export function useUserRepository() {
       if (checked) {
         old.push(car)
       } else {
-        removeFromList(car, old, (c1, c2) => c1.id === c2.id)
+        old.remove((c1) => c1.id === car.id)
       }
       localStorage.setItem(LOCAL_STORAGE_MY_CARS_KEY, JSON.stringify(old.map((i) => i.id)))
       return [...old]
@@ -102,7 +101,7 @@ export function useUserRepository() {
       if (checked) {
         old.push(track)
       } else {
-        removeFromList(track, old, (c1, c2) => c1.id === c2.id)
+        old.remove((c1) => c1.id === track.id)
       }
       localStorage.setItem(LOCAL_STORAGE_MY_TRACKS_KEY, JSON.stringify(old.map((i) => i.id)))
       return [...old]
@@ -115,7 +114,7 @@ export function useUserRepository() {
       if (checked) {
         old.push(schedule)
       } else {
-        removeFromList(schedule, old, (c1, c2) => c1.serieId === c2.serieId && c1.raceWeekNum === c2.raceWeekNum)
+        old.remove((c1) => c1.serieId === schedule.serieId && c1.raceWeekNum === schedule.raceWeekNum)
       }
       localStorage.setItem(
         LOCAL_STORAGE_PARTICIPATED_RACES_KEY,
@@ -137,7 +136,7 @@ export function useUserRepository() {
           ),
         )
         if (!shouldRemoveSerie) {
-          removeFromList(serie, old, (c1, c2) => c1.id === c2.id)
+          old.remove((c1) => c1.id === serie.id)
         }
       }
       return [...old]
@@ -150,19 +149,19 @@ export function useUserRepository() {
       if (checked) {
         old.push(license)
       } else {
-        removeFromList(license, old, (c1, c2) => c1.id === c2.id)
+        old.remove((c1) => c1.id === license.id)
       }
       localStorage.setItem(LOCAL_STORAGE_PREFERRED_LICENSES_KEY, JSON.stringify(old.map((i) => i.id)))
       return [...old]
     })
   }
 
-  const setPreferredCategory = (checked: boolean, license: Category) => {
+  const setPreferredCategory = (checked: boolean, category: Category) => {
     setPreferredCategories((old) => {
       if (checked) {
-        old.push(license)
+        old.push(category)
       } else {
-        removeFromList(license, old, (c1, c2) => c1.id === c2.id)
+        old.remove((c1) => c1.id === category.id)
       }
       localStorage.setItem(LOCAL_STORAGE_PREFERRED_CATEGORIES_KEY, JSON.stringify(old.map((i) => i.id)))
       return [...old]

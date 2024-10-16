@@ -1,10 +1,9 @@
 import { Car } from "data/car"
-import { Row } from "./row"
-import { Column } from "./column"
-import { Text } from "./text"
-import { Checkbox } from "./check_box"
+import { Row } from "frontend/components/atoms/row"
+import { Column } from "frontend/components/atoms/column"
+import { Text } from "frontend/components/atoms/text"
+import { Checkbox } from "frontend/components/atoms/checkbox"
 import { LicenseLetter } from "./license_letter"
-import { formatPrice } from "utils/price-formatter"
 import "./car_row.css"
 import "./list_row.css"
 
@@ -39,7 +38,7 @@ export function CarRow({ car, selected, showCategory = true, onSelect }: CarRowP
         <img src="" />
       </Column> */}
       <Column className="price">
-        <Text>{formatPrice(car.price)}</Text>
+        <Text>{car.price.formatCurrency("en-US", "USD")}</Text>
       </Column>
       <Column className="others">
         <Row>

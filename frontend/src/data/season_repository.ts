@@ -1,8 +1,9 @@
-import { Series } from "data/series"
-import { Season } from "data/season"
+import { Series } from "data/models/series"
+import { Season } from "data/models/season"
 import { Schedule } from "data/schedule"
 import { useRequest } from "./use_request"
 import { useEffect, useState } from "react"
+import { assertNotNull } from "utils"
 
 export const LOCAL_STORAGE_CACHED_DATE_KEY = "cachedDate"
 
@@ -159,7 +160,9 @@ export function useSeasonRepository() {
       concatenated.set(array, offset)
       offset += array.byteLength
     }
-    return new TextDecoder().decode(concatenated)
+    const result = new TextDecoder().decode(concatenated)
+    assertNotNull(result)
+    return result
   }
 
   return { data: season, loading, error, success, invalidateCache }

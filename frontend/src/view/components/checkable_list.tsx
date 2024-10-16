@@ -1,6 +1,6 @@
-import { Checkbox } from "./check_box"
-import { Row } from "./row"
-import { Text } from "./text"
+import { Checkbox } from "frontend/components/atoms/checkbox"
+import { Row } from "frontend/components/atoms/row"
+import { Text } from "frontend/components/atoms/text"
 import "./checkable_list.css"
 
 interface CheckableListProps<T extends { id: number; name: string }> {

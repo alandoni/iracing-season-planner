@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { LazyPageLoad } from "components/lazy_page_load"
+import { Column } from "frontend/components/atoms/column"
 import { Header } from "components/header"
 import { Navigation } from "components/navigation"
-import { Column } from "components/column"
-import { Page } from "components/page"
 import { Warning } from "components/warning"
+import { Page } from "frontend/components/templates/simple-page"
+import { LazyPageLoad } from "frontend/components/templates/lazy_page_load"
 import "./App.css"
+import "utils"
 
 function App() {
   return (

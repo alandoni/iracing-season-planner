@@ -1,15 +1,14 @@
 import { CheckableList } from "components/checkable_list"
-import { Column } from "components/column"
-import { Row } from "components/row"
-import { Text } from "components/text"
+import { Column } from "frontend/components/atoms/column"
+import { Row } from "frontend/components/atoms/row"
+import { Text } from "frontend/components/atoms/text"
 import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { CarRow } from "components/car_row"
 import { Car } from "data/car"
-import "./cars.css"
 import { SearchInput } from "components/search-input"
-import { findInName } from "utils/find"
+import "./cars.css"
 
 export function CarsPage() {
   const season = useSeasonRepository()
@@ -26,8 +25,7 @@ export function CarsPage() {
         return shouldFilter
       }
       return (
-        shouldFilter &&
-        (findInName(car.name, search) || car.categories.find((cat) => findInName(cat.name, search)) !== undefined)
+        shouldFilter && (car.name.find(search) || car.categories.find((cat) => cat.name.find(search)) !== undefined)
       )
     })
 

@@ -1,12 +1,12 @@
 import WarningIcon from "assets/warning.svg?react"
 import Close from "assets/close.svg?react"
-import { Row } from "./row"
-import { Column } from "./column"
-import { Text } from "./text"
+import { Row } from "frontend/components/atoms/row"
+import { Column } from "frontend/components/atoms/column"
+import { Text } from "frontend/components/atoms/text"
 import { useState } from "react"
 import { useDonationRepository } from "data/donation_repository"
-import { Modal } from "./modal"
-import { LoadingSpinner } from "./loading_spinner"
+import { Modal } from "frontend/components/atoms/modal"
+import { LoadingSpinner } from "frontend/components/atoms/loading_spinner"
 import "./warning.css"
 
 export function Warning() {

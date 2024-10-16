@@ -1,9 +1,9 @@
 import { Schedule } from "data/schedule"
 import { Series } from "data/series"
-import { Column } from "./column"
-import { Row } from "./row"
-import { Text } from "./text"
-import { Checkbox } from "./check_box"
+import { Column } from "frontend/components/atoms/column"
+import { Row } from "frontend/components/atoms/row"
+import { Text } from "frontend/components/atoms/text"
+import { Checkbox } from "frontend/components/atoms/checkbox"
 import { LicenseLetter } from "./license_letter"
 import "./schedule_row.css"
 

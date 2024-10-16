@@ -1,12 +1,12 @@
-import { Text } from "./text"
-import { Row } from "./row"
+import { Text } from "frontend/components/atoms/text"
+import { Row } from "frontend/components/atoms/row"
 import Import from "assets/import.svg?react"
 import Export from "assets/export.svg?react"
 import Update from "assets/update.svg?react"
 import { ImportingOlderFileError, useUserRepository } from "data/user_repository"
 import { ChangeEvent, useRef } from "react"
-import "./header.css"
 import { useSeasonRepository } from "data/season_repository"
+import "./header.css"
 
 export function Header() {
   const userRepository = useUserRepository()

@@ -2,16 +2,15 @@ import { Series } from "data/series"
 import { Schedule } from "data/schedule"
 import { Car } from "data/car"
 import { Track } from "data/track"
-import { Row } from "./row"
-import { Column } from "./column"
-import { Text } from "./text"
-import { Checkbox } from "./check_box"
+import { Row } from "frontend/components/atoms/row"
+import { Column } from "frontend/components/atoms/column"
+import { Text } from "frontend/components/atoms/text"
+import { Checkbox } from "frontend/components/atoms/checkbox"
 import { LicenseLetter } from "./license_letter"
 import { useEffect, useRef, useState } from "react"
 import { ExpandCollapseButton } from "./expand_collapse_button"
 import { CarRow } from "./car_row"
 import { TrackRow } from "./track_row"
-import { removeDuplicates } from "utils/list"
 import "./list_row.css"
 import "./series_row.css"
 
@@ -76,10 +75,10 @@ export function SeriesRow({
           </Row>
           <Row>
             <Text relevance="irrelevant" size="small">
-              {removeDuplicates(
-                series.schedules.map((s) => s.category),
-                (a, b) => a === b,
-              ).join(", ")}
+              {series.schedules
+                .map((s) => s.category)
+                .removeDuplicates((a, b) => a === b)
+                .join(", ")}
             </Text>
           </Row>
         </Column>
@@ -103,34 +102,34 @@ export function SeriesRow({
         <Row>
           <Column>
             <Text relevance="important">Carros da série:</Text>
-            {removeDuplicates(
-              series.schedules.flatMap((s) => s.cars),
-              (a, b) => a.id === b.id,
-            ).map((car) => (
-              <CarRow
-                key={car.id}
-                car={car}
-                showCategory={false}
-                selected={car.free || ownedCars.find((c) => car.id === c.id) !== undefined}
-                onSelect={onSetOwnedCar}
-              />
-            ))}
+            {series.schedules
+              .flatMap((s) => s.cars)
+              .removeDuplicates((a, b) => a.id === b.id)
+              .map((car) => (
+                <CarRow
+                  key={car.id}
+                  car={car}
+                  showCategory={false}
+                  selected={car.free || ownedCars.find((c) => car.id === c.id) !== undefined}
+                  onSelect={onSetOwnedCar}
+                />
+              ))}
           </Column>
         </Row>
         <Row>
           <Column>
             <Text relevance="important">Pistas da série:</Text>
-            {removeDuplicates(
-              series.schedules.flatMap((s) => s.track),
-              (a, b) => a.id === b.id,
-            ).map((track) => (
-              <TrackRow
-                key={track.id}
-                track={track}
-                selected={track.free || ownedTracks.find((t) => track.id === t.id) !== undefined}
-                onSelect={onSetOwnedTrack}
-              />
-            ))}
+            {series.schedules
+              .flatMap((s) => s.track)
+              .removeDuplicates((a, b) => a.id === b.id)
+              .map((track) => (
+                <TrackRow
+                  key={track.id}
+                  track={track}
+                  selected={track.free || ownedTracks.find((t) => track.id === t.id) !== undefined}
+                  onSelect={onSetOwnedTrack}
+                />
+              ))}
           </Column>
         </Row>
       </Column>
