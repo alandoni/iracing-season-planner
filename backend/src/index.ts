@@ -34,8 +34,11 @@ app.get("/*", (_req, res) => {
 
 app.init().then(async () => {
   logger.info("Downloading latest info")
-  await getSeasonController().getSeason()
-  logger.info("Latest info downloaded and cached")
-
-  logger.info(`Running on: ${process.env.NODE_ENV}`)
+  try {
+    await getSeasonController().getSeason()
+    logger.info("Latest info downloaded and cached")
+    logger.info(`Running on: ${process.env.NODE_ENV}`)
+  } catch (error) {
+    logger.error(error)
+  }
 })
