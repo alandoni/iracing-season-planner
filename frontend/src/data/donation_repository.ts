@@ -1,6 +1,6 @@
-import { PaymentResponse } from "data/payment_response"
+import { PaymentResponse } from "data/payment/payment_response"
 import { useRequest } from "./use_request"
-import { Payment } from "data/payment"
+import { PaymentRequest } from "data/payment/payment_request"
 import { useState } from "react"
 
 export function useDonationRepository() {
@@ -46,7 +46,7 @@ export function useDonationRepository() {
     const names = name.split(" ")
     const firstName = names.slice(0, -2).join(" ")
     const lastName = names[names.length - 1]
-    makeRequest<Payment>("POST", {
+    makeRequest<PaymentRequest>("POST", {
       firstName,
       lastName,
       email: email.length > 0 ? email : undefined,

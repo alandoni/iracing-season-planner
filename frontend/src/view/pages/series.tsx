@@ -6,7 +6,7 @@ import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { SeriesRow } from "components/series_row"
-import { Series } from "data/series"
+import { Series } from "data/iracing/season/models/series"
 import { SearchInput } from "components/search-input"
 import { LoadingOutlet } from "frontend/components/templates/loading_outlet"
 import "./series.css"
@@ -23,14 +23,14 @@ export function SeriesPage() {
       const shouldFilter =
         userRepository.preferredLicenses.some((license) => series.licenses.find((l) => l.id === license.id)) &&
         userRepository.preferredCategories.some((category) =>
-          series.schedules.find((s) => s.categoryId === category.id),
+          series.schedules.find((s) => s.category.id === category.id),
         ) &&
         series.schedules.length > 0
       if (search.length === 0) {
         return shouldFilter
       }
       const findInSeries =
-        series.name.find(search) || series.schedules.find((s) => s.category.find(search)) !== undefined
+        series.name.find(search) || series.schedules.find((s) => s.category.name.find(search)) !== undefined
       const findInCar =
         series.schedules.find((s) =>
           s.cars.find((c) => c.name.find(search) || c.categories.find((cat) => cat.name.find(search))),
@@ -39,7 +39,7 @@ export function SeriesPage() {
         series.schedules.find(
           (s) =>
             s.track.name.find(search) ||
-            s.track.category.find(search) ||
+            s.track.mainCategory.name.find(search) ||
             s.track.categories.find((c) => c.name.find(search)) !== undefined,
         ) !== undefined
 

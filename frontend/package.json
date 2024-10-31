@@ -12,12 +12,13 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
-    "frontend": "../../shared/frontend/",
+    "data": "/home/alan/Development/iracing-season-planner/data",
+    "frontend": "/home/alan/Development/shared/frontend/",
     "js-sha256": "^0.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.0",
-    "utils": "../../shared/utils"
+    "utils": "/home/alan/Development/shared/utils"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

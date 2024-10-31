@@ -6,7 +6,7 @@ import { useSeasonRepository } from "data/season_repository"
 import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { CarRow } from "components/car_row"
-import { Car } from "data/car"
+import { Car } from "data/iracing/season/models/car"
 import { SearchInput } from "components/search-input"
 import "./cars.css"
 

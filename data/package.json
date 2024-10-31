@@ -1,0 +1,27 @@
+{
+  "name": "data",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "exports": {
+    "./*": [
+      "./dist/*.js",
+      "./dist/*/index.js"
+    ]
+  },
+  "scripts": {
+    "build": "tsc --build --verbose",
+    "test": "jest"
+  },
+  "dependencies": {
+    "data-utils": "/home/alan/Development/shared/data-utils"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.2.5",
+    "@types/node": "^22.7.5",
+    "jest": "^29.2.5",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2"
+  }
+}

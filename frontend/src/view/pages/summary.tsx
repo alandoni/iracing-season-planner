@@ -1,12 +1,13 @@
-import { Car } from "data/car"
-import { Track, TrackWithConfigName } from "data/track"
-import { Series } from "data/series"
-import { Column } from "frontend/components/atoms/column"
-import { useSeasonRepository } from "data/season_repository"
-import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
+import { Column } from "frontend/components/atoms/column"
 import { Row } from "frontend/components/atoms/row"
 import { Text } from "frontend/components/atoms/text"
+import { Checkbox } from "frontend/components/atoms/checkbox"
+import { Car } from "data/iracing/season/models/car"
+import { Track, TrackWithConfigName } from "data/iracing/season/models/track"
+import { Series } from "data/iracing/season/models/series"
+import { useSeasonRepository } from "data/season_repository"
+import { useUserRepository } from "data/user_repository"
 import { CarRow } from "components/car_row"
 import { TrackRow } from "components/track_row"
 import { CheckableList } from "components/checkable_list"
@@ -15,7 +16,6 @@ import {
   SeriesWithSummary,
   calculateMinimumParticipation,
 } from "components/participated_series_row"
-import { Checkbox } from "frontend/components/atoms/checkbox"
 import {
   AlmostEligibleSeries,
   AlmostEligibleSeriesAndContentsToBuy,
@@ -132,7 +132,7 @@ export function SummaryPage() {
         (serie) =>
           userRepository.preferredLicenses.some((license) => serie.licenses.find((l) => l.id === license.id)) &&
           userRepository.preferredCategories.some((category) =>
-            serie.schedules.find((c) => c.categoryId === category.id),
+            serie.schedules.find((c) => c.category.id === category.id),
           ) &&
           serie.eligible < calculateMinimumParticipation(serie),
       )
@@ -180,7 +180,7 @@ export function SummaryPage() {
               s.licenses.find((l) => l.id === license.id && license.letter !== "R"),
             ) &&
             userRepository.preferredCategories.some((category) =>
-              s.schedules.find((sc) => sc.categoryId === category.id),
+              s.schedules.find((sc) => sc.category.id === category.id),
             )) ||
           s.participatedRaces > 0,
       ),

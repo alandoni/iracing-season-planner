@@ -1,4 +1,4 @@
-import { License } from "data/license"
+import { License } from "data/iracing/season/models/license"
 import "./license_letter.css"
 
 interface LicenseLetterProps {

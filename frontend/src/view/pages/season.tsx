@@ -6,7 +6,7 @@ import { ScheduleRow } from "components/schedule_row"
 import { Text } from "frontend/components/atoms/text"
 import { useSeasonRepository } from "data/season_repository"
 import { useEffect, useState } from "react"
-import { Series } from "data/series"
+import { Series } from "data/iracing/season/models/series"
 import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
 import { Checkbox } from "frontend/components/atoms/checkbox"
@@ -30,7 +30,7 @@ export function SeasonPage() {
         copy.schedules = copy.schedules.filter((schedule) => {
           const correctWeek = week === -1 || schedule.raceWeekNum === week
           const containsCategories = (userRepository.preferredCategories ?? []).find(
-            (c) => c.id === schedule.categoryId,
+            (c) => c.id === schedule.category.id,
           )
           const ownedTrack = schedule.track.free || userRepository.myTracks.find((t) => t.id === schedule.track.id)
           const ownedCarsInSchedule = schedule.cars.filter(
@@ -49,7 +49,7 @@ export function SeasonPage() {
           return shouldFilter
         }
         const findInSeries =
-          series.name.find(search) || series.schedules.find((s) => s.category.find(search)) !== undefined
+          series.name.find(search) || series.schedules.find((s) => s.category.name.find(search)) !== undefined
         const findInCar =
           series.schedules.find((s) =>
             s.cars.find((c) => c.name.find(search) || c.categories.find((cat) => cat.name.find(search))),
@@ -57,8 +57,8 @@ export function SeasonPage() {
         const findInTrack =
           series.schedules.find(
             (s) =>
-              s.track.find(ame, search) ||
-              s.category.find(search) ||
+              s.track.name.find(search) ||
+              s.category.name.find(search) ||
               s.track.categories.find((c) => c.name.find(search)) !== undefined,
           ) !== undefined
 

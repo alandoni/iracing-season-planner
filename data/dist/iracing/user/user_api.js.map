@@ -1,0 +1,1 @@
+{"version":3,"file":"user_api.js","sourceRoot":"","sources":["../../../src/iracing/user/user_api.ts"],"names":[],"mappings":";;;AAAA,2CAA8D;AAC9D,iCAA6B;AAO7B,MAAa,OAAO;IAClB,GAAG,GAAG,OAAO,CAAA;IAEb,aAAa;QACX,OAAO,IAAI,uBAAU,CAAC,uBAAU,CAAC,GAAG,EAAE,mBAAmB,EAAE,WAAI,CAAC,CAAA;IAClE,CAAC;CACF;AAND,0BAMC"}

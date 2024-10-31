@@ -1,5 +1,5 @@
-import { Car } from "data/car"
-import { Track } from "data/track"
+import { Car } from "data/iracing/season/models/car"
+import { Track } from "data/iracing/season/models/track"
 import { Row } from "frontend/components/atoms/row"
 import { Column } from "frontend/components/atoms/column"
 import { CarRow } from "./car_row"

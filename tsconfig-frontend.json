@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "composite": true,
+    "jsx": "react-jsx",
+    "types": ["vite/client", "vite-plugin-svgr/client", "jest", "node"],
+
+    // check if those are really necessary
+    "module": "ES2022",
+    "moduleResolution": "Bundler"
+  }
+}

@@ -7,7 +7,7 @@ import { useUserRepository } from "data/user_repository"
 import { useEffect, useState } from "react"
 import { TrackRow } from "components/track_row"
 import { SearchInput } from "components/search-input"
-import { Track } from "data/track"
+import { Track } from "data/iracing/season/models/track"
 import "./tracks.css"
 
 export function TracksPage() {
@@ -25,7 +25,7 @@ export function TracksPage() {
         return shouldFilter
       }
       return (
-        (shouldFilter && (track.name.find(search) || track.category.find(search))) ||
+        (shouldFilter && (track.name.find(search) || track.mainCategory.name.find(search))) ||
         track.categories.find((c) => c.name.find(search))
       )
     })

@@ -1,4 +1,4 @@
-import { Series } from "data/series"
+import { Series } from "data/iracing/season/models/series"
 import { Row } from "frontend/components/atoms/row"
 import { Column } from "frontend/components/atoms/column"
 import { Text } from "frontend/components/atoms/text"

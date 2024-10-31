@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
+    "module": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "useDefineForClassFields": true,
     "allowJs": false,
@@ -17,15 +17,15 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": false,
+    "noEmit": true,
     "types": ["vite/client", "vite-plugin-svgr/client"],
     /* Bundler mode */
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Bundler",
     "declaration": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "preserveSymlinks": true,
-    "allowImportingTsExtensions": false,
+    "allowImportingTsExtensions": true,
     "sourceMap": false,
     "incremental": true,
 
@@ -33,17 +33,17 @@
     "jsx": "react-jsx",
 
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "../",
 
     "paths": {
       "components/*": ["./src/view/components/*"],
       "pages/*": ["./src/view/pages/*"],
       "i18n/*": ["./src/view/i18n/*"],
       "assets/*": ["./src/assets/*"],
-      "data/*": ["./src/data/*", "../data/*"]
+      "data/*": ["./src/data/*", "./../data/src/*"]
     }
   },
-  "include": ["./src", "vite.config.ts"],
+  "include": ["./src", "../data/src"],
   "ts-node": {
     "files": true
   },

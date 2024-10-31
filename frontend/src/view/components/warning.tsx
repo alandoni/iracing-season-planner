@@ -18,13 +18,13 @@ export function Warning() {
     <Row className={`warning ${show ? "" : "hidden"}`}>
       <WarningIcon className="svg icon warning-icon" />
       <Column>
-        <Text>Devido aos altos custos de manutenção, os dados deste website serão armazenados apenas localmente.</Text>
         <Text>
-          Caso você limpe o cache ou desinstale o navegador, ou formate o computador, seus dados serão perdidos.
+          Devido aos altos custos de manutenção, os dados deste website serão armazenados apenas localmente. Caso você
+          limpe o cache ou desinstale o navegador, ou formate o computador, seus dados serão perdidos.
         </Text>
-        <Text>Use os botões acima para importar e exportar seus dados entre diferentes aparelhos.</Text>
         <Text>
-          Está gostando de usar a ferramenta? Que tal &nbsp;
+          Use os botões acima para importar e exportar seus dados entre diferentes aparelhos. Está gostando de usar a
+          ferramenta? Que tal &nbsp;
           <a
             onClick={() => {
               setShowModal(true)

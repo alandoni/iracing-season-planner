@@ -1,42 +1,34 @@
-import axios, { AxiosError, AxiosResponse } from "axios"
+import axios, { AxiosError } from "axios"
+import { CommonResponse, HttpClient, Headers, RequestBody, ResponseBody, HttpMethod, Interceptor } from "data-utils"
 
-export class HttpClient {
-  private axiosInstance = axios.create()
-
-  private useSetCookie(response: AxiosResponse) {
-    this.axiosInstance.defaults.headers.Cookie = this.parseCookies(response)
+export class AxiosHttpClient extends HttpClient {
+  constructor(url: string, interceptors: Interceptor[]) {
+    super(url, interceptors)
   }
 
-  private parseCookies(response: AxiosResponse) {
-    const raw = response.headers["set-cookie"]
-    return (
-      raw
-        ?.map((entry) => {
-          const parts = entry.split(";")
-          const cookiePart = parts[0]
-          return cookiePart
-        })
-        ?.join(";") ?? ""
-    )
-  }
-
-  async get<R>(url: string): Promise<R> {
+  async fetch<Response extends ResponseBody>(
+    url: string,
+    config: { headers?: Headers; method: HttpMethod; body?: RequestBody },
+  ): Promise<CommonResponse<Response>> {
     try {
-      return (await this.axiosInstance(url)).data
-    } catch (error) {
-      throw this.printableError(error)
-    }
-  }
-
-  async post<B, R>(url: string, body: B): Promise<R> {
-    try {
-      const response = await this.axiosInstance<R>(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        data: body,
+      console.log(JSON.stringify(config, null, 2))
+      const response = await axios.request<Response>({
+        url,
+        data: config.body,
+        method: config.method.toString(),
+        headers: config.headers,
       })
-      this.useSetCookie(response)
-      return response.data
+      console.log(
+        JSON.stringify(
+          {
+            data: response.data,
+            headers: response.headers,
+          },
+          null,
+          2,
+        ),
+      )
+      return response
     } catch (error) {
       throw this.printableError(error)
     }

@@ -1,4 +1,4 @@
-import { Car } from "data/car"
+import { Car } from "data/iracing/season/models/car"
 import { Row } from "frontend/components/atoms/row"
 import { Column } from "frontend/components/atoms/column"
 import { Text } from "frontend/components/atoms/text"

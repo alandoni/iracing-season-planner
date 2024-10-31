@@ -1,5 +1,5 @@
-import { Schedule } from "data/schedule"
-import { Series } from "data/series"
+import { Schedule } from "data/iracing/season/models/schedule"
+import { Series } from "data/iracing/season/models/series"
 import { Column } from "frontend/components/atoms/column"
 import { Row } from "frontend/components/atoms/row"
 import { Text } from "frontend/components/atoms/text"
@@ -49,7 +49,7 @@ export function ScheduleRow({
       </Column>
       <Column className="image">
         <img src="" />
-        <Text size="small">{schedule.category}</Text>
+        <Text size="small">{schedule.category.name}</Text>
       </Column>
       <Column className="others">
         <Row>
