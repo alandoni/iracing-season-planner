@@ -25,6 +25,7 @@ export class SeasonController {
   }
 
   async getSeason(): Promise<Season> {
+    console.log("Ué")
     const cache = await this.getCachedSeason()
     if (cache?.validate()) {
       this.logger.debug(`Using cache ${cache?.cachedDate}`)

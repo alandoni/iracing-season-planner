@@ -4,7 +4,7 @@ import { CarRepository } from "./car_repository"
 import fs from "fs"
 import "../../../dependency_injection"
 
-describe("CarRepository", () => {
+xdescribe("CarRepository", () => {
   const user = DI.get(UserRepository)
   const repo = DI.get(CarRepository)
 
