@@ -8,7 +8,7 @@ export const car1 = new Car()
 export const car2 = new Car()
 export const car3 = new Car()
 export const category1 = new Category(1, "Oval")
-export const category2 = new Category(1, "Sports Car")
+export const category2 = new Category(2, "Sports Car")
 export const license1 = new License()
 export const license2 = new License()
 

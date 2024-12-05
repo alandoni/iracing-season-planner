@@ -97,4 +97,54 @@ describe("Cars Page", () => {
       })
     })
   })
+
+  describe("setPreferredCategories", () => {
+    it("should search the data by name", async () => {
+      const { result } = vm
+
+      userPreferencesRepository.addOrRemovePreferredCategory = jest.fn().mockReturnValue([category2.id])
+      await act(async () => {
+        await result.current.onLoad()
+      })
+
+      act(() => {
+        result.current.setPreferredCategory(true, category2)
+      })
+
+      act(() => {
+        result.current.setSearch("Legends")
+      })
+
+      expect(result.current).toMatchObject({
+        search: "Legends",
+        preferredCategories: [category2],
+        filteredCars: [],
+      })
+    })
+  })
+
+  describe("setPreferredLicenses", () => {
+    it("should search the data by name", async () => {
+      const { result } = vm
+
+      userPreferencesRepository.addOrRemovePreferredLicense = jest.fn().mockReturnValue([license2.id])
+      await act(async () => {
+        await result.current.onLoad()
+      })
+
+      act(() => {
+        result.current.setPreferredLicense(true, license2)
+      })
+
+      act(() => {
+        result.current.setSearch("Legends")
+      })
+
+      expect(result.current).toMatchObject({
+        search: "Legends",
+        preferredLicenses: [license2],
+        filteredCars: [],
+      })
+    })
+  })
 })
