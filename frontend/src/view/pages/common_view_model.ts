@@ -6,11 +6,11 @@ import { Season } from "racing-tools-data/iracing/season/models/season"
 import { Series } from "racing-tools-data/iracing/season/models/series"
 import { Track } from "racing-tools-data/iracing/season/models/track"
 import { TrackWithConfigName } from "racing-tools-data/iracing/season/models/track"
-import { SeasonRepository } from "src/data/season_repository"
 import { UserPreferencesRepository } from "src/data/user_repository"
 import { useState } from "react"
 import { assertNotNull, Logger, DI } from "@alandoni/utils"
 import { ConsoleLogger } from "@alandoni/frontend/utils/logger"
+import { SeasonRepositoryInterface } from "racing-tools-data/iracing/season/season_repository_interface"
 
 export type FullSchedule = Omit<Schedule, "cars" | "track"> & { cars: Car[]; track: TrackWithConfigName }
 
@@ -21,7 +21,7 @@ export type SeasonWithFullSchedule = Omit<Season, "series" | "validate"> & { ser
 type SeasonLists = Omit<SeasonWithFullSchedule, "cachedDate" | "quarter" | "year" | "validate">
 
 export function useCommonViewModel(
-  seasonRepository: SeasonRepository,
+  seasonRepository: SeasonRepositoryInterface,
   userRepository: UserPreferencesRepository,
   logger: Logger = DI.get(ConsoleLogger),
 ) {
@@ -77,8 +77,8 @@ export function useCommonViewModel(
   const getUserPreferences = (season: SeasonWithFullSchedule | undefined) => {
     const preferences = userRepository.getUserPreferences()
     if (!preferences) {
-      setList(season, [], "categories", setPreferredCategories, season?.categories)
-      setList(season, [], "licenses", setPreferredLicenses, season?.licenses)
+      setPreferredCategories(season?.categories ?? [])
+      setPreferredLicenses(season?.licenses ?? [])
       return
     }
     setList(season, preferences.myCarsIds, "cars", setMyCars)

@@ -4,15 +4,17 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "yalc update && vite",
+    "start": "vite",
     "prebuild": "echo \"VITE_API_ADDRESS=$VITE_API_ADDRESS\" > .env",
     "build": "tsc --build --verbose && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "preinstall": "yalc update"
   },
   "dependencies": {
     "@alandoni/frontend": "^1.0.2",
+    "@testing-library/dom": "^10.4.0",
     "axios": "^1.7.2",
     "js-sha256": "^0.11.0",
     "racing-tools-data": "file:.yalc/racing-tools-data",
@@ -21,9 +23,9 @@
     "react-router-dom": "^6.24.0"
   },
   "devDependencies": {
-    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.13",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

@@ -1,8 +1,9 @@
 import { Season } from "racing-tools-data/iracing/season/models/season"
 import { SeasonService } from "./season_service"
 import { SeasonStorage } from "./season_storage"
+import { SeasonRepositoryInterface } from "racing-tools-data/iracing/season/season_repository_interface"
 
-export class SeasonRepository {
+export class SeasonRepository implements SeasonRepositoryInterface {
   constructor(private seasonService: SeasonService, private seasonStorage: SeasonStorage) {}
 
   async getSeason(): Promise<Season> {

@@ -4,10 +4,11 @@
   "description": "An app to help to plan the season on iRacing",
   "main": "index.ts",
   "scripts": {
-    "build": "yalc update && tsc --build --verbose && tsc-alias",
+    "build": "tsc --build --verbose && tsc-alias",
     "postbuild": "cp package.json ./dist/package.json && cp .env ./dist || : && cd ./dist && yarn install --prod",
-    "start": "yalc update && ts-node-dev -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts --diagnostics",
-    "test": "jest"
+    "start": "ts-node-dev -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts --diagnostics",
+    "test": "jest",
+    "preinstall": "yalc update"
   },
   "author": "Alan Donizete Quintiliano",
   "license": "ISC",

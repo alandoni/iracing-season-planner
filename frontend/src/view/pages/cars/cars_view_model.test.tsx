@@ -1,0 +1,100 @@
+import "reflect-metadata"
+import { renderHook, RenderHookResult } from "@testing-library/react"
+import { act } from "react"
+import { useCarsViewModel } from "./cars_view_model"
+import { UserPreferencesRepository } from "src/data/user_repository"
+import { mockLogger } from "@alandoni/utils"
+import {
+  car1,
+  car2,
+  car3,
+  category1,
+  category2,
+  license1,
+  license2,
+  seasonRepository,
+} from "src/test-utils/season_repository_mock"
+
+describe("Cars Page", () => {
+  const userPreferencesRepository = {
+    getUserPreferences: () => null,
+  } as UserPreferencesRepository
+  let vm: RenderHookResult<ReturnType<typeof useCarsViewModel>, never>
+
+  beforeEach(() => {
+    vm = renderHook(() => useCarsViewModel(seasonRepository, userPreferencesRepository, mockLogger))
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it("should have correct state when instantiated", () => {
+    const { result } = vm
+    expect(result.current).toMatchObject({
+      season: undefined,
+      filteredCars: [],
+      loading: false,
+      error: undefined,
+      search: "",
+      myCars: [],
+      myTracks: [],
+      participatedSeries: [],
+      participatedRaces: [],
+      preferredCategories: [],
+      preferredLicenses: [],
+    })
+  })
+
+  describe("OnLoad", () => {
+    it("should load the data", async () => {
+      const { result } = vm
+
+      await act(async () => {
+        await result.current.onLoad()
+      })
+      expect(result.current.loading).toBe(false)
+      expect(result.current).toMatchObject({
+        filteredCars: [car1, car2, car3],
+        preferredCategories: [category1, category2],
+        preferredLicenses: [license1, license2],
+      })
+    })
+  })
+
+  describe("OnSearch", () => {
+    it("should search the data by name", async () => {
+      const { result } = vm
+
+      await act(async () => {
+        await result.current.onLoad()
+      })
+
+      act(() => {
+        result.current.setSearch("Legends")
+      })
+
+      expect(result.current).toMatchObject({
+        search: "Legends",
+        filteredCars: [car1],
+      })
+    })
+
+    it("should search the data by category name", async () => {
+      const { result } = vm
+
+      await act(async () => {
+        await result.current.onLoad()
+      })
+
+      await act(async () => {
+        result.current.setSearch("Sports")
+      })
+
+      expect(result.current).toMatchObject({
+        search: "Sports",
+        filteredCars: [car2, car3],
+      })
+    })
+  })
+})

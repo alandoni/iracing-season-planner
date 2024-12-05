@@ -41,7 +41,7 @@ function App() {
             path="/series"
             element={<LazyPageLoad factory={import("pages/series")} componentName="SeriesPage" />}
           />
-          <Route path="/cars" element={<LazyPageLoad factory={import("pages/cars")} componentName="CarsPage" />} />
+          <Route path="/cars" element={<LazyPageLoad factory={import("pages/cars/cars")} componentName="CarsPage" />} />
           <Route
             path="/tracks"
             element={<LazyPageLoad factory={import("pages/tracks")} componentName="TracksPage" />}
