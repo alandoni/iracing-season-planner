@@ -9,7 +9,9 @@ export class Season {
   static MAX_DAYS_TO_VALIDATE_CACHE = 7
 
   cachedDate: Date
+  @Type(() => Car)
   cars: Car[]
+  @Type(() => Track)
   tracks: Track[]
   licenses: License[]
   @Type(() => Series)

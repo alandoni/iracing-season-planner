@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Season = void 0;
+const track_1 = require("./track");
+const car_1 = require("./car");
 const series_1 = require("./series");
 const category_1 = require("./category");
 const class_transformer_1 = require("class-transformer");
@@ -45,6 +47,14 @@ class Season {
     }
 }
 exports.Season = Season;
+__decorate([
+    (0, class_transformer_1.Type)(() => car_1.Car),
+    __metadata("design:type", Array)
+], Season.prototype, "cars", void 0);
+__decorate([
+    (0, class_transformer_1.Type)(() => track_1.Track),
+    __metadata("design:type", Array)
+], Season.prototype, "tracks", void 0);
 __decorate([
     (0, class_transformer_1.Type)(() => series_1.Series),
     __metadata("design:type", Array)

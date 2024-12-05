@@ -4,19 +4,27 @@ import { SeasonController } from "./season_controller"
 import { DI, plainToInstance } from "@alandoni/utils"
 import { Season } from "racing-tools-data/iracing/season/models/season"
 import { Category } from "racing-tools-data/iracing/season/models/category"
-import { plainToClass } from "class-transformer"
+import { Car } from "racing-tools-data/iracing/season/models/car"
 import { mockLogger } from "@alandoni/utils"
+import { plainToClass } from "class-transformer"
 
 describe("Season", () => {
   it("should deserialize correctly", () => {
     const object = {
       categories: [{ id: 1, _name: "A" }],
+      cars: [{ id: 1, categories: [{ id: 1, _name: "A" }] }],
     }
     const result: Season = plainToClass(Season, object)
     mockLogger.debugObject("Season", result)
+
     expect(result.categories[0]["_name"]).toBe("A")
     expect(result.categories[0]).toBeInstanceOf(Category)
     expect(result.categories[0].name).toBe("A")
+
+    expect(result.cars[0]).toBeInstanceOf(Car)
+    expect(result.cars[0].categories[0]["_name"]).toBe("A")
+    expect(result.cars[0].categories[0]).toBeInstanceOf(Category)
+    expect(result.cars[0].categories[0].name).toBe("A")
   })
 })
 

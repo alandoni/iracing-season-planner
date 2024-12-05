@@ -1,13 +1,13 @@
 import { CheckableList } from "components/checkable_list"
-import { Column } from "frontend/components/atoms/column"
-import { Row } from "frontend/components/atoms/row"
-import { Text } from "frontend/components/atoms/text"
+import { Column } from "@alandoni/frontend/components/atoms/column"
+import { Row } from "@alandoni/frontend/components/atoms/row"
+import { Text } from "@alandoni/frontend/components/atoms/text"
 import { useEffect } from "react"
 import { CarRow } from "components/car_row"
 import { SearchInput } from "components/search-input"
 import { useCarsViewModel } from "./cars_view_model"
-import { Error } from "frontend/components/atoms/error"
-import { LoadingPage } from "frontend/components/templates/loading_page"
+import { Error } from "@alandoni/frontend/components/atoms/error"
+import { LoadingPage } from "@alandoni/frontend/components/templates/loading_page"
 import "./cars.css"
 
 export function CarsPage() {

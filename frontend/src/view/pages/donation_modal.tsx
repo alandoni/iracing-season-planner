@@ -1,10 +1,10 @@
-import { Modal } from "frontend/components/atoms/modal"
+import { Modal } from "@alandoni/frontend/components/atoms/modal"
 import { useDonationViewModel } from "./donation_view_model"
-import { Text } from "frontend/components/atoms/text"
-import { Row } from "frontend/components/atoms/row"
-import { LoadingSpinner } from "frontend/components/atoms/loading_spinner"
-import { Input } from "frontend/components/atoms/input"
-import { Button } from "frontend/components/atoms/button"
+import { Text } from "@alandoni/frontend/components/atoms/text"
+import { Row } from "@alandoni/frontend/components/atoms/row"
+import { LoadingSpinner } from "@alandoni/frontend/components/atoms/loading_spinner"
+import { Input } from "@alandoni/frontend/components/atoms/input"
+import { Button } from "@alandoni/frontend/components/atoms/button"
 
 interface DonationModalProps {
   setIsDisplaying: (isDisplaying: boolean) => void

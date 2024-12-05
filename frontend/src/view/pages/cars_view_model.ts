@@ -4,7 +4,7 @@ import { SeasonRepository } from "src/data/season_repository"
 import { UserPreferencesRepository } from "src/data/user_repository"
 import { useEffect, useState } from "react"
 import { useCommonViewModel } from "./common_view_model"
-import { ConsoleLogger } from "frontend/utils/logger"
+import { ConsoleLogger } from "@alandoni/frontend/utils/logger"
 
 export function useCarsViewModel(
   seasonRepository: SeasonRepository = DI.get(SeasonRepository),

@@ -1,6 +1,6 @@
 import { PaymentRepository } from "src/data/payment_repository"
 import { PaymentResponse } from "racing-tools-data/payment/payment_response"
-import { useForm } from "frontend/utils/react_hooks/use_form"
+import { useForm } from "@alandoni/frontend/utils/react_hooks/use_form"
 import { useState } from "react"
 import { DI, Money } from "@alandoni/utils"
 

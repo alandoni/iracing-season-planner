@@ -1,5 +1,5 @@
 import "./search-input.css"
-import { useDebounceField } from "frontend/utils/react_hooks/use_debounce_field"
+import { useDebounceField } from "@alandoni/frontend/utils/react_hooks/use_debounce_field"
 
 interface SearchInputProps {
   value: string

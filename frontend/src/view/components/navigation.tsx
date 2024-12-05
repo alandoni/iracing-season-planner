@@ -1,6 +1,6 @@
-import { Column } from "frontend/components/atoms/column"
-import { Row } from "frontend/components/atoms/row"
-import { Text } from "frontend/components/atoms/text"
+import { Column } from "@alandoni/frontend/components/atoms/column"
+import { Row } from "@alandoni/frontend/components/atoms/row"
+import { Text } from "@alandoni/frontend/components/atoms/text"
 import "./navigation.css"
 
 const links = [

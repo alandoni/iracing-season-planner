@@ -4,7 +4,7 @@ import { SeasonService } from "src/data/season_service"
 import { SeasonStorage } from "src/data/season_storage"
 import { UserPreferencesRepository } from "src/data/user_repository"
 import { UserPreferencesStorage } from "src/data/user_storage"
-import { HttpClientImpl } from "frontend/utils/http_client"
+import { HttpClientImpl } from "@alandoni/frontend/utils/http_client"
 import { DependencyInjection, DependencyInjectionModule } from "@alandoni/utils"
 import { CompressionRepository } from "@alandoni/data-utils"
 

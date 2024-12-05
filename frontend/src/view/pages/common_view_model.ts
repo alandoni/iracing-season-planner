@@ -10,7 +10,7 @@ import { SeasonRepository } from "src/data/season_repository"
 import { UserPreferencesRepository } from "src/data/user_repository"
 import { useState } from "react"
 import { assertNotNull, Logger, DI } from "@alandoni/utils"
-import { ConsoleLogger } from "frontend/utils/logger"
+import { ConsoleLogger } from "@alandoni/frontend/utils/logger"
 
 export type FullSchedule = Omit<Schedule, "cars" | "track"> & { cars: Car[]; track: TrackWithConfigName }
 

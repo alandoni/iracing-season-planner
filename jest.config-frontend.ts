@@ -3,11 +3,14 @@ import { jestConfig as jc } from "./jest.config";
 export const jestConfig = {
   ...jc,
   testEnvironment: "jest-environment-jsdom",
-  transformIgnorePatterns: [`/node_modules/(?!frontend)`],
+  transformIgnorePatterns: [`node_modules/(frontend)`],
   transform: {
-    ".+\\.(ts|tsx)$": ["ts-jest", { tsconfig: "<rootDir>/tsconfig.json" }],
+    ".+\\.(js|jsx|ts|tsx)$": [
+      "ts-jest",
+      { tsconfig: "<rootDir>/tsconfig.json" },
+    ],
     "^.+\\.svg(\\?react)*$":
-      "<rootDir>/node_modules/utils/dist/test-utils/svg_transform.js",
+      "<rootDir>/node_modules/@alandoni/utils/dist/test-utils/svg_transform.js",
   },
   moduleNameMapper: {
     "^.+\\.svg(\\?react)*$": "<rootDir>/src/test-utils/svg_mock.tsx",

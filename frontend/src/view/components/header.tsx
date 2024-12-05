@@ -1,5 +1,5 @@
-import { Text } from "frontend/components/atoms/text"
-import { Row } from "frontend/components/atoms/row"
+import { Text } from "@alandoni/frontend/components/atoms/text"
+import { Row } from "@alandoni/frontend/components/atoms/row"
 import Import from "assets/import.svg?react"
 import Export from "assets/export.svg?react"
 import Update from "assets/update.svg?react"

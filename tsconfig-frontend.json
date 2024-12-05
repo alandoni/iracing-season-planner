@@ -9,5 +9,12 @@
     // check if those are really necessary
     "module": "ES2022",
     "moduleResolution": "Bundler"
+  },
+  "ts-node": {
+    "files": true,
+    "compilerOptions": {
+      "module": "ES2022"
+    },
+    "esm": true
   }
 }

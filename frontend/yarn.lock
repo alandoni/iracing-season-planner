@@ -17,10 +17,10 @@
     class-validator "^0.14.1"
     typeorm "^0.3.20"
 
-"@alandoni/frontend@^1.0.1":
-  version "1.0.1"
-  resolved "https://npm.pkg.github.com/download/@alandoni/frontend/1.0.1/e8992b06a56270839be455108f584ca4e3abf56c#e8992b06a56270839be455108f584ca4e3abf56c"
-  integrity sha512-YDP5/p4vI+4YS1h9lDOsDyc39SituExZzQfiM7661L4LPxqsIwj99aFoMjwcEaMems2hIdP56y49F2sSDxvj3A==
+"@alandoni/frontend@^1.0.2":
+  version "1.0.2"
+  resolved "https://npm.pkg.github.com/download/@alandoni/frontend/1.0.2/f454ef8eceef8dbee1b4bf7656b63ccbe68de6ad#f454ef8eceef8dbee1b4bf7656b63ccbe68de6ad"
+  integrity sha512-lZ1LHZg2yoJPG7oZVcdwHBr2BY9aK8WmRS4RqBRagWWBU14i0QNxPkgdVP2QMltN4z+c3NvTlXqv1KcVm4sHIw==
   dependencies:
     "@alandoni/data-utils" "^1.0.0"
     react "^18.3.1"

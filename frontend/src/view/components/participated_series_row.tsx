@@ -1,6 +1,6 @@
-import { Row } from "frontend/components/atoms/row"
-import { Column } from "frontend/components/atoms/column"
-import { Text } from "frontend/components/atoms/text"
+import { Row } from "@alandoni/frontend/components/atoms/row"
+import { Column } from "@alandoni/frontend/components/atoms/column"
+import { Text } from "@alandoni/frontend/components/atoms/text"
 import { FullSeries } from "../pages/common_view_model"
 import "./participated_series_row.css"
 
