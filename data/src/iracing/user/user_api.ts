@@ -1,4 +1,4 @@
-import { ApiConfig, ApiRequest, HttpMethod } from "data-utils"
+import { RequestApiConfig, ApiRequest, HttpMethod } from "@alandoni/data-utils"
 import { User } from "./user"
 
 export type GetUserParams = {
@@ -7,9 +7,9 @@ export type GetUserParams = {
 }
 
 export class UserApi {
-  url = '/user'
-  
-  getMemberInfo(): ApiRequest<User, never, ApiConfig<GetUserParams>> {
+  url = "/user"
+
+  getMemberInfo(): ApiRequest<User, never, RequestApiConfig<GetUserParams>> {
     return new ApiRequest(HttpMethod.GET, `/:id/:displayName`, User)
   }
 }

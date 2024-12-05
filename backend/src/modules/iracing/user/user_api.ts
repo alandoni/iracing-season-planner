@@ -1,4 +1,4 @@
-import { ApiConfig, ApiRequest, HttpMethod } from "data-utils"
+import { RequestApiConfig, ApiRequest, HttpMethod } from "@alandoni/data-utils"
 import { LinkResponse } from "../link_response"
 import { LoginRequest } from "./login_request"
 import { LoggedUserResponse } from "./logged_user_response"
@@ -22,7 +22,7 @@ export class UserApi {
     return new ApiRequest(HttpMethod.GET, link, LoggedUserResponse)
   }
 
-  public getMemberInfoLink(): ApiRequest<LinkResponse, never, ApiConfig<never, MemberGetQuery>> {
+  public getMemberInfoLink(): ApiRequest<LinkResponse, undefined, RequestApiConfig<undefined, MemberGetQuery>> {
     return new ApiRequest(HttpMethod.GET, "data/member/get", LinkResponse)
   }
 

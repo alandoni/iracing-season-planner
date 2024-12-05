@@ -2,41 +2,32 @@ import { CheckableList } from "components/checkable_list"
 import { Column } from "frontend/components/atoms/column"
 import { Row } from "frontend/components/atoms/row"
 import { Text } from "frontend/components/atoms/text"
-import { useSeasonRepository } from "data/season_repository"
-import { useUserRepository } from "data/user_repository"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { CarRow } from "components/car_row"
-import { Car } from "data/iracing/season/models/car"
 import { SearchInput } from "components/search-input"
+import { useCarsViewModel } from "./cars_view_model"
+import { Error } from "frontend/components/atoms/error"
+import { LoadingPage } from "frontend/components/templates/loading_page"
 import "./cars.css"
 
 export function CarsPage() {
-  const season = useSeasonRepository()
-  const userRepository = useUserRepository()
-  const [filteredCars, setFilteredCars] = useState<Car[]>([])
-  const [search, setSearch] = useState("")
+  const viewModel = useCarsViewModel()
 
   useEffect(() => {
-    const filtered = [...(season.data?.cars ?? [])].filter((car) => {
-      const shouldFilter =
-        userRepository.preferredLicenses.some((license) => car.licenses.find((l) => l.id === license.id)) &&
-        userRepository.preferredCategories.some((category) => car.categories.find((c) => c.id === category.id))
-      if (search.length === 0) {
-        return shouldFilter
-      }
-      return (
-        shouldFilter && (car.name.find(search) || car.categories.find((cat) => cat.name.find(search)) !== undefined)
-      )
-    })
+    viewModel.onLoad()
+  }, [])
 
-    setFilteredCars(filtered)
-  }, [userRepository.preferredLicenses, userRepository.preferredCategories, userRepository.myCars, season.data, search])
+  if (viewModel.loading) {
+    return <LoadingPage />
+  }
 
-  useEffect(() => {
-    if (season.data) {
-      userRepository.load(season.data)
-    }
-  }, [season.data])
+  if (viewModel.error) {
+    return (
+      <Row className="cars-page" alignVertically="start">
+        <Error error="Um erro inesperado aconteceu!" />
+      </Row>
+    )
+  }
 
   return (
     <Row className="cars-page" alignVertically="start">
@@ -46,15 +37,15 @@ export function CarsPage() {
         </Text>
         <CheckableList
           title="Licenças:"
-          list={season.data?.licenses}
-          checkedList={userRepository.preferredLicenses}
-          onCheck={userRepository.setPreferredLicense}
+          list={viewModel.season?.licenses}
+          checkedList={viewModel.preferredLicenses}
+          onCheck={viewModel.setPreferredLicense}
         />
         <CheckableList
           title="Categorias:"
-          list={season.data?.categories}
-          checkedList={userRepository.preferredCategories}
-          onCheck={userRepository.setPreferredCategory}
+          list={viewModel.season?.categories}
+          checkedList={viewModel.preferredCategories}
+          onCheck={viewModel.setPreferredCategory}
         />
       </Column>
       <Column className="content">
@@ -64,7 +55,7 @@ export function CarsPage() {
           </Text>
         </Row>
         <Row>
-          <SearchInput value={search} onChange={setSearch} />
+          <SearchInput value={viewModel.search} onChange={viewModel.setSearch} />
         </Row>
         <div className="list">
           <Row className="car-row list-row subtitle">
@@ -77,12 +68,12 @@ export function CarsPage() {
               </Row>
             </Column>
           </Row>
-          {filteredCars.flatMap((car, index, array) => (
+          {viewModel.filteredCars.flatMap((car, index, array) => (
             <div key={`${car.id}`}>
               <CarRow
                 car={car}
-                selected={car.free || userRepository.myCars?.find((c) => car.id === c.id) !== undefined}
-                onSelect={(checked) => userRepository.setCar(checked, car)}
+                selected={car.free || viewModel.myCars?.find((c) => car.id === c.id) !== undefined}
+                onSelect={(checked) => viewModel.setCar(checked, car)}
               />
               {index < array.length - 1 ? <hr /> : null}
             </div>

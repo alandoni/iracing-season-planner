@@ -1,5 +1,5 @@
 import { Season } from "./models/season";
-import { ApiRequest } from "data-utils";
+import { ApiRequest } from "@alandoni/data-utils";
 export declare class SeasonApi {
     url: string;
     constructor();

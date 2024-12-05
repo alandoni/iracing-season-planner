@@ -1,7 +1,5 @@
-import { Series } from "data/iracing/season/models/series"
-import { Schedule } from "data/iracing/season/models/schedule"
-import { Car } from "data/iracing/season/models/car"
-import { Track } from "data/iracing/season/models/track"
+import { Car } from "racing-tools-data/iracing/season/models/car"
+import { Track } from "racing-tools-data/iracing/season/models/track"
 import { Row } from "frontend/components/atoms/row"
 import { Column } from "frontend/components/atoms/column"
 import { Text } from "frontend/components/atoms/text"
@@ -11,12 +9,13 @@ import { useEffect, useRef, useState } from "react"
 import { ExpandCollapseButton } from "./expand_collapse_button"
 import { CarRow } from "./car_row"
 import { TrackRow } from "./track_row"
+import { FullSchedule, FullSeries } from "../pages/common_view_model"
 import "./list_row.css"
 import "./series_row.css"
 
 interface SeriesRowProps {
-  series: Series
-  participatedRaces: Schedule[]
+  series: FullSeries
+  participatedRaces: FullSchedule[]
   ownedCars: Car[]
   onSetOwnedCar: (checked: boolean, car: Car) => void
   ownedTracks: Track[]

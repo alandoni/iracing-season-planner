@@ -1,4 +1,4 @@
-import { HttpClient } from "data-utils"
+import { HttpClient } from "@alandoni/data-utils"
 import { TrackResponse } from "./track_response"
 import { TrackApi } from "./track_api"
 

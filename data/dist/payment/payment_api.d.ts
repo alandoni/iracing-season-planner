@@ -1,4 +1,4 @@
-import { ApiRequest } from "data-utils";
+import { ApiRequest } from "@alandoni/data-utils";
 import { PaymentResponse } from "./payment_response";
 import { PaymentRequest } from "./payment_request";
 export declare class PaymentApi {

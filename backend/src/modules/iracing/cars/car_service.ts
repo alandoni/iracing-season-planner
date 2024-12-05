@@ -1,4 +1,4 @@
-import { HttpClient } from "data-utils"
+import { HttpClient } from "@alandoni/data-utils"
 import { CarClassResponse } from "./car_class_response"
 import { CarResponse } from "./car_response"
 import { CarApi } from "./car_api"

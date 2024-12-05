@@ -1,15 +1,15 @@
 import { FileRepository } from "src/data/file_repository"
 import { AxiosHttpClient } from "src/data/http_client"
-import { DependencyInjection, DependencyInjectionModule, DI } from "utils"
+import { DependencyInjection, DependencyInjectionModule, DI } from "@alandoni/utils"
 import { MPHeadersInterceptor } from "./mp_headers_interceptor"
-import { PaymentApi } from "data/payment/payment_api"
+import { PaymentApi } from "racing-tools-data/payment/payment_api"
 import { PaymentService } from "./payment_service"
 import { PaymentRepository } from "./payment_repository"
 import { PaymentController } from "./payment_controller"
 import { MPPaymentApi } from "./mp_payment_api"
 import { PaymentRouter } from "./payment_router"
-import { Routes } from "backend/routes/routes"
-import { BackendModuleInterface } from "backend/backend_module_interface"
+import { Routes } from "@alandoni/backend/routes/routes"
+import { BackendModuleInterface } from "@alandoni/backend/backend_module_interface"
 
 class MPHttpClient extends AxiosHttpClient {
   constructor() {

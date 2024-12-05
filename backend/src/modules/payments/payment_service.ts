@@ -1,4 +1,4 @@
-import { HttpClient } from "data-utils"
+import { HttpClient } from "@alandoni/data-utils"
 import { MPPaymentApi } from "./mp_payment_api"
 import { MPPaymentRequest } from "./mp_payment_request"
 

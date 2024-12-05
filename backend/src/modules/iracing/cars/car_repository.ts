@@ -1,6 +1,6 @@
 import { CarResponse } from "./car_response"
-import { Car } from "data/iracing/season/models/car"
-import { Category } from "data/iracing/season/models/category"
+import { Car } from "racing-tools-data/iracing/season/models/car"
+import { Category } from "racing-tools-data/iracing/season/models/category"
 import { CarService } from "./car_service"
 import { CarClassResponse } from "./car_class_response"
 

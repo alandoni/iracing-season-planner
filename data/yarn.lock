@@ -2,6 +2,31 @@
 # yarn lockfile v1
 
 
+"@alandoni/data-utils@^1.0.1":
+  version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@alandoni/data-utils/1.0.1/ed26451fe72331cdb1a2e9e6e51e0d1586499c4c#ed26451fe72331cdb1a2e9e6e51e0d1586499c4c"
+  integrity sha512-fNEucdNn4Qb9AAuzC/XATpqgbriIqJPNHG2Qh2+L7EpWmStoCrRS5NLp+V6W+v8YQ6vwr+1QBupxGRSM0MP+bw==
+  dependencies:
+    "@alandoni/utils" "^1.0.0"
+    class-transformer "^0.5.1"
+    class-validator "^0.14.1"
+    typeorm "^0.3.20"
+
+"@alandoni/racing-tools-data@^0.0.1":
+  version "0.0.1"
+  resolved "https://npm.pkg.github.com/download/@alandoni/racing-tools-data/0.0.1/6ba15d542fc4b283a7fcfc4862956e87b05b197f#6ba15d542fc4b283a7fcfc4862956e87b05b197f"
+  integrity sha512-e0GOFzjSvYkG6JwIL/dpSmJT0GblVYxj4ER5jsHnfxL/gCsUsxG/+i+vBFqel4ywoMha7/yLW0JVx8NGZ/YlIQ==
+  dependencies:
+    "@alandoni/data-utils" "^1.0.1"
+
+"@alandoni/utils@^1.0.0":
+  version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@alandoni/utils/1.0.1/a04183b191395108f33cda50e5605c3dcbd00cd8#a04183b191395108f33cda50e5605c3dcbd00cd8"
+  integrity sha512-uH77TMMJhgUri0HWpArUVdw5FUZ6jh2Gbh+vTDSxu+sCO/kCWffdbTtiqClj1MWvijJCvxu6C6KW4bK+rU16OA==
+  dependencies:
+    class-transformer "^0.5.1"
+    uuid "^9.0.1"
+
 "@ampproject/remapping@^2.2.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.3.0.tgz#ed441b6fa600072520ce18b43d2c8cc8caecc7f4"
@@ -1043,15 +1068,6 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
-
-"data-utils@file:../../shared/data-utils":
-  version "1.0.0"
-  dependencies:
-    class-transformer "^0.5.1"
-    class-validator "^0.14.1"
-    reflect-metadata "^0.2.2"
-    typeorm "^0.3.20"
-    utils "file:../../shared/utils"
 
 dayjs@^1.11.9:
   version "1.11.13"
@@ -2151,7 +2167,7 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
 
-reflect-metadata@^0.2.1, reflect-metadata@^0.2.2:
+reflect-metadata@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.2.2.tgz#400c845b6cba87a21f2c65c4aeb158f4fa4d9c5b"
   integrity sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==
@@ -2479,11 +2495,6 @@ update-browserslist-db@^1.1.1:
   dependencies:
     escalade "^3.2.0"
     picocolors "^1.1.0"
-
-"utils@file:../../shared/utils":
-  version "1.0.0"
-  dependencies:
-    uuid "^9.0.1"
 
 uuid@^9.0.0, uuid@^9.0.1:
   version "9.0.1"

@@ -1,12 +1,13 @@
-import { Car } from "./car";
 import { Category } from "./category";
-import { TrackWithConfigName } from "./track";
-export type Schedule = {
+export declare class Schedule {
     raceWeekNum: number;
-    cars: Car[];
+    cars: number[];
     category: Category;
     startDate: Date;
     name: string;
     serieId: number;
-    track: TrackWithConfigName;
-};
+    track: {
+        id: number;
+        configName: string;
+    };
+}

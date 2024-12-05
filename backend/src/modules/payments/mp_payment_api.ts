@@ -1,4 +1,4 @@
-import { ApiRequest, HttpMethod } from "data-utils"
+import { ApiRequest, HttpMethod } from "@alandoni/data-utils"
 import { MPPayment } from "./mp_payment"
 import { MPPaymentRequest } from "./mp_payment_request"
 

@@ -1,5 +1,5 @@
-import { useState } from "react"
 import "./search-input.css"
+import { useDebounceField } from "frontend/utils/react_hooks/use_debounce_field"
 
 interface SearchInputProps {
   value: string
@@ -16,27 +16,9 @@ export function SearchInput({
   minChars = 1,
   placeholder = "Pesquisar",
 }: SearchInputProps) {
-  const [text, setText] = useState(value)
-  const [timeout, handleTimeout] = useState<number>()
-
-  const onChangeText = (text: string) => {
-    setText(text)
-    clearTimeout(timeout)
-    handleTimeout(
-      setTimeout(() => {
-        if (text.length >= minChars || text.length === 0) {
-          onChange(text)
-        }
-      }, delay),
-    )
-  }
+  const [text, setText] = useDebounceField(value, onChange, delay, minChars)
 
   return (
-    <input
-      className="search-input"
-      value={text}
-      onChange={(e) => onChangeText(e.target.value)}
-      placeholder={placeholder}
-    />
+    <input className="search-input" value={text} onChange={(e) => setText(e.target.value)} placeholder={placeholder} />
   )
 }

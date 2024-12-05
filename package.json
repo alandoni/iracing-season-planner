@@ -4,6 +4,7 @@
   "description": "An app to help to plan the season on iRacing",
   "main": "index.ts",
   "scripts": {
+    "preinstall": "npm i -g yarn && npm i -g yalc",
     "test": "jest",
     "start": "cd build/backend/src && node index.js",
     "install": "cd data && yarn install && cd ../frontend && yarn install --production=false && cd ../backend && yarn install --production=false",

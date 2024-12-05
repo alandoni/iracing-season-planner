@@ -2,47 +2,18 @@ import { CheckableList } from "components/checkable_list"
 import { Column } from "frontend/components/atoms/column"
 import { Row } from "frontend/components/atoms/row"
 import { Text } from "frontend/components/atoms/text"
-import { useSeasonRepository } from "data/season_repository"
-import { useUserRepository } from "data/user_repository"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { TrackRow } from "components/track_row"
 import { SearchInput } from "components/search-input"
-import { Track } from "data/iracing/season/models/track"
+import { useTracksViewModel } from "./tracks_view_model"
 import "./tracks.css"
 
 export function TracksPage() {
-  const season = useSeasonRepository()
-  const userRepository = useUserRepository()
-  const [filteredTracks, setFilteredTracks] = useState<Track[]>([])
-  const [search, setSearch] = useState("")
+  const viewModel = useTracksViewModel()
 
   useEffect(() => {
-    const filtered = [...(season.data?.tracks ?? [])].filter((track) => {
-      const shouldFilter =
-        (userRepository.preferredLicenses.some((license) => track.licenses.find((l) => l.id === license.id)),
-        userRepository.preferredCategories.some((category) => track.categories.find((c) => c.id === category.id)))
-      if (search.length === 0) {
-        return shouldFilter
-      }
-      return (
-        (shouldFilter && (track.name.find(search) || track.mainCategory.name.find(search))) ||
-        track.categories.find((c) => c.name.find(search))
-      )
-    })
-    setFilteredTracks(filtered)
-  }, [
-    userRepository.preferredLicenses,
-    userRepository.preferredCategories,
-    userRepository.myTracks,
-    season.data,
-    search,
-  ])
-
-  useEffect(() => {
-    if (season.data) {
-      userRepository.load(season.data)
-    }
-  }, [season.data])
+    viewModel.onLoad()
+  }, [viewModel])
 
   return (
     <Row className="tracks-page" alignVertically="start">
@@ -52,15 +23,15 @@ export function TracksPage() {
         </Text>
         <CheckableList
           title="Licenças:"
-          list={season.data?.licenses}
-          checkedList={userRepository.preferredLicenses}
-          onCheck={userRepository.setPreferredLicense}
+          list={viewModel.season?.licenses}
+          checkedList={viewModel.preferredLicenses}
+          onCheck={viewModel.setPreferredLicense}
         />
         <CheckableList
           title="Categorias:"
-          list={season.data?.categories}
-          checkedList={userRepository.preferredCategories}
-          onCheck={userRepository.setPreferredCategory}
+          list={viewModel.season?.categories}
+          checkedList={viewModel.preferredCategories}
+          onCheck={viewModel.setPreferredCategory}
         />
       </Column>
       <Column className="content">
@@ -70,7 +41,7 @@ export function TracksPage() {
           </Text>
         </Row>
         <Row>
-          <SearchInput value={search} onChange={setSearch} />
+          <SearchInput value={viewModel.search} onChange={viewModel.setSearch} />
         </Row>
         <div className="list">
           <Row className="track-row list-row subtitle">
@@ -83,12 +54,12 @@ export function TracksPage() {
               </Row>
             </Column>
           </Row>
-          {filteredTracks.flatMap((track, index, array) => (
+          {viewModel.filteredTracks.flatMap((track, index, array) => (
             <div key={`${track.id}`}>
               <TrackRow
                 track={track}
-                selected={track.free || userRepository.myTracks?.find((c) => track.id === c.id) !== undefined}
-                onSelect={(checked) => userRepository.setTrack(checked, track)}
+                selected={track.free || viewModel.myTracks?.find((c) => track.id === c.id) !== undefined}
+                onSelect={(checked) => viewModel.setTrack(checked, track)}
               />
               {index < array.length - 1 ? <hr /> : null}
             </div>

@@ -1,8 +1,8 @@
-import { CustomRouter } from "backend/routes/custom_router"
-import { Routes } from "backend/routes/routes"
+import { CustomRouter } from "@alandoni/backend/routes/custom_router"
+import { Routes } from "@alandoni/backend/routes/routes"
+import { Router } from "@alandoni/backend/server_interface"
 import { PaymentController } from "./payment_controller"
-import { PaymentApi } from "data/payment/payment_api"
-import { Router } from "backend/server_interface"
+import { PaymentApi } from "racing-tools-data/payment/payment_api"
 
 export class PaymentRouter implements Routes {
   constructor(private seasonController: PaymentController, private api: PaymentApi) {}

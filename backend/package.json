@@ -4,13 +4,25 @@
   "description": "An app to help to plan the season on iRacing",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc --build --verbose && tsc-alias",
+    "build": "yalc update && tsc --build --verbose && tsc-alias",
     "postbuild": "cp package.json ./dist/package.json && cp .env ./dist || : && cd ./dist && yarn install --prod",
-    "start": "ts-node-dev -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts --diagnostics",
+    "start": "yalc update && ts-node-dev -r tsconfig-paths/register --project ./tsconfig.json ./src/index.ts --diagnostics",
     "test": "jest"
   },
   "author": "Alan Donizete Quintiliano",
   "license": "ISC",
+  "dependencies": {
+    "@alandoni/backend": "^1.0.2",
+    "axios": "^1.7.2",
+    "body-parser": "^1.18.1",
+    "cors": "^2.8.5",
+    "dotenv-cli": "^7.3.0",
+    "dotenv-safe": "^8.2.0",
+    "express": "^4.18.2",
+    "js-sha256": "^0.11.0",
+    "racing-tools-data": "file:.yalc/racing-tools-data",
+    "winston": "^3.8.2"
+  },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.11",
@@ -30,17 +42,5 @@
     "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.6.3"
-  },
-  "dependencies": {
-    "axios": "^1.7.2",
-    "backend": "/home/alan/Development/shared/backend",
-    "body-parser": "^1.18.1",
-    "cors": "^2.8.5",
-    "data": "/home/alan/Development/iracing-season-planner/data",
-    "dotenv-cli": "^7.3.0",
-    "dotenv-safe": "^8.2.0",
-    "express": "^4.18.2",
-    "js-sha256": "^0.11.0",
-    "winston": "^3.8.2"
   }
 }

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeasonApi = void 0;
 const season_1 = require("./models/season");
-const data_utils_1 = require("data-utils");
+const data_utils_1 = require("@alandoni/data-utils");
 class SeasonApi {
     url = "season";
     constructor() { }

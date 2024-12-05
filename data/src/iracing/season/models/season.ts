@@ -3,6 +3,7 @@ import { Track } from "./track"
 import { Car } from "./car"
 import { Series } from "./series"
 import { Category } from "./category"
+import { Type } from "class-transformer"
 
 export class Season {
   static MAX_DAYS_TO_VALIDATE_CACHE = 7
@@ -11,13 +12,19 @@ export class Season {
   cars: Car[]
   tracks: Track[]
   licenses: License[]
+  @Type(() => Series)
   series: Series[]
+  @Type(() => Category)
   categories: Category[]
   quarter: number
   year: number
 
   public validate(): boolean {
-    const sortedSeries = this.series.sort((a, b) => b.schedules.length - a.schedules.length)
+    const sortedSeries = this.series
+      .filter(
+        (s) => s.schedules.length >= s.maxWeeks - s.droppedWeeks && s.schedules.length <= s.maxWeeks && s.maxWeeks < 16,
+      )
+      .sort((a, b) => b.schedules.length - a.schedules.length)
     if (sortedSeries.length === 0) {
       return false
     }

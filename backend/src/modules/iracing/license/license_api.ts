@@ -1,4 +1,4 @@
-import { ApiRequest, HttpMethod } from "data-utils"
+import { ApiRequest, HttpMethod } from "@alandoni/data-utils"
 import { LinkResponse } from "../link_response"
 import { LicenseResponse } from "./license_response"
 

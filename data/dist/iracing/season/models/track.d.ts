@@ -1,6 +1,6 @@
 import { License } from "./license";
 import { Category } from "./category";
-export type Track = {
+export declare class Track {
     id: number;
     mainCategory: Category;
     categories: Category[];
@@ -26,7 +26,7 @@ export type Track = {
     numberOfSeries: number;
     numberOfRaces: number;
     seriesIds: number[];
-};
+}
 export type TrackWithConfigName = Track & {
     configName: string;
 };

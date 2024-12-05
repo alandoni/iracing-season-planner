@@ -1,8 +1,8 @@
-import { Logger, DI } from "utils"
-import { WinstonLogger } from "backend/logger/index"
+import { Logger, DI } from "@alandoni/utils"
+import { WinstonLogger } from "@alandoni/backend/logger/index"
 import { MPPaymentRequest } from "./mp_payment_request"
 import { PaymentService } from "./payment_service"
-import { PaymentRequest } from "data/payment/payment_request"
+import { PaymentRequest } from "racing-tools-data/payment/payment_request"
 
 export class PaymentRepository {
   constructor(private service: PaymentService, private logger: Logger = DI.get(WinstonLogger)) {}

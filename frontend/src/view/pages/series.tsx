@@ -2,59 +2,19 @@ import { CheckableList } from "components/checkable_list"
 import { Column } from "frontend/components/atoms/column"
 import { Row } from "frontend/components/atoms/row"
 import { Text } from "frontend/components/atoms/text"
-import { useSeasonRepository } from "data/season_repository"
-import { useUserRepository } from "data/user_repository"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { SeriesRow } from "components/series_row"
-import { Series } from "data/iracing/season/models/series"
 import { SearchInput } from "components/search-input"
 import { LoadingOutlet } from "frontend/components/templates/loading_outlet"
+import { useSeriesViewModel } from "./series_view_model"
 import "./series.css"
 
 export function SeriesPage() {
-  const season = useSeasonRepository()
-  const userRepository = useUserRepository()
-  const [filteredSeries, setFilteredSeries] = useState<Series[]>([])
-  const [search, setSearch] = useState("")
-  const [loading, setLoading] = useState(true)
+  const viewModel = useSeriesViewModel()
 
   useEffect(() => {
-    const filtered = [...(season.data?.series ?? [])].filter((series) => {
-      const shouldFilter =
-        userRepository.preferredLicenses.some((license) => series.licenses.find((l) => l.id === license.id)) &&
-        userRepository.preferredCategories.some((category) =>
-          series.schedules.find((s) => s.category.id === category.id),
-        ) &&
-        series.schedules.length > 0
-      if (search.length === 0) {
-        return shouldFilter
-      }
-      const findInSeries =
-        series.name.find(search) || series.schedules.find((s) => s.category.name.find(search)) !== undefined
-      const findInCar =
-        series.schedules.find((s) =>
-          s.cars.find((c) => c.name.find(search) || c.categories.find((cat) => cat.name.find(search))),
-        ) !== undefined
-      const findInTrack =
-        series.schedules.find(
-          (s) =>
-            s.track.name.find(search) ||
-            s.track.mainCategory.name.find(search) ||
-            s.track.categories.find((c) => c.name.find(search)) !== undefined,
-        ) !== undefined
-
-      return shouldFilter && (findInSeries || findInCar || findInTrack)
-    })
-    setFilteredSeries(filtered)
-    setLoading(false)
-  }, [userRepository.preferredLicenses, userRepository.preferredCategories, season.data, search])
-
-  useEffect(() => {
-    setLoading(true)
-    if (season.data) {
-      userRepository.load(season.data)
-    }
-  }, [season.data])
+    viewModel.onLoad()
+  }, [viewModel])
 
   return (
     <Row className="series-page" alignVertically="start">
@@ -64,15 +24,15 @@ export function SeriesPage() {
         </Text>
         <CheckableList
           title="Licenças:"
-          list={season.data?.licenses}
-          checkedList={userRepository.preferredLicenses}
-          onCheck={userRepository.setPreferredLicense}
+          list={viewModel.season?.licenses}
+          checkedList={viewModel.preferredLicenses}
+          onCheck={viewModel.setPreferredLicense}
         />
         <CheckableList
           title="Categorias:"
-          list={season.data?.categories}
-          checkedList={userRepository.preferredCategories}
-          onCheck={userRepository.setPreferredCategory}
+          list={viewModel.season?.categories}
+          checkedList={viewModel.preferredCategories}
+          onCheck={viewModel.setPreferredCategory}
         />
       </Column>
       <Column className="content">
@@ -82,9 +42,9 @@ export function SeriesPage() {
           </Text>
         </Row>
         <Row>
-          <SearchInput value={search} onChange={setSearch} />
+          <SearchInput value={viewModel.search} onChange={viewModel.setSearch} />
         </Row>
-        {loading ? (
+        {viewModel.loading ? (
           <LoadingOutlet />
         ) : (
           <div className="list">
@@ -97,15 +57,15 @@ export function SeriesPage() {
                 </Row>
               </Column>
             </Row>
-            {filteredSeries.flatMap((series, index, array) => (
+            {viewModel.filteredSeries.flatMap((series, index, array) => (
               <div key={`${series.id}`}>
                 <SeriesRow
                   series={series}
-                  participatedRaces={userRepository.participatedRaces}
-                  ownedCars={userRepository.myCars}
-                  onSetOwnedCar={userRepository.setCar}
-                  ownedTracks={userRepository.myTracks}
-                  onSetOwnedTrack={userRepository.setTrack}
+                  participatedRaces={viewModel.participatedRaces}
+                  ownedCars={viewModel.myCars}
+                  onSetOwnedCar={viewModel.setCar}
+                  ownedTracks={viewModel.myTracks}
+                  onSetOwnedTrack={viewModel.setTrack}
                 />
                 {index < array.length - 1 ? <hr /> : null}
               </div>

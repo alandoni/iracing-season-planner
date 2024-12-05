@@ -1,4 +1,4 @@
-import { DependencyInjectionModule, DependencyInjection, DI } from "utils"
+import { DependencyInjectionModule, DependencyInjection, DI } from "@alandoni/utils"
 import { AxiosHttpClient } from "../../data/http_client"
 import { IRacingHeadersInterceptor } from "./ir_headers_interceptor"
 import { CarApi } from "./cars/car_api"
@@ -20,11 +20,11 @@ import { TrackApi } from "./tracks/track_api"
 import { UserApi as IRUserApi } from "./user/user_api"
 import { UserController } from "./user/user_controller"
 import { UserRouter } from "./user/user_router"
-import { BackendModuleInterface } from "backend/backend_module_interface"
-import { Routes } from "backend/routes/routes"
+import { BackendModuleInterface } from "@alandoni/backend/backend_module_interface"
+import { Routes } from "@alandoni/backend/routes/routes"
 import { FileRepository } from "src/data/file_repository"
-import { SeasonApi } from "data/iracing/season/season_api"
-import { UserApi } from "data/iracing/user/user_api"
+import { UserApi } from "racing-tools-data/iracing/user/user_api"
+import { SeasonApi } from "racing-tools-data/iracing/season/season_api"
 
 export class IRacingHttpClient extends AxiosHttpClient {
   constructor() {

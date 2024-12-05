@@ -4,100 +4,18 @@ import { Range } from "frontend/components/atoms/range"
 import { Row } from "frontend/components/atoms/row"
 import { ScheduleRow } from "components/schedule_row"
 import { Text } from "frontend/components/atoms/text"
-import { useSeasonRepository } from "data/season_repository"
-import { useEffect, useState } from "react"
-import { Series } from "data/iracing/season/models/series"
-import { useUserRepository } from "data/user_repository"
 import { CheckableList } from "components/checkable_list"
 import { Checkbox } from "frontend/components/atoms/checkbox"
 import { SearchInput } from "components/search-input"
+import { useSeasonViewModel } from "./season_view_model"
 import "./season.css"
 
 export function SeasonPage() {
-  const season = useSeasonRepository()
-  const userRepository = useUserRepository()
-
-  const [filteredSeries, setFilteredSeries] = useState<Series[]>([])
-
-  const [week, setWeek] = useState(0)
-  const [showOnlySeriesEligible, setShowOnlySeriesEligible] = useState(false)
-  const [search, setSearch] = useState("")
-
-  useEffect(() => {
-    const filtered = [...(season.data?.series ?? [])]
-      .flatMap((series) => {
-        const copy = { ...series }
-        copy.schedules = copy.schedules.filter((schedule) => {
-          const correctWeek = week === -1 || schedule.raceWeekNum === week
-          const containsCategories = (userRepository.preferredCategories ?? []).find(
-            (c) => c.id === schedule.category.id,
-          )
-          const ownedTrack = schedule.track.free || userRepository.myTracks.find((t) => t.id === schedule.track.id)
-          const ownedCarsInSchedule = schedule.cars.filter(
-            (car) => car.free || userRepository.myCars.find((c) => car.id === c.id),
-          )
-          const eligible = ownedTrack && ownedCarsInSchedule.length > 0
-          return correctWeek && containsCategories && (!showOnlySeriesEligible || (showOnlySeriesEligible && eligible))
-        })
-        return copy
-      })
-      .filter((series) => {
-        const shouldFilter =
-          series.schedules.length > 0 &&
-          series.licenses.find((license) => userRepository.preferredLicenses.map((l) => l.id).includes(license.id))
-        if (search.length === 0) {
-          return shouldFilter
-        }
-        const findInSeries =
-          series.name.find(search) || series.schedules.find((s) => s.category.name.find(search)) !== undefined
-        const findInCar =
-          series.schedules.find((s) =>
-            s.cars.find((c) => c.name.find(search) || c.categories.find((cat) => cat.name.find(search))),
-          ) !== undefined
-        const findInTrack =
-          series.schedules.find(
-            (s) =>
-              s.track.name.find(search) ||
-              s.category.name.find(search) ||
-              s.track.categories.find((c) => c.name.find(search)) !== undefined,
-          ) !== undefined
-
-        return shouldFilter && (findInSeries || findInCar || findInTrack)
-      })
-    setFilteredSeries([...filtered])
-  }, [
-    userRepository.preferredLicenses,
-    userRepository.preferredCategories,
-    week,
-    season.data,
-    showOnlySeriesEligible,
-    search,
-  ])
-
-  useEffect(() => {
-    if (season.data) {
-      userRepository.load(season.data)
-      const firstSeries = season.data.series.find((s) => s.schedules.length > 11 && s.schedules.length < 14)
-      if (!firstSeries) {
-        return
-      }
-      const currentSchedule = firstSeries.schedules
-        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
-        .find((s, i, array) => {
-          if (i < array.length - 1) {
-            return new Date().isBetween(s.startDate, firstSeries.schedules[i + 1].startDate)
-          } else {
-            return true
-          }
-        })
-      setWeek(currentSchedule?.raceWeekNum ?? 0)
-    }
-  }, [season.data])
-
-  if (season.loading) {
+  const viewModel = useSeasonViewModel()
+  if (viewModel.loading) {
     return <LoadingPage />
   }
-  if (season.error) {
+  if (viewModel.error) {
     return (
       <Row>
         <Text color="error">Um erro inesperado aconteceu.</Text>
@@ -111,22 +29,22 @@ export function SeasonPage() {
         <Text size="regular" relevance="info">
           Filtrar
         </Text>
-        {week > -1 ? <Text>Semana {week + 1}</Text> : <Text>Todas as semanas</Text>}
-        <Range min={-1} max={12} value={week} onChange={setWeek} />
+        {viewModel.week > -1 ? <Text>Semana {viewModel.week + 1}</Text> : <Text>Todas as semanas</Text>}
+        <Range min={-1} max={12} value={viewModel.week} onChange={viewModel.setWeek} />
         <CheckableList
           title="Licenças:"
-          list={season.data?.licenses}
-          checkedList={userRepository.preferredLicenses}
-          onCheck={userRepository.setPreferredLicense}
+          list={viewModel.season?.licenses}
+          checkedList={viewModel.preferredLicenses}
+          onCheck={viewModel.setPreferredLicense}
         />
         <CheckableList
           title="Categorias:"
-          list={season.data?.categories}
-          checkedList={userRepository.preferredCategories}
-          onCheck={userRepository.setPreferredCategory}
+          list={viewModel.season?.categories}
+          checkedList={viewModel.preferredCategories}
+          onCheck={viewModel.setPreferredCategory}
         />
         <Row alignVertically="start">
-          <Checkbox small isChecked={showOnlySeriesEligible} onChange={setShowOnlySeriesEligible} />
+          <Checkbox small isChecked={viewModel.showOnlySeriesEligible} onChange={viewModel.setShowOnlySeriesEligible} />
           <Text size="small">Mostrar apenas séries elegíveis</Text>
         </Row>
       </Column>
@@ -137,7 +55,7 @@ export function SeasonPage() {
           </Text>
         </Row>
         <Row>
-          <SearchInput value={search} onChange={setSearch} />
+          <SearchInput value={viewModel.search} onChange={viewModel.setSearch} />
         </Row>
         <div className="list">
           <Row className="schedule-row subtitle list-row">
@@ -150,7 +68,7 @@ export function SeasonPage() {
               </Row>
             </Column>
           </Row>
-          {filteredSeries.map((series, index, array) => {
+          {viewModel.filteredSeries.map((series, index, array) => {
             return (
               <div key={`${series.id}`}>
                 {series.schedules?.map((schedule) => {
@@ -161,21 +79,21 @@ export function SeasonPage() {
                         series={series}
                         selectedTrack={
                           schedule.track.free ||
-                          userRepository.myTracks?.find((track) => schedule.track.id === track.id) !== undefined
+                          viewModel.myTracks?.find((track) => schedule.track.id === track.id) !== undefined
                         }
                         selectedCar={
                           schedule.cars.filter(
-                            (car) => car.free || userRepository.myCars?.find((c) => car.id === c.id) !== undefined,
+                            (car) => car.free || viewModel.myCars?.find((c) => car.id === c.id) !== undefined,
                           ).length > 0
                         }
                         selectedSchedule={
-                          userRepository.participatedRaces?.find(
+                          viewModel.participatedRaces?.find(
                             (s) => s.raceWeekNum === schedule.raceWeekNum && s.serieId === schedule.serieId,
                           ) !== undefined
                         }
-                        onSelectParticipate={(checked) => userRepository.setParticipatedRace(checked, series, schedule)}
-                        onSelectOwnCar={(checked) => userRepository.setCar(checked, schedule.cars[0])}
-                        onSelectOwnTrack={(checked) => userRepository.setTrack(checked, schedule.track)}
+                        onSelectParticipate={(checked) => viewModel.setParticipatedRace(checked, schedule)}
+                        onSelectOwnCar={(checked) => viewModel.setCar(checked, schedule.cars[0])}
+                        onSelectOwnTrack={(checked) => viewModel.setTrack(checked, schedule.track)}
                       />
                       {index < array.length - 1 ? <hr /> : null}
                     </div>

@@ -1,5 +1,5 @@
 import { Season } from "./models/season"
-import { ApiRequest, HttpMethod } from "data-utils"
+import { ApiRequest, HttpMethod } from "@alandoni/data-utils"
 
 export class SeasonApi {
   url = "season"

@@ -1,7 +1,11 @@
 export const jestConfig = {
   verbose: true,
   collectCoverage: true,
-  collectCoverageFrom: ["!**/node_modules/**", "!src/**/test*/**", "!<rootDir>/**/*interface.ts"],
+  collectCoverageFrom: [
+    "!**/node_modules/**",
+    "!src/**/test*/**",
+    "!<rootDir>/**/*interface.ts",
+  ],
   coverageProvider: "v8",
   testFailureExitCode: 0, //this will make it not fail on CI/CD, change it with an env var
   passWithNoTests: true,
@@ -18,4 +22,4 @@ export const jestConfig = {
   preset: "ts-jest",
   testEnvironment: "node",
   testMatch: ["<rootDir>/src/**/*.test.ts"],
-}
+};

@@ -1,8 +1,8 @@
-import { uuid } from "utils"
-import { BuiltRequest, Interceptor } from "data-utils"
+import { uuid } from "@alandoni/utils"
+import { BuiltRequest, Interceptor, RequestBody } from "@alandoni/data-utils"
 
 export class MPHeadersInterceptor implements Interceptor {
-  executeBefore<Response extends object, RequestBodyType extends string | object>(
+  executeBefore<Response extends object, RequestBodyType extends RequestBody | undefined>(
     apiRequest: BuiltRequest<Response, RequestBodyType>,
   ): Promise<void> {
     apiRequest.headers = {

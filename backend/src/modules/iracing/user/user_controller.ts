@@ -1,8 +1,8 @@
-import { RequestWrapper } from "backend/controller/request_wrapper"
-import { GetUserParams } from "data/iracing/user/user_api"
+import { RequestWrapper } from "@alandoni/backend/controller/request_wrapper"
+import { GetUserParams } from "racing-tools-data/iracing/user/user_api"
+import { User } from "racing-tools-data/iracing/user/user"
 import { UserRepository } from "./user_repository"
-import { AuthError } from "data-utils"
-import { User } from "data/iracing/user/user"
+import { AuthError } from "@alandoni/data-utils"
 
 export class UserController {
   constructor(private userRepository: UserRepository) {}

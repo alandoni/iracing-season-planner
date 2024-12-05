@@ -1,6 +1,6 @@
 import { License } from "./license";
 import { Category } from "./category";
-export type Car = {
+export declare class Car {
     id: number;
     dirpath: string;
     name: string;
@@ -23,4 +23,4 @@ export type Car = {
     numberOfSeries: number;
     numberOfRaces: number;
     seriesIds: number[];
-};
+}

@@ -1,13 +1,13 @@
-import { Car } from "./car"
 import { Category } from "./category"
-import { TrackWithConfigName } from "./track"
+import { Type } from "class-transformer"
 
-export type Schedule = {
+export class Schedule {
   raceWeekNum: number
-  cars: Car[]
+  cars: number[]
+  @Type(() => Category)
   category: Category
   startDate: Date
   name: string
   serieId: number
-  track: TrackWithConfigName
+  track: { id: number; configName: string }
 }

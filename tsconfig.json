@@ -6,7 +6,7 @@
 
     /* Linting */
     "useDefineForClassFields": true,
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -32,7 +32,11 @@
     "incremental": true
   },
   "ts-node": {
-    "files": true
+    "files": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    },
+    "esm": true
   },
   "exclude": ["dist", "node_modules", "coverage"]
 }

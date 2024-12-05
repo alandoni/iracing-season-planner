@@ -1,9 +1,12 @@
 import { License } from "./license"
 import { Category } from "./category"
+import { Type } from "class-transformer"
 
-export type Track = {
+export class Track {
   id: number
+  @Type(() => Category)
   mainCategory: Category
+  @Type(() => Category)
   categories: Category[]
   location: string
   maxCars: number

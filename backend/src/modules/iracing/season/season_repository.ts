@@ -2,17 +2,17 @@ import { CarRepository } from "../cars/car_repository"
 import { LicenseRepository } from "../license/license_repository"
 import { TrackRepository } from "../tracks/track_repository"
 import { SeriesService } from "./series_service"
-import { Series } from "data/iracing/season/models/series"
-import { WinstonLogger } from "backend/logger/index"
-import { DI } from "utils"
-import { Schedule } from "data/iracing/season/models/schedule"
-import { Category } from "data/iracing/season/models/category"
-import { License } from "data/iracing/season/models/license"
+import { WinstonLogger } from "@alandoni/backend/logger/index"
+import { Series } from "racing-tools-data/iracing/season/models/series"
+import { Schedule } from "racing-tools-data/iracing/season/models/schedule"
+import { Category } from "racing-tools-data/iracing/season/models/category"
+import { License } from "racing-tools-data/iracing/season/models/license"
+import { Car } from "racing-tools-data/iracing/season/models/car"
+import { Track } from "racing-tools-data/iracing/season/models/track"
+import { Season } from "racing-tools-data/iracing/season/models/season"
 import { SeriesResponse } from "./series_response"
-import { Car } from "data/iracing/season/models/car"
-import { Track } from "data/iracing/season/models/track"
 import { IrSchedule } from "./ir_schedule"
-import { Season } from "data/iracing/season/models/season"
+import { DI, assertNotNull, plainToInstance } from "@alandoni/utils"
 
 export class SeasonRepository {
   constructor(
@@ -32,7 +32,7 @@ export class SeasonRepository {
 
       const series = seriesResponse
         .filter((series) => series.active)
-        .flatMap((series) => this.fromSeriesReponseToSeries(series, licenses, cars, tracks))
+        .flatMap((series) => this.fromSeriesResponseToSeries(series, licenses, cars, tracks))
         .sort((a, b) => {
           const licenseSorted = this.sortLicenses(a.licenses)[0].id - this.sortLicenses(b.licenses)[0].id
           if (licenseSorted !== 0) {
@@ -42,10 +42,10 @@ export class SeasonRepository {
           }
         })
 
-      const seasonCars = this.getCarsOfTheSeason(series)
-      const seasonTracks = this.getTracksOfTheSeason(series)
+      const seasonCars = this.getCarsOfTheSeason(series, cars)
+      const seasonTracks = this.getTracksOfTheSeason(series, tracks)
 
-      return Object.assign(new Season(), {
+      return plainToInstance(Season, {
         cachedDate: new Date(),
         cars: this.sortByLicense(Object.values(seasonCars)),
         tracks: this.sortByLicense(Object.values(seasonTracks)),
@@ -61,10 +61,10 @@ export class SeasonRepository {
               return {
                 ...s,
                 track: {
-                  ...track,
+                  id: track.id,
                   configName: s.track.configName,
                 },
-                cars: s.cars.map((car) => seasonCars[car.id]),
+                cars: s.cars.map((car) => seasonCars[car]).map((car) => car.id),
               }
             }),
           }
@@ -76,7 +76,12 @@ export class SeasonRepository {
     }
   }
 
-  private fromSeriesReponseToSeries(series: SeriesResponse, licenses: License[], cars: Car[], tracks: Track[]): Series {
+  private fromSeriesResponseToSeries(
+    series: SeriesResponse,
+    licenses: License[],
+    cars: Car[],
+    tracks: Track[],
+  ): Series {
     return {
       id: series.season_id,
       name: series.season_name,
@@ -95,6 +100,7 @@ export class SeasonRepository {
       schedules: series.schedules.map((schedule) =>
         this.fromScheduleResponseToSchedule(schedule, series, cars, tracks),
       ),
+      calculateMinimumParticipation: () => 1,
     }
   }
 
@@ -110,15 +116,12 @@ export class SeasonRepository {
     }
     return {
       raceWeekNum: schedule.race_week_num,
-      cars: this.getScheduleCars(schedule, series, cars),
+      cars: this.getScheduleCars(schedule, series, cars).map((car) => car.id),
       category: new Category(schedule.category_id, schedule.category),
       startDate: new Date(schedule.start_date),
       name: schedule.schedule_name,
       serieId: series.season_id,
-      track: {
-        ...track,
-        configName: schedule.track.config_name,
-      },
+      track: { id: track.id, configName: schedule.track.config_name },
     }
   }
 
@@ -150,24 +153,24 @@ export class SeasonRepository {
     return licenses.sort((a, b) => a.id - b.id)
   }
 
-  private getCarsOfTheSeason(series: Series[]) {
+  private getCarsOfTheSeason(series: Series[], cars: Car[]) {
     return series.reduce((acc, series) => {
       series.schedules.forEach((schedule) => {
-        schedule.cars.forEach((car) => {
-          if (acc[car.id]) {
-            if (!acc[car.id].seriesIds.includes(series.id)) {
-              acc[car.id].numberOfSeries += 1
-              acc[car.id].seriesIds.push(series.id)
+        schedule.cars.forEach((carId) => {
+          const car = cars.find((c) => c.id === carId)
+          assertNotNull(car)
+          if (acc[carId]) {
+            if (!acc[carId].seriesIds.includes(series.id)) {
+              acc[carId].numberOfSeries += 1
+              acc[carId].seriesIds.push(series.id)
             }
-            acc[car.id].numberOfRaces += 1
-            acc[car.id].licenses = [...acc[car.id].licenses, ...series.licenses].removeDuplicates(
-              (a, b) => a.id === b.id,
-            )
-            acc[car.id].categories = [...acc[car.id].categories, schedule.category].removeDuplicates(
+            acc[carId].numberOfRaces += 1
+            acc[carId].licenses = [...acc[carId].licenses, ...series.licenses].removeDuplicates((a, b) => a.id === b.id)
+            acc[carId].categories = [...acc[carId].categories, schedule.category].removeDuplicates(
               (a, b) => a.id === b.id,
             )
           } else {
-            acc[car.id] = {
+            acc[carId] = {
               ...car,
               categories: [schedule.category],
               licenses: series.licenses,
@@ -176,17 +179,18 @@ export class SeasonRepository {
               seriesIds: [series.id],
             }
           }
-          acc[car.id].licenses = this.sortLicenses(acc[car.id].licenses)
+          acc[carId].licenses = this.sortLicenses(acc[carId].licenses)
         })
       })
       return acc
     }, {} as Record<number, Car>)
   }
 
-  private getTracksOfTheSeason(series: Series[]) {
+  private getTracksOfTheSeason(series: Series[], tracks: Track[]) {
     return series.reduce((acc, series) => {
       series.schedules.forEach((schedule) => {
-        const track = schedule.track
+        const track = tracks.find((t) => t.id === schedule.track.id)
+        assertNotNull(track)
         if (acc[track.id]) {
           if (!acc[track.id].seriesIds.includes(series.id)) {
             acc[track.id].numberOfSeries += 1
@@ -218,7 +222,7 @@ export class SeasonRepository {
   private getCategoriesOfTheSeason(series: Series[]) {
     return series
       .flatMap((series) => series.schedules)
-      .removeDuplicates((value, value2) => value.category === value2.category)
+      .removeDuplicates((value, value2) => value.category.id === value2.category.id)
       .map((value) => value.category)
   }
 }

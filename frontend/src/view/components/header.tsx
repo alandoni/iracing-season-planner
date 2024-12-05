@@ -3,14 +3,12 @@ import { Row } from "frontend/components/atoms/row"
 import Import from "assets/import.svg?react"
 import Export from "assets/export.svg?react"
 import Update from "assets/update.svg?react"
-import { ImportingOlderFileError, useUserRepository } from "data/user_repository"
 import { ChangeEvent, useRef } from "react"
-import { useSeasonRepository } from "data/season_repository"
+import { ImportingOlderFileError, useImportExportViewModel } from "pages/import_export_view_model"
 import "./header.css"
 
 export function Header() {
-  const userRepository = useUserRepository()
-  const seasonRepository = useSeasonRepository()
+  const viewModel = useImportExportViewModel()
   const ref = useRef<HTMLInputElement>(null)
 
   const onImportClick = () => {
@@ -23,21 +21,24 @@ export function Header() {
       throw new Error("File not found")
     }
     try {
-      await userRepository.importData(file)
+      await viewModel.importData(file)
       window.location.reload()
     } catch (e) {
       if (
         e instanceof ImportingOlderFileError &&
         confirm("A versão do arquivo que você está tentando importar é mais antiga do que o conteúdo atual, continuar?")
       ) {
-        await userRepository.importData(file, true)
+        await viewModel.importData(file, true)
         window.location.reload()
       }
     }
   }
 
   const onExportClick = async () => {
-    const url = await userRepository.exportData()
+    const url = await viewModel.exportData()
+    if (!url) {
+      throw new Error("Exported data wasn't found")
+    }
     const a = document.createElement("a")
     a.setAttribute("href", url) // Set "a" element link
     a.setAttribute("download", "exported.irsp") // Set download filename
@@ -45,7 +46,7 @@ export function Header() {
   }
 
   const onUpdateClick = async () => {
-    seasonRepository.invalidateCache()
+    viewModel.invalidateCache()
   }
 
   return (

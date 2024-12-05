@@ -1,4 +1,4 @@
-export type License = {
+export class License {
   id: number
   name: string
   minRaces: number

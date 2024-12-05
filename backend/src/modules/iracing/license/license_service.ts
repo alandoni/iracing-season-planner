@@ -1,4 +1,4 @@
-import { HttpClient } from "data-utils"
+import { HttpClient } from "@alandoni/data-utils"
 import { LicenseApi } from "./license_api"
 import { LicenseResponse } from "./license_response"
 

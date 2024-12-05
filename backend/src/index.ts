@@ -1,13 +1,16 @@
-import { DI } from "utils"
-import { ServerConfiguration } from "backend/server_interface"
-import "./dependency_injection"
-import { WinstonLogger } from "backend/logger/index"
+import "reflect-metadata"
+import { ServerConfiguration } from "@alandoni/backend/server_interface"
+import { WinstonLogger } from "@alandoni/backend/logger/index"
 import { SeasonController } from "./modules/iracing/season/season_controller"
+import { DI } from "@alandoni/utils"
+import "./dependency_injection"
+
+const logger = DI.get(WinstonLogger)
+logger.info("Starting...")
 
 DI.get(ServerConfiguration)
   .startServer()
   .then(async (address) => {
-    const logger = DI.get(WinstonLogger)
     logger.info(`Downloading latest info`)
     try {
       logger.info("Latest info downloaded and cached")

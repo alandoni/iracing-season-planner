@@ -1,18 +1,18 @@
-import { Series } from "data/iracing/season/models/series"
 import { Row } from "frontend/components/atoms/row"
 import { Column } from "frontend/components/atoms/column"
 import { Text } from "frontend/components/atoms/text"
+import { FullSeries } from "../pages/common_view_model"
 import "./participated_series_row.css"
 
 export const DEFAULT_DROPPED_WEEKS = 4
 
-export function calculateMinimumParticipation(series: Series) {
+export function calculateMinimumParticipation(series: FullSeries) {
   const droppedWeeks = series.droppedWeeks ?? DEFAULT_DROPPED_WEEKS
   const minimumParticipationWeeks = series.schedules.length - droppedWeeks
   return Math.max(minimumParticipationWeeks)
 }
 
-export type SeriesWithSummary = Series & {
+export type SeriesWithSummary = FullSeries & {
   participatedRaces: number
   totalCars: number
   ownedCars: number

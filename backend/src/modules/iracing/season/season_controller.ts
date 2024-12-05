@@ -1,9 +1,9 @@
-import { Season } from "data/iracing/season/models/season"
+import { Season } from "racing-tools-data/iracing/season/models/season"
 import { SeasonRepository } from "./season_repository"
 import { UserRepository } from "src/modules/iracing/user/user_repository"
 import { FileRepository } from "src/data/file_repository"
-import { DI, Logger } from "utils"
-import { WinstonLogger } from "backend/logger/index"
+import { DI, Logger, plainToInstance } from "@alandoni/utils"
+import { WinstonLogger } from "@alandoni/backend/logger/index"
 
 export class SeasonController {
   static DOWNLOAD_PATH = `downloaded`
@@ -25,7 +25,6 @@ export class SeasonController {
   }
 
   async getSeason(): Promise<Season> {
-    console.log("Ué")
     const cache = await this.getCachedSeason()
     if (cache?.validate()) {
       this.logger.debug(`Using cache ${cache?.cachedDate}`)
@@ -46,7 +45,7 @@ export class SeasonController {
           sc.startDate = new Date(sc.startDate)
         })
       })
-      return Object.assign(new Season(), content)
+      return plainToInstance(Season, content)
     } catch (error) {
       this.logger.error(error)
       return null
@@ -59,6 +58,7 @@ export class SeasonController {
       await this.fileRepository.createFolder("", SeasonController.DOWNLOAD_PATH)
     }
     await this.fileRepository.writeFile(SeasonController.SEASON_FILE, JSON.stringify(season, null, 2))
+    this.logger.info(`Season stored, new cached date is: ${season.cachedDate}`)
     return season
   }
 

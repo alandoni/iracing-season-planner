@@ -1,4 +1,4 @@
-import { Track } from "data/iracing/season/models/track"
+import { Track } from "racing-tools-data/iracing/season/models/track"
 import { Row } from "frontend/components/atoms/row"
 import { Column } from "frontend/components/atoms/column"
 import { Text } from "frontend/components/atoms/text"

@@ -4,9 +4,9 @@ import * as dotenv from "dotenv"
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") })
 
-import { ServerConfiguration } from "backend/server_interface"
-import { WinstonLogger } from "backend/logger/index"
-import { DependencyInjection } from "utils"
+import { ServerConfiguration } from "@alandoni/backend/server_interface"
+import { WinstonLogger } from "@alandoni/backend/logger/index"
+import { DependencyInjection } from "@alandoni/utils"
 import { IRacingModule } from "./modules/iracing/iracing_module"
 import { PaymentModule } from "./modules/payments/payment_module"
 import { json } from "body-parser"

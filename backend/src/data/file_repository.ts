@@ -1,5 +1,5 @@
-import { WinstonLogger } from "backend/logger/index"
-import { Logger, DI } from "utils"
+import { WinstonLogger } from "@alandoni/backend/logger/index"
+import { Logger, DI } from "@alandoni/utils"
 import { promises as fs } from "fs"
 import path from "path"
 

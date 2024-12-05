@@ -1,4 +1,4 @@
-import { HttpClient } from "data-utils"
+import { HttpClient } from "@alandoni/data-utils"
 import { SeriesResponse } from "./series_response"
 import { SeriesApi } from "./series_api"
 

@@ -1,12 +1,26 @@
+import "reflect-metadata"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { ConsoleLogger } from "frontend/utils/logger"
 import { Column } from "frontend/components/atoms/column"
 import { Header } from "components/header"
 import { Navigation } from "components/navigation"
 import { Warning } from "components/warning"
 import { LazyPageLoad } from "frontend/components/templates/lazy_page_load"
 import { PageWithHeader } from "frontend/components/templates/page-with-header"
+import { DependencyInjection } from "@alandoni/utils"
+import { IRacingModule } from "./iracing-module"
+import { PaymentModule } from "./payment-module"
+import { HttpClientImpl } from "frontend/utils/http_client"
 import "./App.css"
-import "utils"
+
+const VITE_API_ADDRESS = import.meta.env.VITE_API_ADDRESS
+const modules = [new IRacingModule(), new PaymentModule()]
+
+DependencyInjection.initialize((di) => {
+  di.modules(...modules)
+  di.factory(ConsoleLogger, () => new ConsoleLogger())
+  di.factory(HttpClientImpl, () => new HttpClientImpl(VITE_API_ADDRESS))
+})
 
 function App() {
   return (

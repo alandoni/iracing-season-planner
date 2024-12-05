@@ -1,9 +1,9 @@
-import { DI } from "utils"
-import { Interceptor, ResponseBody, RequestBody, BuiltRequest, ResponseWrapper } from "data-utils"
+import { DI } from "@alandoni/utils"
+import { Interceptor, ResponseBody, RequestBody, BuiltRequest, ResponseWrapper } from "@alandoni/data-utils"
 import { UserRepository } from "src/modules/iracing/user/user_repository"
 
 export class IRacingHeadersInterceptor implements Interceptor {
-  async executeBefore<Response extends ResponseBody, RequestBodyType extends RequestBody>(
+  async executeBefore<Response extends ResponseBody, RequestBodyType extends RequestBody | undefined>(
     apiRequest: BuiltRequest<Response, RequestBodyType>,
   ): Promise<void> {
     const userRepository = DI.get(UserRepository)

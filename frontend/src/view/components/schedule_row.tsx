@@ -1,15 +1,14 @@
-import { Schedule } from "data/iracing/season/models/schedule"
-import { Series } from "data/iracing/season/models/series"
 import { Column } from "frontend/components/atoms/column"
 import { Row } from "frontend/components/atoms/row"
 import { Text } from "frontend/components/atoms/text"
 import { Checkbox } from "frontend/components/atoms/checkbox"
 import { LicenseLetter } from "./license_letter"
+import { FullSchedule, FullSeries } from "../pages/common_view_model"
 import "./schedule_row.css"
 
 interface ScheduleRowProps {
-  series: Series
-  schedule: Schedule
+  series: FullSeries
+  schedule: FullSchedule
   selectedSchedule: boolean
   selectedCar: boolean
   selectedTrack: boolean

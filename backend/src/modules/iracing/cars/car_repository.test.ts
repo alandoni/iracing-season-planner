@@ -1,4 +1,4 @@
-import { DI } from "utils"
+import { DI } from "@alandoni/utils"
 import { UserRepository } from "../user/user_repository"
 import { CarRepository } from "./car_repository"
 import fs from "fs"

@@ -1,4 +1,4 @@
-import { License } from "data/iracing/season/models/license"
+import { License } from "racing-tools-data/iracing/season/models/license"
 import "./license_letter.css"
 
 interface LicenseLetterProps {

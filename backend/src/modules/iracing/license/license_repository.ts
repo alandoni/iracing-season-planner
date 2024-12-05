@@ -1,5 +1,5 @@
 import { LicenseResponse } from "./license_response"
-import { License } from "data/iracing/season/models/license"
+import { License } from "racing-tools-data/iracing/season/models/license"
 import { LicenseService } from "./license_service"
 
 export class LicenseRepository {

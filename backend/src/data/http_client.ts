@@ -1,13 +1,20 @@
 import axios, { AxiosError } from "axios"
-import { CommonResponse, HttpClient, ResponseBody, Interceptor, HttpClientConfig, RequestBody } from "data-utils"
-import { printableRequest } from "backend/printable_request"
+import {
+  CommonResponse,
+  HttpClient,
+  ResponseBody,
+  Interceptor,
+  HttpClientConfig,
+  RequestBody,
+} from "@alandoni/data-utils"
+import { printableRequest } from "@alandoni/backend/printable_request"
 
 export class AxiosHttpClient extends HttpClient {
   constructor(url: string, interceptors: Interceptor[]) {
     super(url, interceptors)
   }
 
-  async fetch<Response extends ResponseBody, Body extends RequestBody>(
+  async fetch<Response extends ResponseBody, Body extends RequestBody | undefined>(
     url: string,
     config: HttpClientConfig<Body>,
   ): Promise<CommonResponse<Response>> {

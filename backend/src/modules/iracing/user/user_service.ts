@@ -1,4 +1,4 @@
-import { HttpClient } from "data-utils"
+import { HttpClient } from "@alandoni/data-utils"
 import { LoginRequest } from "./login_request"
 import { LoggedUserResponse } from "./logged_user_response"
 import { MemberGetResponse } from "./member_get_response"

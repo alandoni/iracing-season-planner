@@ -1,5 +1,5 @@
-import { Track } from "data/iracing/season/models/track"
-import { Category } from "data/iracing/season/models/category"
+import { Track } from "racing-tools-data/iracing/season/models/track"
+import { Category } from "racing-tools-data/iracing/season/models/category"
 import { TrackResponse } from "./track_response"
 import { TrackService } from "./track_service"
 

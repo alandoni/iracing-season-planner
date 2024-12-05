@@ -1,7 +1,7 @@
 import { PaymentRepository } from "./payment_repository"
-import { PaymentResponse } from "data/payment/payment_response"
-import { RequestWrapper } from "backend/controller/request_wrapper"
-import { PaymentRequest } from "data/payment/payment_request"
+import { PaymentResponse } from "racing-tools-data/payment/payment_response"
+import { PaymentRequest } from "racing-tools-data/payment/payment_request"
+import { RequestWrapper } from "@alandoni/backend/controller/request_wrapper"
 
 export class PaymentController {
   constructor(private donationRepository: PaymentRepository) {}

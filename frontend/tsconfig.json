@@ -1,51 +1,20 @@
 {
+  "extends": "../tsconfig-frontend.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "useDefineForClassFields": true,
-    "allowJs": false,
     /* Linting */
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "types": ["vite/client", "vite-plugin-svgr/client"],
-    /* Bundler mode */
-    "moduleResolution": "Bundler",
-    "declaration": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "preserveSymlinks": true,
-    "allowImportingTsExtensions": true,
-    "sourceMap": false,
-    "incremental": true,
-
-    "composite": true,
-    "jsx": "react-jsx",
-
     "outDir": "./dist",
     "rootDir": "../",
-
     "paths": {
+      "src/*": ["./src/*"],
       "components/*": ["./src/view/components/*"],
       "pages/*": ["./src/view/pages/*"],
       "i18n/*": ["./src/view/i18n/*"],
-      "assets/*": ["./src/assets/*"],
-      "data/*": ["./src/data/*", "./../data/src/*"]
+      "assets/*": ["./src/assets/*"]
     }
   },
-  "include": ["./src", "../data/src"],
+  "include": ["./src"],
   "ts-node": {
     "files": true
-  },
-  "exclude": ["**/*.test.ts", "**/dist/*", "**/node_modules/*"]
+  }
 }

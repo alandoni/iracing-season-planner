@@ -1,4 +1,4 @@
-import { DI } from "utils"
+import { DI } from "@alandoni/utils"
 import { UserRepository } from "./user_repository"
 import { promises as fs } from "fs"
 import "../../../dependency_injection"
