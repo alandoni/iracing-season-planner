@@ -99,6 +99,25 @@ describe("Cars Page", () => {
   })
 
   describe("setPreferredCategories", () => {
+    it("should should filter", async () => {
+      const { result } = vm
+
+      userPreferencesRepository.addOrRemovePreferredCategory = jest.fn().mockReturnValue([category2.id])
+      await act(async () => {
+        await result.current.onLoad()
+      })
+
+      act(() => {
+        result.current.setPreferredCategory(true, category2)
+      })
+
+      expect(result.current).toMatchObject({
+        search: "",
+        preferredCategories: [category2],
+        filteredCars: [car2, car3],
+      })
+    })
+
     it("should search the data by name", async () => {
       const { result } = vm
 
@@ -124,6 +143,25 @@ describe("Cars Page", () => {
   })
 
   describe("setPreferredLicenses", () => {
+    it("should should filter", async () => {
+      const { result } = vm
+
+      userPreferencesRepository.addOrRemovePreferredLicense = jest.fn().mockReturnValue([license2.id])
+      await act(async () => {
+        await result.current.onLoad()
+      })
+
+      act(() => {
+        result.current.setPreferredLicense(true, license2)
+      })
+
+      expect(result.current).toMatchObject({
+        search: "",
+        preferredLicenses: [license2],
+        filteredCars: [car3],
+      })
+    })
+
     it("should search the data by name", async () => {
       const { result } = vm
 
