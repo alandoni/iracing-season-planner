@@ -1,27 +1,27 @@
 import { renderHook, RenderHookResult } from "@testing-library/react"
-import { act } from "react"
-import { useCarsViewModel } from "./cars_view_model"
 import { UserPreferencesRepository } from "src/data/user_repository"
-import { mockLogger } from "@alandoni/utils"
+import { useTracksViewModel } from "./tracks_view_model"
 import {
-  car1,
-  car2,
-  car3,
   category1,
   category2,
   license1,
   license2,
   seasonRepositoryMock,
+  track1,
+  track2,
+  track3,
 } from "src/test-utils/season_repository_mock"
+import { mockLogger } from "@alandoni/utils"
+import { act } from "react"
 
-describe("CarsViewModel", () => {
+describe("TracksViewModel", () => {
   const userPreferencesRepository = {
     getUserPreferences: () => null,
   } as UserPreferencesRepository
-  let vm: RenderHookResult<ReturnType<typeof useCarsViewModel>, never>
+  let vm: RenderHookResult<ReturnType<typeof useTracksViewModel>, never>
 
   beforeEach(() => {
-    vm = renderHook(() => useCarsViewModel(seasonRepositoryMock, userPreferencesRepository, mockLogger))
+    vm = renderHook(() => useTracksViewModel(seasonRepositoryMock, userPreferencesRepository, mockLogger))
   })
 
   afterEach(() => {
@@ -32,7 +32,7 @@ describe("CarsViewModel", () => {
     const { result } = vm
     expect(result.current).toMatchObject({
       season: undefined,
-      filteredCars: [],
+      filteredTracks: [],
       loading: false,
       error: undefined,
       search: "",
@@ -54,7 +54,7 @@ describe("CarsViewModel", () => {
       })
       expect(result.current.loading).toBe(false)
       expect(result.current).toMatchObject({
-        filteredCars: [car1, car2, car3],
+        filteredTracks: [track1, track2, track3],
         preferredCategories: [category1, category2],
         preferredLicenses: [license1, license2],
       })
@@ -70,12 +70,12 @@ describe("CarsViewModel", () => {
       })
 
       act(() => {
-        result.current.setSearch("Legends")
+        result.current.setSearch("Legacy")
       })
 
       expect(result.current).toMatchObject({
-        search: "Legends",
-        filteredCars: [car1],
+        search: "Legacy",
+        filteredTracks: [track1],
       })
     })
 
@@ -92,7 +92,7 @@ describe("CarsViewModel", () => {
 
       expect(result.current).toMatchObject({
         search: "Sports",
-        filteredCars: [car2, car3],
+        filteredTracks: [track2, track3],
       })
     })
   })
@@ -113,7 +113,7 @@ describe("CarsViewModel", () => {
       expect(result.current).toMatchObject({
         search: "",
         preferredCategories: [category2],
-        filteredCars: [car2, car3],
+        filteredTracks: [track2, track3],
       })
     })
 
@@ -136,7 +136,7 @@ describe("CarsViewModel", () => {
       expect(result.current).toMatchObject({
         search: "Legends",
         preferredCategories: [category2],
-        filteredCars: [],
+        filteredTracks: [],
       })
     })
   })
@@ -157,7 +157,7 @@ describe("CarsViewModel", () => {
       expect(result.current).toMatchObject({
         search: "",
         preferredLicenses: [license2],
-        filteredCars: [car3],
+        filteredTracks: [track1, track2, track3],
       })
     })
 
@@ -180,7 +180,7 @@ describe("CarsViewModel", () => {
       expect(result.current).toMatchObject({
         search: "Legends",
         preferredLicenses: [license2],
-        filteredCars: [],
+        filteredTracks: [],
       })
     })
   })

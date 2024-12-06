@@ -3,6 +3,7 @@ import { jestConfig as jc } from "../jest.config-frontend"
 const jestConfig = {
   ...jc,
   rootDir: "./",
+  setupFilesAfterEnv: ["<rootDir>/src/test-utils/config.ts"],
   moduleNameMapper: {
     "^src/(.*)$": "<rootDir>/src/$1",
     "^components/(.*)$": ["<rootDir>/src/view/components/$1"],
