@@ -2,9 +2,9 @@ import "reflect-metadata"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { ConsoleLogger } from "@alandoni/frontend/utils/logger"
 import { Column } from "@alandoni/frontend/components/atoms/column"
-import { Header } from "components/header"
-import { Navigation } from "components/navigation"
-import { Warning } from "components/warning"
+import { Header } from "src/components/header"
+import { Navigation } from "src/components/navigation"
+import { Warning } from "src/components/warning"
 import { LazyPageLoad } from "@alandoni/frontend/components/templates/lazy_page_load"
 import { PageWithHeader } from "@alandoni/frontend/components/templates/page-with-header"
 import { DependencyInjection } from "@alandoni/utils"
@@ -36,19 +36,47 @@ function App() {
     >
       <BrowserRouter>
         <Routes>
-          <Route index={true} element={<LazyPageLoad factory={import("pages/season")} componentName="SeasonPage" />} />
+          <Route
+            index={true}
+            element={
+              <LazyPageLoad
+                factory={import("src/modules/iracing/views/pages/season/season")}
+                componentName="SeasonPage"
+              />
+            }
+          />
           <Route
             path="/series"
-            element={<LazyPageLoad factory={import("pages/series")} componentName="SeriesPage" />}
+            element={
+              <LazyPageLoad
+                factory={import("src/modules/iracing/views/pages/series/series")}
+                componentName="SeriesPage"
+              />
+            }
           />
-          <Route path="/cars" element={<LazyPageLoad factory={import("pages/cars/cars")} componentName="CarsPage" />} />
+          <Route
+            path="/cars"
+            element={
+              <LazyPageLoad factory={import("src/modules/iracing/views/pages/cars/cars")} componentName="CarsPage" />
+            }
+          />
           <Route
             path="/tracks"
-            element={<LazyPageLoad factory={import("src/view/pages/tracks/tracks")} componentName="TracksPage" />}
+            element={
+              <LazyPageLoad
+                factory={import("src/modules/iracing/views/pages/tracks/tracks")}
+                componentName="TracksPage"
+              />
+            }
           />
           <Route
             path="/summary"
-            element={<LazyPageLoad factory={import("pages/summary")} componentName="SummaryPage" />}
+            element={
+              <LazyPageLoad
+                factory={import("src/modules/iracing/views/pages/summary/summary")}
+                componentName="SummaryPage"
+              />
+            }
           />
         </Routes>
       </BrowserRouter>

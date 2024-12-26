@@ -1,8 +1,8 @@
 import { HttpClientImpl } from "@alandoni/frontend/utils/http_client"
 import { DependencyInjection, DependencyInjectionModule } from "@alandoni/utils"
 import { PaymentApi } from "racing-tools-data/payment/payment_api"
-import { PaymentRepository } from "./data/payment_repository.js"
-import { PaymentService } from "./data/payment_service.js"
+import { PaymentRepository } from "./modules/payment/data/payment_repository.js"
+import { PaymentService } from "./modules/payment/data/payment_service.js"
 
 export class PaymentModule extends DependencyInjectionModule {
   initialize() {

@@ -2,8 +2,13 @@ export const jestConfig = {
   verbose: true,
   collectCoverage: true,
   collectCoverageFrom: [
+    "!<rootDir>/*.*",
+    "!coverage/**",
+    "!**/.yalc/**",
     "!**/node_modules/**",
     "!src/**/test*/**",
+    "!src/**/*.test.tsx",
+    "!src/**/*.test.ts",
     "!<rootDir>/**/*interface.ts",
   ],
   coverageProvider: "v8",
