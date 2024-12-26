@@ -16,6 +16,12 @@ import { SeasonRepositoryInterface } from "racing-tools-data/iracing/season/seas
 describe("CommonViewModel", () => {
   const userPreferencesRepository = {
     getUserPreferences: () => null,
+    setPreferredCategories: (ids: number[]) => {
+      jest.fn()(ids)
+    },
+    setPreferredLicenses: (ids: number[]) => {
+      jest.fn()(ids)
+    },
   } as UserPreferencesRepository
   let vm: RenderHookResult<ReturnType<typeof useCommonViewModel>, never>
 

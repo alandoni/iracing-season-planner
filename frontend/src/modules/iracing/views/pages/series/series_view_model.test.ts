@@ -19,6 +19,12 @@ import { act } from "react"
 describe("SeriesViewModel", () => {
   const userPreferencesRepository = {
     getUserPreferences: () => null,
+    setPreferredCategories: (ids: number[]) => {
+      jest.fn()(ids)
+    },
+    setPreferredLicenses: (ids: number[]) => {
+      jest.fn()(ids)
+    },
   } as UserPreferencesRepository
   let vm: RenderHookResult<ReturnType<typeof useSeriesViewModel>, never>
 

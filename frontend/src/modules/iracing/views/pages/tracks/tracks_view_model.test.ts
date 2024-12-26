@@ -17,6 +17,12 @@ import { act } from "react"
 describe("TracksViewModel", () => {
   const userPreferencesRepository = {
     getUserPreferences: () => null,
+    setPreferredCategories: (ids: number[]) => {
+      jest.fn()(ids)
+    },
+    setPreferredLicenses: (ids: number[]) => {
+      jest.fn()(ids)
+    },
   } as UserPreferencesRepository
   let vm: RenderHookResult<ReturnType<typeof useTracksViewModel>, never>
 

@@ -80,8 +80,16 @@ export function useCommonViewModel(
     const preferences = userRepository.getUserPreferences()
     if (!preferences) {
       setPreferredCategories(season.categories)
+      userRepository.setPreferredCategories(season.categories.map((c) => c.id))
       setPreferredLicenses(season.licenses)
+      userRepository.setPreferredLicenses(season.licenses.map((c) => c.id))
       return
+    }
+    if (preferences.preferredCategories.length === 0) {
+      userRepository.setPreferredCategories(season.categories.map((c) => c.id))
+    }
+    if (preferences.preferredLicenses.length === 0) {
+      userRepository.setPreferredLicenses(season.licenses.map((c) => c.id))
     }
     setList(season, preferences.myCarsIds, "cars", setMyCars)
     setList(season, preferences.myTracksIds, "tracks", setMyTracks)

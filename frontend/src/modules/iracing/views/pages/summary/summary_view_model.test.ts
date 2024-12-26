@@ -23,6 +23,12 @@ import { act } from "react"
 describe("SummaryViewModel", () => {
   const userPreferencesRepository = {
     getUserPreferences: () => null,
+    setPreferredCategories: (ids: number[]) => {
+      jest.fn()(ids)
+    },
+    setPreferredLicenses: (ids: number[]) => {
+      jest.fn()(ids)
+    },
   } as UserPreferencesRepository
   let vm: RenderHookResult<ReturnType<typeof useSummaryViewModel>, never>
 
@@ -187,6 +193,7 @@ describe("SummaryViewModel", () => {
         preferredLicenses: [],
         participatedRacesIds: [],
       })
+
       const { result } = vm
       await act(async () => {
         await result.current.onLoad()

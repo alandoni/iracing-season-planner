@@ -20,6 +20,14 @@ export class UserPreferencesRepository {
     return this.userStorage.getLastChangedDate()
   }
 
+  setPreferredCategories(categoryIds: number[]) {
+    this.userStorage.setPreferredCategories(categoryIds)
+  }
+
+  setPreferredLicenses(licenseIds: number[]) {
+    this.userStorage.setPreferredLicenses(licenseIds)
+  }
+
   private addOrRemoveFromList<T extends { id: number }>(list: number[], item: T, add: boolean) {
     if (add) {
       list.push(item.id)
@@ -45,6 +53,8 @@ export class UserPreferencesRepository {
 
   addOrRemovePreferredCategory(item: Category, add: boolean) {
     const old = this.userStorage.getPreferredCategories()
+    console.log(old)
+
     const ids = this.addOrRemoveFromList(old, item, add)
     this.userStorage.setPreferredCategories(ids)
     return ids
