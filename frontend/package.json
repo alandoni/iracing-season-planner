@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "vite",
-    "prebuild": "echo \"VITE_API_ADDRESS=$VITE_API_ADDRESS\" > .env",
+    "prebuild": "echo VITE_API_ADDRESS=$VITE_API_ADDRESS > .env",
     "build": "tsc --build --verbose && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -13,7 +13,7 @@
     "preinstall": "yalc update"
   },
   "dependencies": {
-    "@alandoni/frontend": "^1.0.2",
+    "@alandoni/frontend": "^1.0.5",
     "@testing-library/dom": "^10.4.0",
     "axios": "^1.7.2",
     "js-sha256": "^0.11.0",

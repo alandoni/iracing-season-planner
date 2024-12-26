@@ -10,13 +10,27 @@ import { ParticipatedSeriesRow } from "src/components/participated_series_row"
 import { AlmostEligibleSeries } from "src/components/series_eligible_and_needed_content"
 import { useSummaryViewModel } from "./summary_view_model"
 import "./summary.css"
+import { LoadingPage } from "@alandoni/frontend/components/templates/loading_page"
+import { Error } from "@alandoni/frontend/components/atoms/error"
 
 export function SummaryPage() {
   const viewModel = useSummaryViewModel()
 
   useEffect(() => {
     viewModel.onLoad()
-  }, [viewModel])
+  }, [])
+
+  if (viewModel.loading) {
+    return <LoadingPage />
+  }
+
+  if (viewModel.error) {
+    return (
+      <Row className="cars-page" alignVertically="start">
+        <Error error="Um erro inesperado aconteceu!" />
+      </Row>
+    )
+  }
 
   return (
     <Row className="summary-page" alignVertically="start">
@@ -82,7 +96,11 @@ export function SummaryPage() {
               <Text size="small">Mostrar conteúdos possuídos</Text>
             </Row>
             <Row className="row-with-2-lines">
-              <Checkbox small isChecked={viewModel.showSeriesEligible} onChange={viewModel.setShowSeriesEligible} />
+              <Checkbox
+                small
+                isChecked={viewModel.showOnlySeriesEligible}
+                onChange={viewModel.setShowOnlySeriesEligible}
+              />
               <Text size="small">Mostrar conteúdos de séries já elegíveis</Text>
             </Row>
           </Column>
@@ -103,7 +121,7 @@ export function SummaryPage() {
                   </Row>
                 </Column>
               </Row>
-              {viewModel.almostEligibleseriesAndContentToBuy.flatMap((series, index, array) => (
+              {viewModel.almostEligibleSeriesAndContentToBuy.flatMap((series, index, array) => (
                 <div key={`${series.series.id}`}>
                   <AlmostEligibleSeries
                     series={series}

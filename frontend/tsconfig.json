@@ -7,8 +7,8 @@
     "rootDir": "../",
     "paths": {
       "src/*": ["./src/*"],
-      "components/*": ["src/components/*"],
-      "pages/*": ["src/modules/iracing/views/pages/*"],
+      "components/*": ["./src/components/*"],
+      "pages/*": ["./src/modules/iracing/views/pages/*"],
       "i18n/*": ["./src/view/i18n/*"],
       "assets/*": ["./src/assets/*"]
     }

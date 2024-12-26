@@ -11,7 +11,6 @@ describe("Season", () => {
       cars: [{ id: 1, categories: [{ id: 1, _name: "A" }] }],
     }
     const result = plainToInstance(Season, object)
-    console.log(result)
     expect(result.categories[0]["_name"]).toBe("A")
     expect(result.categories[0]).toBeInstanceOf(Category)
     expect(result.categories[0].name).toBe("A")

@@ -153,7 +153,7 @@ export function useCommonViewModel(
     setList(season, ids, "licenses", setPreferredLicenses)
   }
 
-  const setParticipatedRace = (checked: boolean, schedule: Schedule) => {
+  const setParticipatedRace = (checked: boolean, schedule: Pick<Schedule, "serieId" | "raceWeekNum">) => {
     const ids = userRepository.setParticipatedRace(checked, schedule)
     setParticipatedRacesAndSeries(season, ids)
   }

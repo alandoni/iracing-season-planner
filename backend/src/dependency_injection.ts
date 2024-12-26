@@ -13,6 +13,8 @@ import { json } from "body-parser"
 import cors from "cors"
 import { PublicRoute } from "./public_routes"
 
+const version = "/api/v1"
+
 export const modules = [new IRacingModule(), new PaymentModule()]
 
 DependencyInjection.initialize((di) => {
@@ -23,10 +25,9 @@ DependencyInjection.initialize((di) => {
     const app = express()
     app.use(cors())
     app.use(json())
-    const version = "/api/v1"
     const port = isNaN(Number(process.env.PORT)) ? 3001 : Number(process.env.port)
     const appConfiguration = new ServerConfiguration(app, Router, port, di.get(WinstonLogger))
-    // appConfiguration.setRoutes("", [di.get(PublicRoute)])
+    appConfiguration.setRoutes("", [di.get(PublicRoute)])
     appConfiguration.setRoutes(version, [...modules.flatMap((m) => m.getRoutes())])
     return appConfiguration
   })

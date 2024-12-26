@@ -2,6 +2,8 @@ import { Season } from "racing-tools-data/iracing/season/models/season"
 import { SeasonService } from "./season_service"
 import { SeasonStorage } from "./season_storage"
 import { SeasonRepositoryInterface } from "racing-tools-data/iracing/season/season_repository_interface"
+import { ConsoleLogger } from "@alandoni/frontend/utils/logger"
+import { DI } from "@alandoni/utils"
 
 export class SeasonRepository implements SeasonRepositoryInterface {
   constructor(private seasonService: SeasonService, private seasonStorage: SeasonStorage) {}
@@ -13,7 +15,7 @@ export class SeasonRepository implements SeasonRepositoryInterface {
       await this.seasonStorage.setSeason(season)
       return season
     }
-    console.log(`Using cache, it will expire on ${cachedSeason.cachedDate}`)
+    DI.get(ConsoleLogger).debug(`Using cache, it will expire on ${cachedSeason.cachedDate}`)
     return cachedSeason
   }
 

@@ -1,7 +1,7 @@
 import { Modal } from "@alandoni/frontend/components/atoms/modal"
-import { useDonationViewModel } from "../iracing/views/pages/donation_view_model.js"
 import { Text } from "@alandoni/frontend/components/atoms/text"
 import { Row } from "@alandoni/frontend/components/atoms/row"
+import { useDonationViewModel } from "./donation_view_model"
 import { LoadingSpinner } from "@alandoni/frontend/components/atoms/loading_spinner"
 import { Input } from "@alandoni/frontend/components/atoms/input"
 import { Button } from "@alandoni/frontend/components/atoms/button"

@@ -7,13 +7,27 @@ import { TrackRow } from "src/components/track_row"
 import { SearchInput } from "src/components/search-input"
 import { useTracksViewModel } from "./tracks_view_model"
 import "./tracks.css"
+import { LoadingPage } from "@alandoni/frontend/components/templates/loading_page"
+import { Error } from "@alandoni/frontend/components/atoms/error"
 
 export function TracksPage() {
   const viewModel = useTracksViewModel()
 
   useEffect(() => {
     viewModel.onLoad()
-  }, [viewModel])
+  }, [])
+
+  if (viewModel.loading) {
+    return <LoadingPage />
+  }
+
+  if (viewModel.error) {
+    return (
+      <Row className="cars-page" alignVertically="start">
+        <Error error="Um erro inesperado aconteceu!" />
+      </Row>
+    )
+  }
 
   return (
     <Row className="tracks-page" alignVertically="start">

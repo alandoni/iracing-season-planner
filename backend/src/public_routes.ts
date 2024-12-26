@@ -8,13 +8,13 @@ import { WinstonLogger } from "@alandoni/backend/logger/index"
 export class PublicRoute implements Routes {
   constructor(private logger: Logger = DI.get(WinstonLogger)) {}
   use(router: Router): void {
-    const buildPath = process.env.NODE_ENV === "production" ? "../../" : "../../build"
+    const buildPath = "../../frontend/dist"
 
     router.use(express.static(path.resolve(__dirname, buildPath)))
-    router.get("/*", (req, res) => {
+    router.get(/^\/(?!api).*/, (req, res) => {
       this.logger.debugObject("Request", req.path)
-      res.sendFile(path.resolve(__dirname, buildPath, "index.html"))
+      res.sendFile(path.join(__dirname, buildPath, "index.html"))
     })
-    this.logger.debug(`Creating router on /`)
+    this.logger.debug(`Creating router on / <-`)
   }
 }

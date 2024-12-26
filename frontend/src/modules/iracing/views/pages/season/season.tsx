@@ -9,18 +9,26 @@ import { Checkbox } from "@alandoni/frontend/components/atoms/checkbox"
 import { SearchInput } from "src/components/search-input"
 import { useSeasonViewModel } from "./season_view_model"
 import "./season.css"
+import { useEffect } from "react"
+import { Error } from "@alandoni/frontend/components/atoms/error"
 
 export function SeasonPage() {
   const viewModel = useSeasonViewModel()
-  if (viewModel.loading) {
-    return <LoadingPage />
-  }
+
+  useEffect(() => {
+    viewModel.onLoad()
+  }, [])
+
   if (viewModel.error) {
     return (
-      <Row>
-        <Text color="error">Um erro inesperado aconteceu.</Text>
+      <Row className="season-page" alignVertically="start">
+        <Error error="Um erro inesperado aconteceu!" />
       </Row>
     )
+  }
+
+  if (viewModel.loading || viewModel.week === undefined) {
+    return <LoadingPage />
   }
 
   return (

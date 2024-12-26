@@ -8,13 +8,27 @@ import { SearchInput } from "src/components/search-input.js"
 import { LoadingOutlet } from "@alandoni/frontend/components/templates/loading_outlet"
 import { useSeriesViewModel } from "./series_view_model.js"
 import "./series.css"
+import { LoadingPage } from "@alandoni/frontend/components/templates/loading_page"
+import { Error } from "@alandoni/frontend/components/atoms/error"
 
 export function SeriesPage() {
   const viewModel = useSeriesViewModel()
 
   useEffect(() => {
     viewModel.onLoad()
-  }, [viewModel])
+  }, [])
+
+  if (viewModel.loading) {
+    return <LoadingPage />
+  }
+
+  if (viewModel.error) {
+    return (
+      <Row className="cars-page" alignVertically="start">
+        <Error error="Um erro inesperado aconteceu!" />
+      </Row>
+    )
+  }
 
   return (
     <Row className="series-page" alignVertically="start">

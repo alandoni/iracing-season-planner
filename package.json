@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npm i -g yarn && npm i -g yalc",
     "test": "jest",
-    "start": "cd build/backend/src && node index.js",
+    "start": "node backend/dist/index.js",
     "install": "cd data && yarn install && cd ../frontend && yarn install --production=false && cd ../backend && yarn install --production=false",
     "build": "cd data && yarn build && cd ../frontend && yarn build && cd ../backend && yarn build",
     "postbuild": "cd data && yarn install && cd ../frontend && yarn install && cd ../backend && yarn install"
