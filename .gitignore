@@ -10,3 +10,8 @@ build
 **/downloaded
 
 **/package-lock.json
+
+**/dist
+dist
+
+.yalc
