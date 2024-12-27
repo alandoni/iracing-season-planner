@@ -13,7 +13,7 @@
     ]
   },
   "scripts": {
-    "postinstall": "tsc --build --verbose && yalc publish",
+    "build": "tsc --build --verbose && yalc publish",
     "test": "jest"
   },
   "devDependencies": {

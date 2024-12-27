@@ -10,6 +10,11 @@ build
 **/downloaded
 
 **/package-lock.json
-dist
+
 **/dist
+dist
+
+.yalc
+**/.yalc
+
 **/tsconfig.tsbuildinfo
