@@ -24,6 +24,7 @@ DependencyInjection.initialize((di) => {
   di.factory(PublicRoute, () => new PublicRoute())
   di.modules(...modules)
   di.factory(ServerConfiguration, () => {
+    di.get(WinstonLogger).debugObject("Creating server configuration with", process.env)
     const app = express()
     app.use(cors())
     app.use(json())
