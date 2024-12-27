@@ -7,5 +7,7 @@
   "typescript.tsserver.enableTracing": true,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "jest.rootPath": "backend",
-  "workbench.editorLargeFileConfirmation": 20
+  "workbench.editorLargeFileConfirmation": 20,
+  "terminal.integrated.scrollback": 999999,
+  "editor.foldingMaximumRegions": 65000
 }

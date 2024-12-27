@@ -1,42 +1,32 @@
-import axios, { AxiosError, AxiosResponse } from "axios"
+import axios, { AxiosError } from "axios"
+import {
+  CommonResponse,
+  HttpClient,
+  ResponseBody,
+  Interceptor,
+  HttpClientConfig,
+  RequestBody,
+} from "@alandoni/data-utils"
+import { printableRequest } from "@alandoni/backend/printable_request"
 
-export class HttpClient {
-  private axiosInstance = axios.create()
-
-  private useSetCookie(response: AxiosResponse) {
-    this.axiosInstance.defaults.headers.Cookie = this.parseCookies(response)
+export class AxiosHttpClient extends HttpClient {
+  constructor(url: string, interceptors: Interceptor[]) {
+    super(url, interceptors)
   }
 
-  private parseCookies(response: AxiosResponse) {
-    const raw = response.headers["set-cookie"]
-    return (
-      raw
-        ?.map((entry) => {
-          const parts = entry.split(";")
-          const cookiePart = parts[0]
-          return cookiePart
-        })
-        ?.join(";") ?? ""
-    )
-  }
-
-  async get<R>(url: string): Promise<R> {
+  async fetch<Response extends ResponseBody, Body extends RequestBody | undefined>(
+    url: string,
+    config: HttpClientConfig<Body>,
+  ): Promise<CommonResponse<Response>> {
     try {
-      return (await this.axiosInstance(url)).data
-    } catch (error) {
-      throw this.printableError(error)
-    }
-  }
-
-  async post<B, R>(url: string, body: B): Promise<R> {
-    try {
-      const response = await this.axiosInstance<R>(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        data: body,
+      const response = await axios.request<Response>({
+        url: config.endpoint.startsWith("https://") ? config.endpoint : url,
+        data: config.body,
+        method: config.method.toString(),
+        headers: config.headers,
       })
-      this.useSetCookie(response)
-      return response.data
+
+      return response
     } catch (error) {
       throw this.printableError(error)
     }
@@ -49,12 +39,7 @@ export class HttpClient {
     return {
       name: error.name,
       code: error.code,
-      request: {
-        headers: error.config?.headers,
-        method: error.config?.method,
-        url: error.config?.url,
-        body: JSON.parse(error.config?.data ?? "null"),
-      },
+      request: error.response ? printableRequest(error.response?.request) : undefined,
       response: {
         status: error.response?.status,
         statusText: error.response?.statusText,
