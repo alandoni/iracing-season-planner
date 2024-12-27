@@ -5,10 +5,10 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "start": "cd build/backend/src && node index.js",
-    "postinstall": "cd frontend && yarn install --production=false && cd ../backend && yarn install --production=false",
-    "build": "cd frontend && yarn build && cd ../backend && yarn build",
-    "postbuild": "cd frontend && yarn install && cd ../backend && yarn install"
+    "start": "node backend/dist/index.js",
+    "install": "cd data && yarn install && cd ../frontend && yarn install --production=false && cd ../backend && yarn install --production=false",
+    "build": "cd ../frontend && yarn build && cd ../backend && yarn build",
+    "postbuild": "cd data && yarn install && cd ../frontend && yarn install && cd ../backend && yarn install"
   },
   "author": "Alan Donizete Quintiliano",
   "license": "ISC"
