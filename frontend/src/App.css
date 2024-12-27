@@ -129,6 +129,8 @@ input[type="submit"]:hover {
 .main-column {
   width: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .side-bar {
@@ -146,6 +148,10 @@ input[type="submit"]:hover {
   max-height: 100%;
   padding-top: var(--spacing-small);
   overflow: auto;
+}
+
+.loading-outlet {
+  align-self: center;
 }
 
 .content > .row {

@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "racing-tools-data": {
+      "signature": "242aa9d2cba335c541fbe63d6358c8b6",
+      "file": true
+    }
+  }
+}

@@ -1,23 +1,32 @@
 {
   "name": "iracing-season-planner",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "start": "vite",
-    "prebuild": "echo \"VITE_API_ADDRESS=$VITE_API_ADDRESS\" > .env",
+    "prebuild": "echo VITE_API_ADDRESS=$VITE_API_ADDRESS > .env",
     "build": "tsc --build --verbose && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest",
+    "preinstall": "yalc update"
   },
   "dependencies": {
+    "@alandoni/frontend": "^1.0.5",
+    "@testing-library/dom": "^10.4.0",
     "axios": "^1.7.2",
     "js-sha256": "^0.11.0",
+    "racing-tools-data": "file:.yalc/racing-tools-data",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.13",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
@@ -26,7 +35,11 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
-    "typescript": "^5.2.2",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
     "vite": "^5.3.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2"

@@ -1,0 +1,23 @@
+{
+  "name": "racing-tools-data",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+    "dist/*"
+  ],
+  "exports": {
+    "./*": [
+      "./dist/*.js",
+      "./dist/*/index.js"
+    ]
+  },
+  "scripts": {
+    "build": "tsc --build --verbose && yalc publish",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@alandoni/data-utils": "^1.0.1"
+  },
+  "yalcSig": "242aa9d2cba335c541fbe63d6358c8b6"
+}

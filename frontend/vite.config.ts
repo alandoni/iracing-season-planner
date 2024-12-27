@@ -7,5 +7,26 @@ import svgr from "vite-plugin-svgr"
 export default defineConfig({
   base: "./",
   plugins: [svgr(), react(), tsconfigPaths()],
-  build: { outDir: "../build", emptyOutDir: true },
+  build: {
+    outDir: "./dist",
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 600,
+    // rollupOptions: {
+    //   output: {
+    //     manualChunks(id) {
+    //       if (id.includes("node_modules")) {
+    //         return id.toString().split("node_modules/")[1].split("/")[0].toString()
+    //       }
+    //     },
+    //   },
+    // },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: "globalThis",
+      },
+    },
+  },
 })
