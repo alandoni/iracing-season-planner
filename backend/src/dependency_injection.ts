@@ -28,7 +28,7 @@ DependencyInjection.initialize((di) => {
     const app = express()
     app.use(cors())
     app.use(json())
-    const port = isNaN(Number(process.env.PORT)) ? 3001 : Number(process.env.port)
+    const port = isNaN(Number(process.env.PORT)) ? 3001 : Number(process.env.PORT)
     const appConfiguration = new ServerConfiguration(app, Router, port, di.get(WinstonLogger))
     appConfiguration.setRoutes("", [di.get(PublicRoute)])
     appConfiguration.setRoutes(version, [...modules.flatMap((m) => m.getRoutes())])
